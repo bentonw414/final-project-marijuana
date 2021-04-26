@@ -151,9 +151,9 @@ html {
     border:1px solid #b56d07;
     }
   
-  #chart {
+  /* #chart {
     margin-left : 10%;
-  }
+  } */
   
   
   img {
@@ -171,29 +171,19 @@ html {
     /* background-image:radial-gradient(rgba(212, 180, 131, 1), rgba(255,0,0,0)); */
     background-color: var(--background1); 
     /* background-color:; */
-    border-radius:15px;
-    opacity:1;
-    width : 100%;
-    margin: auto;
-    margin-bottom: 5px;
-    padding: 5px 5px;
+    /* border-radius:15px; */
+    /* opacity:1; */
+    /* width : 100%; */
+    /* overflow:scroll; */
+        padding:10px;
+        float:left;
+        width:95%;
+        height:100%; 
+    /* margin: auto; */
+    /* margin-bottom: 5px;
+    padding: 5px 5px; */
   }
   
-  #yearval {
-    display: inline-block;
-    border-radius:20px;
-    background-color: #D4B483;
-    padding: 10px;
-    color: #251605;
-    border:1px solid #b56d07;
-    font-size: large;
-    font-weight: bold;
-  }
-  
-  #num-bars-value {
-    display: inline-block;
-    font-size:14px;
-  }
 
   
   #label{
@@ -295,7 +285,7 @@ button{
     /* width: 200px;
     height: 28px; */
     padding: 10px 10px 0px 10px;
-    pointer-events: none;
+    pointer-events: "bounding-box";
     background: var(--background1);
     border: 2px solid var(--accent2);
     opacity: 0.8;

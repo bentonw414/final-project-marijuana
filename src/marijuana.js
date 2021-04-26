@@ -16,6 +16,7 @@ var yPadding = 0;
 var hBuffer = 0;
 var wBuffer = 0;
 var currentSelectionFunction = undefined;
+var prevTooltip = undefined;
 
 
 const lambdaByGender = function(d){
@@ -316,7 +317,8 @@ var tooltip = d3.select('#chart')                               // NEW
           .attr('class', 'tooltip');                                    // NEW
 
         tooltip.append('div')                                           // NEW
-          .attr('class', 'label');                                      
+          .attr('class', 'label');     
+          tooltip.style('display', 'none');                                 
 
 //create group element and create an svg <use> element for each icon
 svgDoc.append("g")
@@ -342,17 +344,25 @@ svgDoc.append("g")
         .attr("fill", "#D3D3D3");
       
 
-        let temp = svgDoc.selectAll("use").on('mouseover', function(event, d) {     
-            console.log(event);
-            console.log(event.screenX);
-            tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d));            
-            tooltip.style('display', 'block')
-            .style("left", (event.clientX + 10) + "px")     
-            .style("top", (event.clientY + 10) + "px");                     
-          });                                                     
-
-          temp.on('mouseout', function() {                              
-            tooltip.style('display', 'none');                           
+        let temp = svgDoc.selectAll("use").on('mouseover', function(event, d) {  
+            if (currentSelectionFunction !== undefined){
+                if (prevTooltip !== funcMaps.get(currentSelectionFunction)(d)){
+                    tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d));            
+                    tooltip.style('display', 'block');
+                    prevTooltip = funcMaps.get(currentSelectionFunction)(d);
+                };
+                tooltip.style("left", (event.clientX + 10) + "px")     
+                .style("top", (event.clientY + 10) + "px");       
+            }            
+          });                    
+                                         
+          temp.on("mousemove", function(){
+            tooltip.style("left", (event.clientX + 10) + "px")     
+            .style("top", (event.clientY + 10) + "px");    
+          });
+          svgDoc.on('mouseleave', function(event) {
+            tooltip.style('display', 'none');      
+            prevTooltip = undefined;                  
           });             
 
     
