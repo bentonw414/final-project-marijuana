@@ -6,12 +6,44 @@ const genderColumn = "RV0005: Sex";
 const genderMaleValue = 1;
 const genderFemaleValue = 2;
 
+const alcColumn = "V1264: Age at First Drink";
+const offenseColumn = "RV0036: Controlling Offense Category - 13";
+
 var numCols = 0;
 var numRows = 0;
 var xPadding = 0;
 var yPadding = 0;
 var hBuffer = 0;
 var wBuffer = 0;
+var currentSelectionFunction = undefined;
+
+
+const lambdaByGender = function(d){
+    if (d[genderColumn] === genderMaleValue){
+        return 0;
+    } else if (d[genderColumn] === genderFemaleValue){
+        return 1;
+    } else {
+        console.log(d[genderColumn]);
+    }
+};
+
+const lambdaByAgeAlc = function(d){
+    let alcValue = d[alcColumn];
+    if (alcValue > 0 && alcValue < 100){
+        return Math.floor(alcValue / 10);
+    } else {
+        return 0;
+    }
+};
+
+const lambdaByOffenseType = function(d){
+    let offenseType = d[offenseColumn];
+    if (offenseType > 13 || offenseType < 1){
+        return 0;
+    }
+    return offenseType;
+}
 // for a given filter
 // count selected
 // count not selected
@@ -25,8 +57,11 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
     maxValue = -1;
     let counts = new Map();
     // TODO make this just however many categories there are 
-    counts[0] = 0;
-    counts[1] = 0 ;
+    for (let i = 0; i < 20; i++){
+        counts[i] = 0;
+    }
+    // counts[0] = 0;
+    // counts[1] = 0 ;
 
     data.forEach(element => {
         let funcValue = inputFunc(element);
@@ -47,7 +82,7 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
             counts[i] = 0;
         }
     }
-
+    console.log(counts);
     return counts;
 };
 
@@ -55,15 +90,13 @@ function movePeople(inputFunc, data, counts){
     let prevMap = new Map();
     prevMap.set(0,0);
     for (let i = 1; counts.has(i); i++){
-        console.log(prevMap.get(i-1));
-        console.log(counts[i-1]);
         prevMap.set(i, prevMap.get(i-1) + counts[i-1]);
     }
     console.log(prevMap);
     d3.selectAll("use")
     .data(data)
     .transition()
-    .duration(5000)
+    .duration(3000)
     .ease(d3.easeCubic)
     .attr("x",function(d) {
         let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
@@ -79,23 +112,24 @@ function movePeople(inputFunc, data, counts){
         return xPadding+(whole*wBuffer);//apply the buffer and return value
     })
     .attr("y",function(d) {
-        let remainder = 0;
+        let remainder = (d.graphID + prevMap.get(inputFunc(d))) % numRows;
 
         // let whole = 0;
-        if (inputFunc(d) === 0){
-            remainder = (d.graphID) % numRows;
-        } else {
-            // otherwise add in previous counts
-            remainder = (d.graphID + counts[0]) % numRows;//calculates the y position (row number)
-        }
+        // if (inputFunc(d) === 0){
+        //     remainder = (d.graphID) % numRows;
+        // } else {
+        //     // otherwise add in previous counts
+        //     remainder = (d.graphID + counts[0]) % numRows;//calculates the y position (row number)
+        // }
         return yPadding+(remainder*hBuffer);//apply the buffer and return the value
     });
 };
 
 
 
+
 d3.csv(dataPath, d3.autoType).then(filteredData => {
-    filteredData = filteredData.slice(0,1000);
+    filteredData = filteredData.slice(0,1500);
 
 console.log(filteredData)
 //placeholder div for jquery slider
@@ -119,14 +153,15 @@ numCols = 100;
 numRows = Math.floor(filteredData.length/numCols);
 
 
-//background rectangle
-svgDoc.append("rect").attr("width",numCols*8).attr("height",numRows*4);
 
 // svgDoc.attr("height", 8*numRows);
 // svgDoc.attr("width", 4*numCols);
 //padding for the grid
 xPadding = 10;
 yPadding = 15;
+
+//background rectangle
+svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8 + 2*yPadding).attr('xlink:href', 'http://simpleicon.com/wp-content/uploads/smile.png');
 
 //horizontal and vertical spacing between the icons
 hBuffer = 8;
@@ -155,15 +190,16 @@ svgDoc.append("g")
             return "icon"+d;
         })
         .attr("x",function(d) {
-            var remainder=
-            (d["V0001B: Respondent ID"]-1) % numCols;//calculates the x position (column number) using modulus
-            return xPadding+(remainder*wBuffer);//apply the buffer and return value
+            var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numRows)
+            var remainder = (d["V0001B: Respondent ID"]-1) % numCols;//calculates the x position (column number) using modulus
+            return xPadding+(whole*wBuffer);//apply the buffer and return value
         })
           .attr("y",function(d) {
+            var remainder = (d["V0001B: Respondent ID"]-1) % numRows;
             var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numCols)//calculates the y position (row number)
-            return yPadding+(whole*hBuffer);//apply the buffer and return the value
+            return yPadding+(remainder*hBuffer);//apply the buffer and return the value
         })
-        .attr("class", d => returnClass(d))
+        .attr("fill", "#808080");
         // .classed(returnClass(), true);
 
         
@@ -188,26 +224,70 @@ svgDoc.append("g")
 let moveButton = document.getElementById('move-button');
 moveButton.addEventListener('click', function(){
     console.log("clicked move button");
-    let lambdaDude = function(d){
-        if (d[genderColumn] === genderMaleValue){
-            return 0;
-        } else if (d[genderColumn] === genderFemaleValue){
-            return 1
-        } else {
-            console.log(d[genderColumn]);
-        }
-    };
-    let counts = getCountsAndUpdateGraphId(lambdaDude, filteredData);
-    console.log(counts);
-    movePeople(lambdaDude, filteredData, counts);
-});
-
-});
-
-function returnClass(d){
-    if (d["RV0005: Sex"] == "2"){
-        return "iconSelected";
+    if (currentSelectionFunction === undefined){
+        console.log("no selection yet");
+        return;
     }
-    return "iconPlain";
+    let counts = getCountsAndUpdateGraphId(currentSelectionFunction, filteredData);
+    console.log(counts);
+    movePeople(currentSelectionFunction, filteredData, counts);
+});
+
+let genderButton = document.getElementById('gender-button');
+genderButton.addEventListener('click', function(){
+    console.log("clicked gender button");
+    currentSelectionFunction = lambdaByGender;
+
+    colorPeople(filteredData, currentSelectionFunction);
+});
+
+let ageDrinkButton = document.getElementById('age-drink-button');
+ageDrinkButton.addEventListener('click', function(){
+    console.log("clicked drink button");
+    currentSelectionFunction = lambdaByAgeAlc;
+    colorPeople(filteredData, currentSelectionFunction);
+});
+
+let offenseButton = document.getElementById('offense-type-button');
+offenseButton.addEventListener('click', function(){
+    console.log("clicked offense button");
+    currentSelectionFunction = lambdaByOffenseType;
+    colorPeople(filteredData, currentSelectionFunction);
+});
+
+
+// let moveButtonA = document.getElementById('move-button');
+// moveButton.addEventListener('click', function(){
+//     console.log("clicked move button");
+//     let lambdaDude = function(d){
+//         if (d[genderColumn] === genderMaleValue){
+//             return 0;
+//         } else if (d[genderColumn] === genderFemaleValue){
+//             return 1
+//         } else {
+//             console.log(d[genderColumn]);
+//         }
+//     };
+//     let counts = getCountsAndUpdateGraphId(lambdaDude, filteredData);
+//     console.log(counts);
+//     movePeople(lambdaDude, filteredData, counts);
+// });
+
+});
+
+function colorPeople(data, lambdaFunc){
+    d3.selectAll("use")
+    .data(data)
+    .attr("fill", d => returnClass(lambdaFunc, d));
+}
+
+let colorScale = d3.scaleOrdinal(d3.schemeTableau10)
+function returnClass(lambdafunc, d){
+    return colorScale(lambdafunc(d));
+    // if (d["RV0005: Sex"] == "2"){
+    //     colorScale(d)
+    //     return "#BADA55";
+    // }
+    // return "#a7a59b";
 }
 
