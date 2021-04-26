@@ -167,9 +167,82 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
             counts.set(i, 0);
         }
     }
-    console.log(counts);
     return counts;
 };
+
+function getCounts(inputFunc, data){
+    maxValue = -1;
+    let counts = new Map();
+    // TODO make this just however many categories there are 
+    for (let i = 0; i < 20; i++){
+        counts.set(i, 0);
+    }
+    // counts[0] = 0;
+    // counts[1] = 0 ;
+
+    data.forEach(element => {
+        let funcValue = inputFunc(element);
+        if (!(counts.has(funcValue))){
+            counts.set(funcValue, 0);
+            maxValue = Math.max(funcValue, maxValue);
+        }
+        let seenSoFar = counts.get(funcValue);
+        counts.set(funcValue, seenSoFar + 1);
+    });
+
+    // Make sure a value is in each one.
+    for (let i = 0; i < maxValue + 1; i++){
+        if (!counts.has(i)){
+            counts.set(i, 0);
+        }
+    }
+    return counts;
+}
+
+// Now graphID is going to be the overall value that we are moving too
+function updateGraphId(inputFunc, data, counts){
+    const usedGraphIds = new Set();
+    let prevMap = new Map();
+    prevMap.set(0,0);
+    for (let i = 1; counts.has(i); i++){
+        prevMap.set(i, prevMap.get(i-1) + counts.get(i-1));
+    }
+
+    // Keep the graph ids in place, and mark those spots as used
+    data.forEach(element => {
+        let funcValue = inputFunc(element);
+        const isAlreadyInPlace = (prevMap.get(funcValue) <= element.graphID
+                                && prevMap.get(funcValue + 1) > element.graphID);
+        if (isAlreadyInPlace){
+            usedGraphIds.add(element.graphID)
+        }
+    });
+
+    // 
+    const proposals = new Map();
+    for (let i = 0; i < counts.size; i++){
+        proposals.set(i, prevMap.get(i));
+    }
+
+    // For rest of elements, move into open location
+    data.forEach(element => {
+        let funcValue = inputFunc(element);
+        const isAlreadyInPlace = prevMap.get(funcValue) <= element.graphID
+                                && prevMap.get(funcValue + 1) > element.graphID;
+        if (!isAlreadyInPlace){
+            let proposedID = proposals.get(funcValue);
+            if (isNaN(proposedID) || proposedID === undefined){
+                throw new Error();
+            }
+            while(usedGraphIds.has(proposedID)){
+                proposedID++;
+            }
+            element.graphID = proposedID;
+            proposals.set(funcValue, element.graphID + 1);
+            usedGraphIds.add(element.graphID);
+        }
+    });
+}
 
 function movePeople(inputFunc, data, counts){
     let prevMap = new Map();
@@ -177,24 +250,22 @@ function movePeople(inputFunc, data, counts){
     for (let i = 1; counts.has(i); i++){
         prevMap.set(i, prevMap.get(i-1) + counts.get(i-1));
     }
-    console.log(prevMap);
     d3.selectAll("use")
     .data(data)
     .transition()
-    .delay(function(d, i) { return i})
+    .delay(function(d, i) { return  Math.floor(Math.random() * 1000)})
     .duration(function(d, i){
         let prevX = this.getAttribute("x");
         let prevY = this.getAttribute("y");
-        let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
+        let whole = Math.floor((d.graphID /*+ prevMap.get(inputFunc(d))*/)/numRows);
         let newX = xPadding+(whole*wBuffer);
-        let remainder = (d.graphID + prevMap.get(inputFunc(d))) % numRows;
+        let remainder = (d.graphID /*+ prevMap.get(inputFunc(d))*/) % numRows;
         let newY = yPadding+(remainder*hBuffer);
         let deltaX = newX - prevX;
         let deltaY = newY - prevY;
 
         let delta = Math.sqrt(deltaX*deltaX + deltaY*deltaY)
-        console.log(prevX);
-        return delta*12;
+        return delta*15;
     })
     .ease(d3.easeSinInOut)
     // .tween( 'x', function() {
@@ -214,7 +285,7 @@ function movePeople(inputFunc, data, counts){
     // }
     //     )
     .attr("x",function(d) {
-        let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
+        let whole = Math.floor((d.graphID /*+ prevMap.get(inputFunc(d))*/)/numRows);
         // if (inputFunc(d) === 0){
         //     whole = Math.floor((d.graphID)/numRows)
             
@@ -246,7 +317,7 @@ function movePeople(inputFunc, data, counts){
     //         return d3.interpolate(this.getAttr("x"), xPadding+(whole*wBuffer));
     //     };)
     .attr("y",function(d) {
-        let remainder = (d.graphID + prevMap.get(inputFunc(d))) % numRows;
+        let remainder = (d.graphID /*+ prevMap.get(inputFunc(d))**/) % numRows;
 
         // let whole = 0;
         // if (inputFunc(d) === 0){
@@ -265,6 +336,7 @@ function movePeople(inputFunc, data, counts){
 d3.csv(dataPath, d3.autoType).then(filteredData => {
     filteredData = filteredData.slice(0,2000);
     // var formatTime = d3.time.format("%e %B");
+
 
 console.log(filteredData)
 //placeholder div for jquery slider
@@ -329,6 +401,7 @@ svgDoc.append("g")
     .append("use")
         .attr("xlink:href","#iconCustom")
         .attr("id",function(d)    {
+            d.graphID = d["V0001B: Respondent ID"]-1;
             return "icon"+d;
         })
         .attr("x",function(d) {
@@ -365,8 +438,6 @@ svgDoc.append("g")
             prevTooltip = undefined;                  
           });             
 
-    
-        
 //create a jquery slider to control the pictogram         
 //  ( "#sliderDiv" ).slider({
 //       orientation: "horizontal",
@@ -392,8 +463,10 @@ moveButton.addEventListener('click', function(){
         console.log("no selection yet");
         return;
     }
-    let counts = getCountsAndUpdateGraphId(currentSelectionFunction, filteredData);
-    console.log(counts);
+    let counts = getCounts(currentSelectionFunction, filteredData);
+    updateGraphId(currentSelectionFunction, filteredData, counts);
+    // let counts = getCountsAndUpdateGraphId(currentSelectionFunction, filteredData);
+    // console.log(counts);
     movePeople(currentSelectionFunction, filteredData, counts);
 });
 
