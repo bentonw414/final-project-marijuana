@@ -119,6 +119,7 @@ function movePeople(inputFunc, data, counts){
     d3.selectAll("use")
     .data(data)
     .transition()
+    .delay(function(d, i) { return i})
     .duration(function(d, i){
         let prevX = this.getAttribute("x");
         let prevY = this.getAttribute("y");
@@ -200,7 +201,7 @@ function movePeople(inputFunc, data, counts){
 
 
 d3.csv(dataPath, d3.autoType).then(filteredData => {
-    filteredData = filteredData.slice(0,1500);
+    filteredData = filteredData.slice(0,5000);
 
 console.log(filteredData)
 //placeholder div for jquery slider
