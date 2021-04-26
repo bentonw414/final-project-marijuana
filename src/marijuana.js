@@ -33,7 +33,7 @@ const lambdaByAgeAlc = function(d){
     if (alcValue > 0 && alcValue < 100){
         return Math.floor(alcValue / 10);
     } else {
-        return 0;
+        return 11;
     }
 };
 
@@ -44,6 +44,67 @@ const lambdaByOffenseType = function(d){
     }
     return offenseType;
 }
+
+const genderMapFunc = function(d){
+    if (d[genderColumn] === genderMaleValue){
+        return "Male";
+    } else if (d[genderColumn] === genderFemaleValue){
+        return "Female";
+    } else {
+        console.log(d[genderColumn]);
+    }
+};
+
+const alcMapFunc = function(d){
+    let alcValue = d[alcColumn];
+    if (alcValue > 0 && alcValue < 100){
+        return "Age:" + Math.floor(alcValue / 10)*10 + "-" + Math.floor(alcValue / 10)+9;
+    } else {
+        return "Did not answer/Never?";
+    }
+}
+
+const offenseMapFunc = function(d){
+    switch(d[offenseColumn]) {
+        case 1:
+            return "Homicide";
+        case 2:
+          return "Rape/Sexual Assault";
+        case 3:
+            return "Robbery";
+        case 4:
+            return "Assault";
+        case 5:
+            return "Other Violent";
+        case 6:
+            return "Burglary";
+        case 7:
+            return "Other Property";
+        case 8:
+            return "Drug Trafficking";
+        case 9: 
+            return "Drug Possession";
+        case 10:
+            return "Other Drug";
+        case 11:
+            return "Weapons";
+        case 12: 
+            return "Other Public Order";
+        case 13:
+            return "Other Unspecified";
+        default:
+            console.log("BROKEN offense type");
+            return "No Offense Type Given";
+          // code block
+      }
+}
+
+
+
+var funcMaps = new Map();
+funcMaps.set(lambdaByGender, genderMapFunc);
+funcMaps.set(lambdaByAgeAlc, alcMapFunc);
+funcMaps.set(lambdaByOffenseType, offenseMapFunc);
 
 const tweenerFunc = function(d, i, a){
     // Called at the start of each thing, for each data point
@@ -201,7 +262,8 @@ function movePeople(inputFunc, data, counts){
 
 
 d3.csv(dataPath, d3.autoType).then(filteredData => {
-    filteredData = filteredData.slice(0,5000);
+    filteredData = filteredData.slice(0,2000);
+    // var formatTime = d3.time.format("%e %B");
 
 console.log(filteredData)
 //placeholder div for jquery slider
@@ -249,13 +311,13 @@ wBuffer = 4;
 //     .attr("y",yPadding)
 //     .attr("dy",-3)
 //     .text("0");
+var tooltip = d3.select('#chart')                               // NEW
+          .append('div')                                                // NEW
+          .attr('class', 'tooltip');                                    // NEW
 
-var tooltip = d3.select("body")
-    .append("div")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden")
-    .text("a simple tooltip");
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'label');                                      
+
 //create group element and create an svg <use> element for each icon
 svgDoc.append("g")
     .attr("id","pictoLayer")
@@ -277,12 +339,21 @@ svgDoc.append("g")
             var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numCols)//calculates the y position (row number)
             return yPadding+(remainder*hBuffer);//apply the buffer and return the value
         })
-        .attr("fill", "#D3D3D3")
-        .on("mouseover", function(d){return tooltip.style("visibility", "visible").text(d[alcColumn].toString());})
-        .on("mousemove", function(){return tooltip.style("top",
-            (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
-        .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
-        
+        .attr("fill", "#D3D3D3");
+      
+
+        let temp = svgDoc.selectAll("use").on('mouseover', function(event, d) {     
+            console.log(event);
+            console.log(event.screenX);
+            tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d));            
+            tooltip.style('display', 'block')
+            .style("left", (event.clientX + 10) + "px")     
+            .style("top", (event.clientY + 10) + "px");                     
+          });                                                     
+
+          temp.on('mouseout', function() {                              
+            tooltip.style('display', 'none');                           
+          });             
 
     
         

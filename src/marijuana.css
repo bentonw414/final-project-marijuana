@@ -289,3 +289,16 @@ button{
     text-align: center;
       /* margin: auto; */
   }
+
+  .tooltip {
+    position:fixed;
+    /* width: 200px;
+    height: 28px; */
+    padding: 10px 10px 0px 10px;
+    pointer-events: none;
+    background: var(--background1);
+    border: 2px solid var(--accent2);
+    opacity: 0.8;
+    
+  }
+
