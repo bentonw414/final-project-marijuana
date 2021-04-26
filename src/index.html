@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
         <script src="//cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+      
         <style type="text/css">
                
             /* #sliderDiv  {
@@ -14,14 +15,7 @@
                 width:00px;
             } */
             
-            svg {
-              /* position:relative;  */
-                overflow:scroll;
-                padding:10px;
-                float:left;
-                width:100%;
-                height:100%;
-            }
+       
             
             /* text    {
                 fill:#bb6d82;
@@ -31,7 +25,7 @@
                 font-weight:bold;
             } */
             
-            .iconPlain  {
+            /* .iconPlain  {
                 fill:#a7a59b;   
                 width: 1px;
                 height: 1px;
@@ -44,10 +38,12 @@
             }
             
             rect    {
+              
+              fill: black;
                 /* background-image: ; */
                 /* fill:"./prison.jpeg"; */
-                fill:#BADA55;   
-            }
+                /* fill:#BADA55;    */
+            } */
         
         </style>
 <title>
@@ -56,6 +52,8 @@
 
 <head>
   <!-- <link rel="stylesheet" href="./babies.css"> -->
+
+<link rel="stylesheet" href="./marijuana.css">
   <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
  <body>
@@ -68,9 +66,9 @@
 
 <div class="movebutton">
   <button type="button" class="button" id="move-button">Move </button>
-  <button type="button" class="button" id="gender-button">gender </button>
-  <button type="button" class="button" id="age-drink-button">age drink </button>
-  <button type="button" class="button" id="offense-type-button">offense type </button>
+  <button type="button" class="button" id="gender-button">Gender </button>
+  <button type="button" class="button" id="age-drink-button">Age Drink </button>
+  <button type="button" class="button" id="offense-type-button">Offense Type </button>
   <p></p>
 </div>
 <div id="chart" >

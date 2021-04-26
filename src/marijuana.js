@@ -44,6 +44,29 @@ const lambdaByOffenseType = function(d){
     }
     return offenseType;
 }
+
+const tweenerFunc = function(d, i, a){
+    // Called at the start of each thing, for each data point
+    console.log(d);
+    console.log(i);
+    console.log(a);
+    console.log("==");
+    let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
+    if (inputFunc(d) === 0){
+        whole = Math.floor((d.graphID)/numRows)
+        
+    } else {
+        // otherwise add in previous counts
+        whole = Math.floor((d.graphID + counts[0])/numRows)
+        // remainder = (d.graphID + counts[0]) % numCols;
+    }
+    return function(d){
+        // console.log(prevx + " mid " + typeof(d));
+        return d3.interpolate(a, );
+    };
+}
+
+// const lambdaBy
 // for a given filter
 // count selected
 // count not selected
@@ -58,7 +81,7 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
     let counts = new Map();
     // TODO make this just however many categories there are 
     for (let i = 0; i < 20; i++){
-        counts[i] = 0;
+        counts.set(i, 0);
     }
     // counts[0] = 0;
     // counts[1] = 0 ;
@@ -69,17 +92,17 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
             counts.set(funcValue, 0);
             maxValue = Math.max(funcValue, maxValue);
         }
-        let seenSoFar = counts[funcValue];
+        let seenSoFar = counts.get(funcValue);
     
         // Set value of graphID before updating count so 0 indexing.
         element.graphID = seenSoFar;
-        counts[funcValue] = seenSoFar + 1;
+        counts.set(funcValue, seenSoFar + 1);
     });
 
     // Make sure a value is in each one.
     for (let i = 0; i < maxValue; i++){
         if (!counts.has(i)){
-            counts[i] = 0;
+            counts.set(i, 0);
         }
     }
     console.log(counts);
@@ -90,14 +113,43 @@ function movePeople(inputFunc, data, counts){
     let prevMap = new Map();
     prevMap.set(0,0);
     for (let i = 1; counts.has(i); i++){
-        prevMap.set(i, prevMap.get(i-1) + counts[i-1]);
+        prevMap.set(i, prevMap.get(i-1) + counts.get(i-1));
     }
     console.log(prevMap);
     d3.selectAll("use")
     .data(data)
     .transition()
-    .duration(3000)
-    .ease(d3.easeCubic)
+    .duration(function(d, i){
+        let prevX = this.getAttribute("x");
+        let prevY = this.getAttribute("y");
+        let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
+        let newX = xPadding+(whole*wBuffer);
+        let remainder = (d.graphID + prevMap.get(inputFunc(d))) % numRows;
+        let newY = yPadding+(remainder*hBuffer);
+        let deltaX = newX - prevX;
+        let deltaY = newY - prevY;
+
+        let delta = Math.sqrt(deltaX*deltaX + deltaY*deltaY)
+        console.log(prevX);
+        return delta*12;
+    })
+    .ease(d3.easeSinInOut)
+    // .tween( 'x', function() {
+    //     // get current value as starting point for tween animation
+    //     var currentValue = this;
+    //     // create interpolator and do not show nasty floating numbers
+    //     var interpolator = d3.interpolateRound( currentValue, 10 );
+
+    //     // this returned function will be called a couple
+    //     // of times to animate anything you want inside
+    //     // of your custom tween
+    //     return function( t ) {
+    //       // set new value to current text element
+    //       this.textContent = interpolator( t );
+    // // .ease(d3.easeCubic)
+    //     };
+    // }
+    //     )
     .attr("x",function(d) {
         let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
         // if (inputFunc(d) === 0){
@@ -111,6 +163,25 @@ function movePeople(inputFunc, data, counts){
 
         return xPadding+(whole*wBuffer);//apply the buffer and return value
     })
+    // .attrTween("x",function(d, i, a){
+    //     // Called at the start of each thing, for each data point
+    //     console.log(d);
+    //     console.log(i);
+    //     console.log(a);
+    //     console.log("==");
+    //     let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
+    //     if (inputFunc(d) === 0){
+    //         whole = Math.floor((d.graphID)/numRows)
+            
+    //     } else {
+    //         // otherwise add in previous counts
+    //         whole = Math.floor((d.graphID + counts[0])/numRows)
+    //         // remainder = (d.graphID + counts[0]) % numCols;
+    //     }
+    //     return function(d){
+    //         // console.log(prevx + " mid " + typeof(d));
+    //         return d3.interpolate(this.getAttr("x"), xPadding+(whole*wBuffer));
+    //     };)
     .attr("y",function(d) {
         let remainder = (d.graphID + prevMap.get(inputFunc(d))) % numRows;
 
@@ -155,7 +226,7 @@ numRows = Math.floor(filteredData.length/numCols);
 
 
 // svgDoc.attr("height", 8*numRows);
-// svgDoc.attr("width", 4*numCols);
+// svgDoc.attr("wixdth", 4*numCols);
 //padding for the grid
 xPadding = 10;
 yPadding = 15;
@@ -178,6 +249,12 @@ wBuffer = 4;
 //     .attr("dy",-3)
 //     .text("0");
 
+var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .text("a simple tooltip");
 //create group element and create an svg <use> element for each icon
 svgDoc.append("g")
     .attr("id","pictoLayer")
@@ -199,9 +276,14 @@ svgDoc.append("g")
             var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numCols)//calculates the y position (row number)
             return yPadding+(remainder*hBuffer);//apply the buffer and return the value
         })
-        .attr("fill", "#808080");
-        // .classed(returnClass(), true);
+        .attr("fill", "#D3D3D3")
+        .on("mouseover", function(d){return tooltip.style("visibility", "visible").text(d[alcColumn].toString());})
+        .on("mousemove", function(){return tooltip.style("top",
+            (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+        .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+        
 
+    
         
 //create a jquery slider to control the pictogram         
 //  ( "#sliderDiv" ).slider({
@@ -278,10 +360,13 @@ offenseButton.addEventListener('click', function(){
 function colorPeople(data, lambdaFunc){
     d3.selectAll("use")
     .data(data)
+    .transition()
+    .duration(400)
+    .ease(d3.easeLinear)
     .attr("fill", d => returnClass(lambdaFunc, d));
 }
 
-let colorScale = d3.scaleOrdinal(d3.schemeTableau10)
+let colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 function returnClass(lambdafunc, d){
     return colorScale(lambdafunc(d));
     // if (d["RV0005: Sex"] == "2"){
