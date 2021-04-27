@@ -276,7 +276,8 @@ function drawLabels(mapping, counts){
     // }
     //      let centerX = getX(leftHumans) + getX(humansWide)/2
     console.log(mapping);
-    let thing = svgDocGlob.selectAll('text')
+
+    let thing = svgDocGlob.selectAll('.labelsText')
         .data(mapping)
         .join(
             enter => enter.append("text")
@@ -317,45 +318,58 @@ function drawLabels(mapping, counts){
         // })
         // .attr("fill", d => getColorOfHash(d.hashValue))
         // .append("text")
+        // .transition()
+        // .duration(1000)
+        // .ease(d3.easeSinInOut)
         .transition()
+        .on("end", function(){
+            svgDocGlob.selectAll('.labelsText')
+            .data(mapping)
+            .join("text")
+            .attr("transform", function(d) {
+                let key = d.hashValue;// FIX
+                // let label = d; // FIX
+                // let textColor = getColorOfHash(key); // gets the color of the text 
+                let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
+                let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
+                let centerHumans = Math.floor(leftHumans + humansWide/2);
+                let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
+                // console.log(centerHumans);
+                // console.log(xValue);
+                // return xValue;
+                return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
+            })
+            .attr("y", 0)
+            .attr("dy", -3)
+            .attr("font-size", "6px")
+            .attr("x", 0)
+            // .attr("x", function(d) {
+            //     let key = d.hashValue;// FIX
+            //     // let label = d; // FIX
+            //     // let textColor = getColorOfHash(key); // gets the color of the text 
+            //     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
+            //     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
+            //     let centerHumans = Math.floor(leftHumans + humansWide/2);
+            //     let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
+            //     console.log(centerHumans);
+            //     console.log(xValue);
+            //     return xValue;
+            // })
+            .transition()
+            .duration(1000)
+            .ease(d3.easeSinInOut)
+            .attr("fill", d => getColorOfHash(d.hashValue))
+            // .attr("text-anchor", "middle")
+            // .attr("rotate", 315)
+    
+            // .transition().duration(100)
+            // .style("opacity", 1)
+            .text(d => d.meaning);
+        })
         .duration(1000)
         .ease(d3.easeSinInOut)
-        .attr("transform", function(d) {
-            let key = d.hashValue;// FIX
-            // let label = d; // FIX
-            // let textColor = getColorOfHash(key); // gets the color of the text 
-            let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
-            let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-            let centerHumans = Math.floor(leftHumans + humansWide/2);
-            let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
-            // console.log(centerHumans);
-            // console.log(xValue);
-            // return xValue;
-            return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
-        })
-        .attr("y", 0)
-        .attr("dy", -3)
-        .attr("font-size", "6px")
-        .attr("x", 0)
-        // .attr("x", function(d) {
-        //     let key = d.hashValue;// FIX
-        //     // let label = d; // FIX
-        //     // let textColor = getColorOfHash(key); // gets the color of the text 
-        //     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
-        //     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-        //     let centerHumans = Math.floor(leftHumans + humansWide/2);
-        //     let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
-        //     console.log(centerHumans);
-        //     console.log(xValue);
-        //     return xValue;
-        // })
-        .attr("fill", d => getColorOfHash(d.hashValue))
-        // .attr("text-anchor", "middle")
-        // .attr("rotate", 315)
-
-        // .transition().duration(100)
-        // .style("opacity", 1)
-        .text(d => d.meaning);
+        .attr("fill", "black");
+        
         // d3.selectAll("text")
         // .attr("transform", "rotate(355)");
 
