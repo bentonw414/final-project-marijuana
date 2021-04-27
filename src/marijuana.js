@@ -1,5 +1,4 @@
 
-// import * as d3 from "d3";
 const dataPath = "../data/filtereddata.csv";
 
 const genderColumn = "RV0005: Sex";
@@ -170,40 +169,10 @@ const labelsOffenseMap =
         }
     ];
 
-
-
 var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
 funcMaps.set(lambdaByOffenseType, offenseMapFunc);
-
-const tweenerFunc = function(d, i, a){
-    // Called at the start of each thing, for each data point
-    console.log(d);
-    console.log(i);
-    console.log(a);
-    console.log("==");
-    let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
-    if (inputFunc(d) === 0){
-        whole = Math.floor((d.graphID)/numRows)
-        
-    } else {
-        // otherwise add in previous counts
-        whole = Math.floor((d.graphID + counts[0])/numRows)
-        // remainder = (d.graphID + counts[0]) % numCols;
-    }
-    return function(d){
-        // console.log(prevx + " mid " + typeof(d));
-        return d3.interpolate(a, );
-    };
-}
-
-// const lambdaBy
-// for a given filter
-// count selected
-// count not selected
-
-// Give everyone a graph id
 
 // Takes in a function, and gives each data point a "graphid" (id within category)
 // Returns a map of counts for each category
@@ -215,8 +184,6 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
     for (let i = 0; i < 20; i++){
         counts.set(i, 0);
     }
-    // counts[0] = 0;
-    // counts[1] = 0 ;
 
     data.forEach(element => {
         let funcValue = inputFunc(element);
@@ -241,12 +208,9 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
 };
 
 function leftXAndWidth(counts, prevMap, d){
-    let key = d.hashValue;// FIX
-    // let label = d; // FIX
-    // let textColor = getColorOfHash(key); // gets the color of the text 
+    let key = d.hashValue;
     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-    // let centerHumans = Math.floor(leftHumans + humansWide/2);
     let leftX =  xPadding+(leftHumans*wBuffer); // stolen from function for drawing little people.
     let width = xPadding+(humansWide*wBuffer);
     return {leftX, width};
@@ -265,34 +229,17 @@ function drawLabels(mapping, counts){
     for (let i = 1; counts.has(i); i++){
         prevMap.set(i, prevMap.get(i-1) + counts.get(i-1));
     }
-    // for (let key of mapping){
-    //      let label = mapping.get(key);
-    //      let textColor = getColorOfHash(key); // gets the color of the text 
-    //      let leftHumans = Math.floor(totalDotsSoFar / numRows);// something like this
-    //      let humansWide = Math.floor(numRows / counts.get(key));//some calculation involving numRows and counts[key]
-    //      totalDotsSoFar += counts.get(key);
-    //      let centerHumans = Math.floor((leftHumans + humansWide)/2);
-    //      let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
-    // }
-    //      let centerX = getX(leftHumans) + getX(humansWide)/2
-    console.log(mapping);
-
-    let thing = svgDocGlob.selectAll('.labelsText')
+    svgDocGlob.selectAll('.labelsText')
         .data(mapping)
         .join(
             enter => enter.append("text")
                 .attr("fill", "black")
                 .attr("transform", function(d) {
-                    let key = d.hashValue;// FIX
-                    // let label = d; // FIX
-                    // let textColor = getColorOfHash(key); // gets the color of the text 
+                    let key = d.hashValue;
                     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
                     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
                     let centerHumans = Math.floor(leftHumans + humansWide/2);
-                    let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
-                    // console.log(centerHumans);
-                    // console.log(xValue);
-                    // return xValue;
+                    let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
                     return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
                 })
                 .attr("y", 0)
@@ -304,115 +251,32 @@ function drawLabels(mapping, counts){
             exit => exit.transition().duration(1000).ease(d3.easeSinInOut).attr("fill", "black").remove()
           )
         .attr("class", "labelsText")
-        // .attr("y", yPadding - 8)
-        // .attr("height", 8)
-        // .attr("width", function(d){
-        //     let {leftX, width} = leftXAndWidth(counts, prevMap,d);
-        //     return width;
-        // })
-        // // .attr("dx", 0)
-        // .attr("x", function(d) {
-        //     let {leftX, width} = leftXAndWidth(counts, prevMap,d);
-        //     console.log(leftX);
-        //     return leftX;
-        // })
-        // .attr("fill", d => getColorOfHash(d.hashValue))
-        // .append("text")
-        // .transition()
-        // .duration(1000)
-        // .ease(d3.easeSinInOut)
         .transition()
         .on("end", function(){
             svgDocGlob.selectAll('.labelsText')
             .data(mapping)
             .join("text")
             .attr("transform", function(d) {
-                let key = d.hashValue;// FIX
-                // let label = d; // FIX
-                // let textColor = getColorOfHash(key); // gets the color of the text 
+                let key = d.hashValue;
                 let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
                 let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
                 let centerHumans = Math.floor(leftHumans + humansWide/2);
                 let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
-                // console.log(centerHumans);
-                // console.log(xValue);
-                // return xValue;
                 return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
             })
             .attr("y", 0)
             .attr("dy", -3)
             .attr("font-size", "6px")
             .attr("x", 0)
-            // .attr("x", function(d) {
-            //     let key = d.hashValue;// FIX
-            //     // let label = d; // FIX
-            //     // let textColor = getColorOfHash(key); // gets the color of the text 
-            //     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
-            //     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-            //     let centerHumans = Math.floor(leftHumans + humansWide/2);
-            //     let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
-            //     console.log(centerHumans);
-            //     console.log(xValue);
-            //     return xValue;
-            // })
             .transition()
             .duration(1000)
             .ease(d3.easeSinInOut)
             .attr("fill", d => getColorOfHash(d.hashValue))
-            // .attr("text-anchor", "middle")
-            // .attr("rotate", 315)
-    
-            // .transition().duration(100)
-            // .style("opacity", 1)
             .text(d => d.meaning);
         })
         .duration(1000)
         .ease(d3.easeSinInOut)
         .attr("fill", "black");
-        
-        // d3.selectAll("text")
-        // .attr("transform", "rotate(355)");
-
-
-    console.log(thing);
-        // svgDoc.append("text")
-        //     .attr("id","txtValue" )
-        //     .attr("x",xPadding)
-        //     .attr("y",yPadding)
-        //     .attr("dy",-3)
-        //     .text("0");
-    // for each value in counts
-    //      figure out the left number and right number
-    //      center label based on mappingFunc
-    //      draw label
-
-
-    // var tooltip = d3.select('#chart')                               // NEW
-    //       .append('div')                                                // NEW
-    //       .attr('class', 'tooltip');                                    // NEW
-
-    // svgDoc.append("g")
-    // .attr("id","labelLayer")
-    // .selectAll("use")
-    // .data(filteredData)
-    // .enter()
-    // .append("use")
-    //     .attr("xlink:href","#iconCustom")
-    //     .attr("id",function(d)    {
-    //         d.graphID = d["V0001B: Respondent ID"]-1;
-    //         return "icon"+d;
-    //     })
-    //     .attr("x",function(d) {
-    //         var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numRows)
-    //         var remainder = (d["V0001B: Respondent ID"]-1) % numCols;//calculates the x position (column number) using modulus
-    //         return xPadding+(whole*wBuffer);//apply the buffer and return value
-    //     })
-    //       .attr("y",function(d) {
-    //         var remainder = (d["V0001B: Respondent ID"]-1) % numRows;
-    //         var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numCols)//calculates the y position (row number)
-    //         return yPadding+(remainder*hBuffer);//apply the buffer and return the value
-    //     })
-    //     .attr("fill", "#D3D3D3");
 }
 
 function getCounts(inputFunc, data){
@@ -513,64 +377,12 @@ function movePeople(inputFunc, data, counts){
         return delta*15;
     })
     .ease(d3.easeSinInOut)
-    // .tween( 'x', function() {
-    //     // get current value as starting point for tween animation
-    //     var currentValue = this;
-    //     // create interpolator and do not show nasty floating numbers
-    //     var interpolator = d3.interpolateRound( currentValue, 10 );
-
-    //     // this returned function will be called a couple
-    //     // of times to animate anything you want inside
-    //     // of your custom tween
-    //     return function( t ) {
-    //       // set new value to current text element
-    //       this.textContent = interpolator( t );
-    // // .ease(d3.easeCubic)
-    //     };
-    // }
-    //     )
     .attr("x",function(d) {
-        let whole = Math.floor((d.graphID /*+ prevMap.get(inputFunc(d))*/)/numRows);
-        // if (inputFunc(d) === 0){
-        //     whole = Math.floor((d.graphID)/numRows)
-            
-        // } else {
-        //     // otherwise add in previous counts
-        //     whole = Math.floor((d.graphID + counts[0])/numRows)
-        //     // remainder = (d.graphID + counts[0]) % numCols;
-        // }
-
+        let whole = Math.floor((d.graphID)/numRows);
         return xPadding+(whole*wBuffer);//apply the buffer and return value
     })
-    // .attrTween("x",function(d, i, a){
-    //     // Called at the start of each thing, for each data point
-    //     console.log(d);
-    //     console.log(i);
-    //     console.log(a);
-    //     console.log("==");
-    //     let whole = Math.floor((d.graphID + prevMap.get(inputFunc(d)))/numRows);
-    //     if (inputFunc(d) === 0){
-    //         whole = Math.floor((d.graphID)/numRows)
-            
-    //     } else {
-    //         // otherwise add in previous counts
-    //         whole = Math.floor((d.graphID + counts[0])/numRows)
-    //         // remainder = (d.graphID + counts[0]) % numCols;
-    //     }
-    //     return function(d){
-    //         // console.log(prevx + " mid " + typeof(d));
-    //         return d3.interpolate(this.getAttr("x"), xPadding+(whole*wBuffer));
-    //     };)
     .attr("y",function(d) {
-        let remainder = (d.graphID /*+ prevMap.get(inputFunc(d))**/) % numRows;
-
-        // let whole = 0;
-        // if (inputFunc(d) === 0){
-        //     remainder = (d.graphID) % numRows;
-        // } else {
-        //     // otherwise add in previous counts
-        //     remainder = (d.graphID + counts[0]) % numRows;//calculates the y position (row number)
-        // }
+        let remainder = (d.graphID) % numRows;
         return yPadding+(remainder*hBuffer);//apply the buffer and return the value
     });
 };
@@ -605,10 +417,6 @@ svgDoc.append("defs")
 numCols = 100;
 numRows = Math.floor(filteredData.length/numCols);
 
-
-
-// svgDoc.attr("height", 8*numRows);
-// svgDoc.attr("wixdth", 4*numCols);
 //padding for the grid
 xPadding = 10;
 yPadding = 80;
@@ -619,9 +427,6 @@ svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8
 //horizontal and vertical spacing between the icons
 hBuffer = 8;
 wBuffer = 4;
-
-//generate a d3 range for the total number of required elements
-// var myIndex=d3.range(numCols*numRows);
 
 //text element to display number of icons highlighted
 // svgDoc.append("text")
@@ -740,24 +545,6 @@ offenseButton.addEventListener('click', function(){
     currentSelectionFunction = lambdaByOffenseType;
     colorPeople(filteredData, currentSelectionFunction);
 });
-
-
-// let moveButtonA = document.getElementById('move-button');
-// moveButton.addEventListener('click', function(){
-//     console.log("clicked move button");
-//     let lambdaDude = function(d){
-//         if (d[genderColumn] === genderMaleValue){
-//             return 0;
-//         } else if (d[genderColumn] === genderFemaleValue){
-//             return 1
-//         } else {
-//             console.log(d[genderColumn]);
-//         }
-//     };
-//     let counts = getCountsAndUpdateGraphId(lambdaDude, filteredData);
-//     console.log(counts);
-//     movePeople(lambdaDude, filteredData, counts);
-// });
 
 });
 
