@@ -115,56 +115,60 @@ const offenseMapFunc = function(d){
 
 const labelsOffenseMap = 
     [
-         {
+        {
             hashValue:0,
+            meaning:"No Offense Type Given"
+        },
+         {
+            hashValue:1,
             meaning:"Homicide"
         },
         {
-            hashValue:1,
+            hashValue:2,
             meaning:"Rape/Sexual Assault"
         },
         {
-            hashValue:2,
+            hashValue:3,
             meaning:"Robbery"
         },
         {
-            hashValue:3,
+            hashValue:4,
             meaning:"Assault"
         },
         {
-            hashValue:4,
+            hashValue:5,
             meaning:"Other Violent"
         },
         {
-            hashValue:5,
+            hashValue:6,
             meaning:"Burglary"
         },
         {
-            hashValue:6,
+            hashValue:7,
             meaning:"Other Property"
         },
         {
-            hashValue:7,
+            hashValue:8,
             meaning:"Drug Trafficking"
         },
         {
-            hashValue:8,
+            hashValue:9,
             meaning:"Drug Possession"
         },
         {
-            hashValue:9,
+            hashValue:10,
             meaning:"Other Drug"
         },
         {
-            hashValue:10,
+            hashValue:11,
             meaning:"Weapons"
         },
         {
-            hashValue:11,
+            hashValue:12,
             meaning:"Other Public Order"
         },
         {
-            hashValue:12,
+            hashValue:13,
             meaning:"Other Unspecified"
         }
     ];
@@ -207,13 +211,13 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
     return counts;
 };
 
-function leftXAndWidth(counts, prevMap, d){
+function getTextX(counts, prevMap, d){
     let key = d.hashValue;
     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-    let leftX =  xPadding+(leftHumans*wBuffer); // stolen from function for drawing little people.
-    let width = xPadding+(humansWide*wBuffer);
-    return {leftX, width};
+    let centerHumans = Math.floor(leftHumans + humansWide/2);
+    let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
+    return xValue;
 }
 
 /**
@@ -235,11 +239,7 @@ function drawLabels(mapping, counts){
             enter => enter.append("text")
                 .attr("opacity", 0)
                 .attr("transform", function(d) {
-                    let key = d.hashValue;
-                    let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
-                    let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-                    let centerHumans = Math.floor(leftHumans + humansWide/2);
-                    let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
+                    let xValue =  getTextX(counts, prevMap, d) // stolen from function for drawing little people.
                     return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
                 })
                 .attr("y", 0)
@@ -257,11 +257,7 @@ function drawLabels(mapping, counts){
             .data(mapping)
             .join("text")
             .attr("transform", function(d) {
-                let key = d.hashValue;
-                let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
-                let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
-                let centerHumans = Math.floor(leftHumans + humansWide/2);
-                let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
+                let xValue =  getTextX(counts, prevMap, d); // stolen from function for drawing little people.
                 return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
             })
             .attr("y", 0)
