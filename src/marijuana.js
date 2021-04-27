@@ -16,7 +16,9 @@ var yPadding = 0;
 var hBuffer = 0;
 var wBuffer = 0;
 var currentSelectionFunction = undefined;
+var currentLabelData = undefined;
 var prevTooltip = undefined;
+var svgDocGlob = undefined;
 
 
 const lambdaByGender = function(d){
@@ -28,6 +30,18 @@ const lambdaByGender = function(d){
         console.log(d[genderColumn]);
     }
 };
+
+const labelsGender = 
+    [
+         {
+            hashValue:0,
+            meaning:"Male"
+        },
+        {
+            hashValue:1,
+            meaning:"Female"
+        }
+    ];
 
 const lambdaByAgeAlc = function(d){
     let alcValue = d[alcColumn];
@@ -100,6 +114,62 @@ const offenseMapFunc = function(d){
       }
 }
 
+const labelsOffenseMap = 
+    [
+         {
+            hashValue:0,
+            meaning:"Homicide"
+        },
+        {
+            hashValue:1,
+            meaning:"Rape/Sexual Assault"
+        },
+        {
+            hashValue:2,
+            meaning:"Robbery"
+        },
+        {
+            hashValue:3,
+            meaning:"Assault"
+        },
+        {
+            hashValue:4,
+            meaning:"Other Violent"
+        },
+        {
+            hashValue:5,
+            meaning:"Burglary"
+        },
+        {
+            hashValue:6,
+            meaning:"Other Property"
+        },
+        {
+            hashValue:7,
+            meaning:"Drug Trafficking"
+        },
+        {
+            hashValue:8,
+            meaning:"Drug Possession"
+        },
+        {
+            hashValue:9,
+            meaning:"Other Drug"
+        },
+        {
+            hashValue:10,
+            meaning:"Weapons"
+        },
+        {
+            hashValue:11,
+            meaning:"Other Public Order"
+        },
+        {
+            hashValue:12,
+            meaning:"Other Unspecified"
+        }
+    ];
+
 
 
 var funcMaps = new Map();
@@ -169,6 +239,167 @@ function getCountsAndUpdateGraphId(inputFunc, data) {
     }
     return counts;
 };
+
+function leftXAndWidth(counts, prevMap, d){
+    let key = d.hashValue;// FIX
+    // let label = d; // FIX
+    // let textColor = getColorOfHash(key); // gets the color of the text 
+    let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
+    let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
+    // let centerHumans = Math.floor(leftHumans + humansWide/2);
+    let leftX =  xPadding+(leftHumans*wBuffer); // stolen from function for drawing little people.
+    let width = xPadding+(humansWide*wBuffer);
+    return {leftX, width};
+}
+
+/**
+ * Draws the labels for each section of the graph based on 
+ * counts.
+ * @param mapping should map an id (integer) to some string value
+ *      corresponds with the hashing functions.
+ */
+function drawLabels(mapping, counts){
+    // intialize some counter
+    let prevMap = new Map();
+    prevMap.set(0,0);
+    for (let i = 1; counts.has(i); i++){
+        prevMap.set(i, prevMap.get(i-1) + counts.get(i-1));
+    }
+    // for (let key of mapping){
+    //      let label = mapping.get(key);
+    //      let textColor = getColorOfHash(key); // gets the color of the text 
+    //      let leftHumans = Math.floor(totalDotsSoFar / numRows);// something like this
+    //      let humansWide = Math.floor(numRows / counts.get(key));//some calculation involving numRows and counts[key]
+    //      totalDotsSoFar += counts.get(key);
+    //      let centerHumans = Math.floor((leftHumans + humansWide)/2);
+    //      let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
+    // }
+    //      let centerX = getX(leftHumans) + getX(humansWide)/2
+    console.log(mapping);
+    let thing = svgDocGlob.selectAll('text')
+        .data(mapping)
+        .join(
+            enter => enter.append("text")
+                .attr("fill", "black")
+                .attr("transform", function(d) {
+                    let key = d.hashValue;// FIX
+                    // let label = d; // FIX
+                    // let textColor = getColorOfHash(key); // gets the color of the text 
+                    let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
+                    let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
+                    let centerHumans = Math.floor(leftHumans + humansWide/2);
+                    let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
+                    // console.log(centerHumans);
+                    // console.log(xValue);
+                    // return xValue;
+                    return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
+                })
+                .attr("y", 0)
+                .attr("dy", -5)
+                .attr("font-size", "6px")
+                .attr("x", 0)
+                .text(d => d),
+            update => update,
+            exit => exit.transition().duration(1000).ease(d3.easeSinInOut).attr("fill", "black").remove()
+          )
+        .attr("class", "labelsText")
+        // .attr("y", yPadding - 8)
+        // .attr("height", 8)
+        // .attr("width", function(d){
+        //     let {leftX, width} = leftXAndWidth(counts, prevMap,d);
+        //     return width;
+        // })
+        // // .attr("dx", 0)
+        // .attr("x", function(d) {
+        //     let {leftX, width} = leftXAndWidth(counts, prevMap,d);
+        //     console.log(leftX);
+        //     return leftX;
+        // })
+        // .attr("fill", d => getColorOfHash(d.hashValue))
+        // .append("text")
+        .transition()
+        .duration(1000)
+        .ease(d3.easeSinInOut)
+        .attr("transform", function(d) {
+            let key = d.hashValue;// FIX
+            // let label = d; // FIX
+            // let textColor = getColorOfHash(key); // gets the color of the text 
+            let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
+            let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
+            let centerHumans = Math.floor(leftHumans + humansWide/2);
+            let xValue =  xPadding+(centerHumans*wBuffer) + 10; // stolen from function for drawing little people.
+            // console.log(centerHumans);
+            // console.log(xValue);
+            // return xValue;
+            return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
+        })
+        .attr("y", 0)
+        .attr("dy", -3)
+        .attr("font-size", "6px")
+        .attr("x", 0)
+        // .attr("x", function(d) {
+        //     let key = d.hashValue;// FIX
+        //     // let label = d; // FIX
+        //     // let textColor = getColorOfHash(key); // gets the color of the text 
+        //     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
+        //     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
+        //     let centerHumans = Math.floor(leftHumans + humansWide/2);
+        //     let xValue =  xPadding+(centerHumans*wBuffer); // stolen from function for drawing little people.
+        //     console.log(centerHumans);
+        //     console.log(xValue);
+        //     return xValue;
+        // })
+        .attr("fill", d => getColorOfHash(d.hashValue))
+        // .attr("text-anchor", "middle")
+        // .attr("rotate", 315)
+
+        // .transition().duration(100)
+        // .style("opacity", 1)
+        .text(d => d.meaning);
+        // d3.selectAll("text")
+        // .attr("transform", "rotate(355)");
+
+
+    console.log(thing);
+        // svgDoc.append("text")
+        //     .attr("id","txtValue" )
+        //     .attr("x",xPadding)
+        //     .attr("y",yPadding)
+        //     .attr("dy",-3)
+        //     .text("0");
+    // for each value in counts
+    //      figure out the left number and right number
+    //      center label based on mappingFunc
+    //      draw label
+
+
+    // var tooltip = d3.select('#chart')                               // NEW
+    //       .append('div')                                                // NEW
+    //       .attr('class', 'tooltip');                                    // NEW
+
+    // svgDoc.append("g")
+    // .attr("id","labelLayer")
+    // .selectAll("use")
+    // .data(filteredData)
+    // .enter()
+    // .append("use")
+    //     .attr("xlink:href","#iconCustom")
+    //     .attr("id",function(d)    {
+    //         d.graphID = d["V0001B: Respondent ID"]-1;
+    //         return "icon"+d;
+    //     })
+    //     .attr("x",function(d) {
+    //         var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numRows)
+    //         var remainder = (d["V0001B: Respondent ID"]-1) % numCols;//calculates the x position (column number) using modulus
+    //         return xPadding+(whole*wBuffer);//apply the buffer and return value
+    //     })
+    //       .attr("y",function(d) {
+    //         var remainder = (d["V0001B: Respondent ID"]-1) % numRows;
+    //         var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numCols)//calculates the y position (row number)
+    //         return yPadding+(remainder*hBuffer);//apply the buffer and return the value
+    //     })
+    //     .attr("fill", "#D3D3D3");
+}
 
 function getCounts(inputFunc, data){
     maxValue = -1;
@@ -344,6 +575,7 @@ d3.select("body").append("div").attr("id","sliderDiv");
             
 //create svg element
 var svgDoc=d3.select("body").append("svg").attr("viewBox","0 0 450 400");
+svgDocGlob = svgDoc;
 
  //define an icon store it in svg <defs> elements as a reusable component - this geometry can be generated from Inkscape, Illustrator or similar
 svgDoc.append("defs")
@@ -365,7 +597,7 @@ numRows = Math.floor(filteredData.length/numCols);
 // svgDoc.attr("wixdth", 4*numCols);
 //padding for the grid
 xPadding = 10;
-yPadding = 15;
+yPadding = 80;
 
 //background rectangle
 svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8 + 2*yPadding).attr('xlink:href', 'http://simpleicon.com/wp-content/uploads/smile.png');
@@ -467,6 +699,7 @@ moveButton.addEventListener('click', function(){
     updateGraphId(currentSelectionFunction, filteredData, counts);
     // let counts = getCountsAndUpdateGraphId(currentSelectionFunction, filteredData);
     // console.log(counts);
+    drawLabels(currentLabelData, counts);
     movePeople(currentSelectionFunction, filteredData, counts);
 });
 
@@ -474,6 +707,7 @@ let genderButton = document.getElementById('gender-button');
 genderButton.addEventListener('click', function(){
     console.log("clicked gender button");
     currentSelectionFunction = lambdaByGender;
+    currentLabelData = labelsGender;
 
     colorPeople(filteredData, currentSelectionFunction);
 });
@@ -488,6 +722,7 @@ ageDrinkButton.addEventListener('click', function(){
 let offenseButton = document.getElementById('offense-type-button');
 offenseButton.addEventListener('click', function(){
     console.log("clicked offense button");
+    currentLabelData = labelsOffenseMap
     currentSelectionFunction = lambdaByOffenseType;
     colorPeople(filteredData, currentSelectionFunction);
 });
@@ -529,5 +764,8 @@ function returnClass(lambdafunc, d){
     //     return "#BADA55";
     // }
     // return "#a7a59b";
+}
+function getColorOfHash(hashValue){
+    return colorScale(hashValue);
 }
 
