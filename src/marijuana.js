@@ -233,7 +233,7 @@ function drawLabels(mapping, counts){
         .data(mapping)
         .join(
             enter => enter.append("text")
-                .attr("fill", "black")
+                .attr("opacity", 0)
                 .attr("transform", function(d) {
                     let key = d.hashValue;
                     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
@@ -248,7 +248,7 @@ function drawLabels(mapping, counts){
                 .attr("x", 0)
                 .text(d => d),
             update => update,
-            exit => exit.transition().duration(1000).ease(d3.easeSinInOut).attr("fill", "black").remove()
+            exit => exit.transition().duration(1000).ease(d3.easeSinInOut).attr("opacity", 0).remove()
           )
         .attr("class", "labelsText")
         .transition()
@@ -272,11 +272,12 @@ function drawLabels(mapping, counts){
             .duration(1000)
             .ease(d3.easeSinInOut)
             .attr("fill", d => getColorOfHash(d.hashValue))
+            .attr("opacity", 1)
             .text(d => d.meaning);
         })
         .duration(1000)
         .ease(d3.easeSinInOut)
-        .attr("fill", "black");
+        .attr("opacity", "0");
 }
 
 function getCounts(inputFunc, data){
@@ -286,8 +287,6 @@ function getCounts(inputFunc, data){
     for (let i = 0; i < 20; i++){
         counts.set(i, 0);
     }
-    // counts[0] = 0;
-    // counts[1] = 0 ;
 
     data.forEach(element => {
         let funcValue = inputFunc(element);
@@ -516,8 +515,6 @@ moveButton.addEventListener('click', function(){
     }
     let counts = getCounts(currentSelectionFunction, filteredData);
     updateGraphId(currentSelectionFunction, filteredData, counts);
-    // let counts = getCountsAndUpdateGraphId(currentSelectionFunction, filteredData);
-    // console.log(counts);
     drawLabels(currentLabelData, counts);
     movePeople(currentSelectionFunction, filteredData, counts);
 });
