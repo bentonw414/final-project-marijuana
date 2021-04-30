@@ -118,6 +118,8 @@
 		var slides = document.querySelectorAll("section.panel");
     var triggers = ["#people1", "#people2", "#people3", "#people4"];
     var toggles = [".p1", ".p2", ".p3", ".p4"];
+    var event = document.createEvent('Event');
+    event.initEvent('TestEvent', true, true);
 		// create scene for every slide
 		for (var i=0; i<slides.length; i++) {
 			new ScrollMagic.Scene({
@@ -128,7 +130,10 @@
 						})
 						.setClassToggle(toggles[i], "visible") // add class to reveal
 						.addIndicators() // add indicators (requires plugin)
-						.addTo(controller);
+						.addTo(controller)
+            .on("enter", function (e) {
+              document.getElementById("people1").dispatchEvent(event);
+						console.log("e")});
 		}
 	});
 </script>

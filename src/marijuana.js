@@ -398,7 +398,7 @@ d3.select("body").append("div").attr("id","sliderDiv");
 
 
 //create svg element
-var svgDoc=d3.selectAll("people").append("svg").attr("id", "people1");
+var svgDoc=d3.selectAll("people").append("svg").attr("id", "people1").attr("viewbox", "0 0 400 400");
 svgDocGlob = svgDoc;
 
  //define an icon store it in svg <defs> elements as a reusable component - this geometry can be generated from Inkscape, Illustrator or similar
@@ -420,7 +420,7 @@ xPadding = 10;
 yPadding = 80;
 
 //background rectangle
-svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8 + 2*yPadding).attr('xlink:href', 'http://simpleicon.com/wp-content/uploads/smile.png');
+// svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8 + 2*yPadding).attr('xlink:href', 'http://simpleicon.com/wp-content/uploads/smile.png');
 
 //horizontal and vertical spacing between the icons
 hBuffer = 8;
@@ -547,6 +547,15 @@ moveButton.addEventListener('click', function(){
     updateGraphId(currentSelectionFunction, filteredData, counts);
     drawLabels(currentLabelData, counts);
     movePeople(currentSelectionFunction, filteredData, counts);
+});
+
+let people1 = document.getElementById('people1');
+people1.addEventListener("TestEvent", function(){
+    console.log("test gender");
+    currentSelectionFunction = lambdaByGender;
+    currentLabelData = labelsGender;
+
+    colorPeople(filteredData, currentSelectionFunction);
 });
 
 let genderButton = document.getElementById('gender-button');

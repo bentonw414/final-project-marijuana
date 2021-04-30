@@ -245,21 +245,61 @@ svg {
 } */
 
 .p1{
+  -webkit-transform: scale(0.9);
+			 -moz-transform: scale(0.9);
+				-ms-transform: scale(0.9);
+				 -o-transform: scale(0.9);
+						transform: scale(0.9);
+		-webkit-transition: all 1s ease-in-out;
+			 -moz-transition: all 1s ease-in-out;
+				-ms-transition: all 1s ease-in-out;
+				 -o-transition: all 1s ease-in-out;
+						transition: all 1s ease-in-out;
   opacity:0;
   background-color: var(--accent1);
 }
 
 .p2{
+  -webkit-transform: scale(0.9);
+			 -moz-transform: scale(0.9);
+				-ms-transform: scale(0.9);
+				 -o-transform: scale(0.9);
+						transform: scale(0.9);
+		-webkit-transition: all 1s ease-in-out;
+			 -moz-transition: all 1s ease-in-out;
+				-ms-transition: all 1s ease-in-out;
+				 -o-transition: all 1s ease-in-out;
+						transition: all 1s ease-in-out;
   opacity:0;
   background-color: var(--accent2);
 }
 
 .p3{
+  -webkit-transform: scale(0.9);
+			 -moz-transform: scale(0.9);
+				-ms-transform: scale(0.9);
+				 -o-transform: scale(0.9);
+						transform: scale(0.9);
+		-webkit-transition: all 1s ease-in-out;
+			 -moz-transition: all 1s ease-in-out;
+				-ms-transition: all 1s ease-in-out;
+				 -o-transition: all 1s ease-in-out;
+						transition: all 1s ease-in-out;
   opacity: 0;
   background-color: var(--neutral);
 }
 
 .p4{
+  -webkit-transform: scale(0.9);
+			 -moz-transform: scale(0.9);
+				-ms-transform: scale(0.9);
+				 -o-transform: scale(0.9);
+						transform: scale(0.9);
+		-webkit-transition: all 1s ease-in-out;
+			 -moz-transition: all 1s ease-in-out;
+				-ms-transition: all 1s ease-in-out;
+				 -o-transition: all 1s ease-in-out;
+						transition: all 1s ease-in-out;
   opacity:0;
   background-color: var(--background1);
 }
@@ -328,5 +368,10 @@ button{
     border: 2px solid var(--accent2);
     opacity: 0.8;
     
+  }
+
+  .people1{
+    height: 80%;
+    width:600px;
   }
 
