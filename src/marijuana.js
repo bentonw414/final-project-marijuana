@@ -398,7 +398,9 @@ d3.select("body").append("div").attr("id","sliderDiv");
 
 
 //create svg element
-var svgDoc=d3.selectAll("people").append("svg").attr("id", "people1").attr("viewbox", "0 0 400 400");
+var svgDoc=d3.selectAll("people").append("svg").attr("viewbox", "0 0 400 400");
+// d3.selectAll("people").each(function(d, i) { d.attr("id", "people" + i) });
+
 svgDocGlob = svgDoc;
 
  //define an icon store it in svg <defs> elements as a reusable component - this geometry can be generated from Inkscape, Illustrator or similar

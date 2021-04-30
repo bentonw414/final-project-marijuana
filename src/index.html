@@ -131,8 +131,12 @@
 						.setClassToggle(toggles[i], "visible") // add class to reveal
 						.addIndicators() // add indicators (requires plugin)
 						.addTo(controller)
-            .on("enter", function (e) {
-              document.getElementById("people1").dispatchEvent(event);
+            .on("progress", function (e) {
+              console.log(e.progress);
+              if (e.progress > 0.5){
+                document.getElementById("people1").dispatchEvent(event);
+              }
+              
 						console.log("e")});
 		}
 	});
