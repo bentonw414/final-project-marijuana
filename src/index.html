@@ -73,7 +73,66 @@
 </div>
 <div id="chart" >
 </div>
-<script src="./marijuana.js"></script>
+<!-- <script src="./marijuana.js"></script> -->
+<!-- <script type="module" src="./scroll.js"></script> -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+
+<style type="text/css">
+	.panel {
+		height: 500px;
+		width: 100%;
+    /* opacity:0; */
+	}
+	.panel.green {
+		margin-bottom: 400px
+	}
+</style>
+<section class="panel p1">
+	<people id="people1"> one</people>
+</section>
+<section class="panel p2">
+	<people id="people2"> two</people>
+</section>
+<section class="panel p3">
+	<people id="people3"> three</people>
+</section>
+<section class="panel p4">
+	<people id="people4"> four</people>
+</section>
+<script>
+	$(function () { // wait for document ready
+		// init
+		var controller = new ScrollMagic.Controller();
+    // {
+		// 	globalSceneOptions: {
+		// 		triggerHook: 'onLeave',
+		// 		duration: "100%" // this works just fine with duration 0 as well
+		// 		// However with large numbers (>20) of pinned sections display errors can occur so every section should be unpinned once it's covered by the next section.
+		// 		// Normally 100% would work for this, but here 200% is used, as Panel 3 is shown for more than 100% of scrollheight due to the pause.
+		// 	}
+		// });
+
+		// get all slides
+		var slides = document.querySelectorAll("section.panel");
+    var triggers = ["#people1", "#people2", "#people3", "#people4"];
+    var toggles = [".p1", ".p2", ".p3", ".p4"];
+		// create scene for every slide
+		for (var i=0; i<slides.length; i++) {
+			new ScrollMagic.Scene({
+        triggerElement: triggers[i],
+							triggerHook: 0.9, // show, when scrolled 10% into view
+							duration: "80%", // hide 10% before exiting view (80% + 10% from bottom)
+							offset: 50 // move trigger to center of element
+						})
+						.setClassToggle(toggles[i], "visible") // add class to reveal
+						.addIndicators() // add indicators (requires plugin)
+						.addTo(controller);
+		}
+	});
+</script>
+
 
 <div class="bottom" id="right">
   Website design by Benton & Elizabeth
@@ -82,3 +141,4 @@
 <div class="bottom" id="left">
  <a href=" https://www.ssa.gov/oact/babynames/limits.html" style="color:black">Data Source</a>
 </div>
+<script src="./marijuana.js"></script>

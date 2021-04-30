@@ -165,7 +165,7 @@ html {
     text-align: center;
   }
   
-  .panel{
+  /* .panel{
     /* background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(rgb(212, 180, 131),1)); */
     /* background-image:radial-gradient(rgba(212, 180, 131, 1), rgba(255,0,0,0)); */
     background-color: var(--background1); 
@@ -181,7 +181,7 @@ html {
     /* margin: auto; */
     /* margin-bottom: 5px;
     padding: 5px 5px; */
-  }
+  } */
   
 
   
@@ -223,6 +223,45 @@ svg {
         width:100%;
         height:100%; 
             
+}
+/* #panel{
+  opacity:0;
+} */
+.p1.visible {
+  opacity:1;
+}
+.p2.visible {
+  opacity:1;
+}
+.p3.visible {
+  opacity:1;
+}
+.p4.visible {
+  opacity:1;
+}
+
+/* section{
+  height: 400px;
+} */
+
+.p1{
+  opacity:0;
+  background-color: var(--accent1);
+}
+
+.p2{
+  opacity:0;
+  background-color: var(--accent2);
+}
+
+.p3{
+  opacity: 0;
+  background-color: var(--neutral);
+}
+
+.p4{
+  opacity:0;
+  background-color: var(--background1);
 }
 
 #move-button{

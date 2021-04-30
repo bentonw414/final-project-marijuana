@@ -385,6 +385,7 @@ function movePeople(inputFunc, data, counts){
 
 
 
+
 d3.csv(dataPath, d3.autoType).then(filteredData => {
     filteredData = filteredData.slice(0,2000);
     // var formatTime = d3.time.format("%e %B");
@@ -393,9 +394,11 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
 console.log(filteredData)
 //placeholder div for jquery slider
 d3.select("body").append("div").attr("id","sliderDiv");
-            
+
+
+
 //create svg element
-var svgDoc=d3.select("body").append("svg").attr("viewBox","0 0 450 400");
+var svgDoc=d3.selectAll("people").append("svg").attr("id", "people1");
 svgDocGlob = svgDoc;
 
  //define an icon store it in svg <defs> elements as a reusable component - this geometry can be generated from Inkscape, Illustrator or similar
@@ -482,7 +485,38 @@ svgDoc.append("g")
           svgDoc.on('mouseleave', function(event) {
             tooltip.style('display', 'none');      
             prevTooltip = undefined;                  
-          });             
+          });     
+          
+        //   var handleItemFocus = function(event, item) {
+        //     var step = item.data.step
+        //     console.log("problem");
+        //     graphic.update(step)
+        // };	
+        
+        // var handleContainerScroll = function(event) {
+        //     var bottom = false
+        //     var fixed = false
+        
+        //     var bb = $graphicEl[0].getBoundingClientRect()
+        //     var bottomFromTop = bb.bottom - viewportHeight
+        
+        //     if (bb.top < 0 && bottomFromTop > 0) {
+        //         bottom = false
+        //         fixed = true
+        //     } else if (bb.top < 0 && bottomFromTop < 0) {
+        //         bottom = true
+        //         fixed = false
+        //     }
+        
+        //     toggle(fixed, bottom)
+        // };
+        
+        // svgDoc.scrollStory({
+        //     contentSelector: '.trigger',
+        //     triggerOffset: 400,
+        //     itemfocus: handleItemFocus,
+        //     containerscroll: handleContainerScroll,
+        // });
 
 //create a jquery slider to control the pictogram         
 //  ( "#sliderDiv" ).slider({
