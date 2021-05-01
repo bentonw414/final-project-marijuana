@@ -27,7 +27,6 @@ def convert_to_column(df, df2, name, column_dict, total):
     percentages = pd.Series(percentages)
     df2[name + ": values"] = values
     df2[name + ":percentages"] = percentages
-    # print(new_column)
     random.shuffle(new_column)
     df[name] = new_column
     return df, df2
@@ -54,10 +53,6 @@ for name in read_file.columns:
             column_dict[value] = 1
     index += 1
     df, df2 = convert_to_column(df, df2, name, column_dict, count)
-
-# selected = read_file[columns]
-# selected.columns = list(mydict.values())
-# selected.to_csv("./filtereddata.csv", mode = "w", index=False)
 
 df.to_csv("./compileddata.csv", mode = "w", index=False)
 df2.to_csv("./percentagedata.csv", mode = "w", index=False)
