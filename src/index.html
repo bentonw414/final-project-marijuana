@@ -89,17 +89,18 @@
 		margin-bottom: 400px
 	}
 </style>
+<people id="people1"> one</people>
 <section class="panel p1">
-	<people id="people1"> one</people>
+	panel 1
 </section>
 <section class="panel p2">
-	<people id="people2"> two</people>
+	panel 2
 </section>
 <section class="panel p3">
-	<people id="people3"> three</people>
+	panel 3
 </section>
 <section class="panel p4">
-	<people id="people4"> four</people>
+	panel 4
 </section>
 <script>
 	$(function () { // wait for document ready
@@ -115,30 +116,57 @@
 		// });
 
 		// get all slides
+    var myevents = ["colorgender", "movegender", "colorage", "moveage"];
+
+    function dispatchColorGender(){
+              var event = document.createEvent('Event');
+              event.initEvent(myevents[0], true, true);
+              
+              // if (e.progress > 0.5){
+              document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchMoveGender(){
+              var event = document.createEvent('Event');
+              event.initEvent(myevents[1], true, true);
+              
+              // if (e.progress > 0.5){
+              document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchColorAge(){
+              var event = document.createEvent('Event');
+              event.initEvent(myevents[2], true, true);
+              
+              // if (e.progress > 0.5){
+              document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchMoveAge(){
+              var event = document.createEvent('Event');
+              event.initEvent(myevents[3], true, true);
+              
+              // if (e.progress > 0.5){
+              document.getElementById("people1").dispatchEvent(event);
+    }
 		var slides = document.querySelectorAll("section.panel");
-    var triggers = ["#people1", "#people2", "#people3", "#people4"];
     var toggles = [".p1", ".p2", ".p3", ".p4"];
-    var event = document.createEvent('Event');
-    event.initEvent('TestEvent', true, true);
+    var funcs = [dispatchColorGender, dispatchMoveGender, dispatchColorAge, dispatchMoveAge];
+
 		// create scene for every slide
 		for (var i=0; i<slides.length; i++) {
+      
 			new ScrollMagic.Scene({
-        triggerElement: triggers[i],
+        triggerElement: toggles[i],
 							triggerHook: 0.9, // show, when scrolled 10% into view
 							duration: "80%", // hide 10% before exiting view (80% + 10% from bottom)
 							offset: 50 // move trigger to center of element
 						})
 						.setClassToggle(toggles[i], "visible") // add class to reveal
-						.addIndicators() // add indicators (requires plugin)
+						// .addIndicators() // add indicators (requires plugin)
 						.addTo(controller)
-            .on("progress", function (e) {
-              console.log(e.progress);
-              if (e.progress > 0.5){
-                document.getElementById("people1").dispatchEvent(event);
-              }
-              
-						console.log("e")});
-		}
+            .on("progress", funcs[i]);
+          }
 	});
 </script>
 

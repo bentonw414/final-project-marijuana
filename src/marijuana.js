@@ -537,6 +537,12 @@ svgDoc.append("g")
 //         });
 //       }
 //  });
+function move(){
+    let counts = getCounts(currentSelectionFunction, filteredData);
+    updateGraphId(currentSelectionFunction, filteredData, counts);
+    drawLabels(currentLabelData, counts);
+    movePeople(currentSelectionFunction, filteredData, counts);
+}
 
 let moveButton = document.getElementById('move-button');
 moveButton.addEventListener('click', function(){
@@ -551,13 +557,29 @@ moveButton.addEventListener('click', function(){
     movePeople(currentSelectionFunction, filteredData, counts);
 });
 
-let people1 = document.getElementById('people1');
-people1.addEventListener("TestEvent", function(){
+let people = document.getElementById('people1');
+people.addEventListener("colorgender", function(){
     console.log("test gender");
     currentSelectionFunction = lambdaByGender;
     currentLabelData = labelsGender;
 
     colorPeople(filteredData, currentSelectionFunction);
+});
+
+people.addEventListener("movegender", function(){
+    console.log("test move gender");
+    move();
+});
+
+people.addEventListener("colorage", function(){
+    console.log("test age");
+    currentSelectionFunction = lambdaByAgeAlc;
+    colorPeople(filteredData, currentSelectionFunction);
+});
+
+people.addEventListener("moveage", function(){
+    console.log("test move gender");
+    move();
 });
 
 let genderButton = document.getElementById('gender-button');

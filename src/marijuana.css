@@ -367,11 +367,19 @@ button{
     background: var(--background1);
     border: 2px solid var(--accent2);
     opacity: 0.8;
+    z-index:999;
     
   }
 
-  .people1{
-    height: 80%;
+  /* .people1{
+    height: 100%;
     width:600px;
+  } */
+
+  people{
+    position:fixed;
+    z-index: 998;
+    width:1600px;
+    height:1000px;
   }
 
