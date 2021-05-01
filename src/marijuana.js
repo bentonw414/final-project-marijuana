@@ -1,5 +1,5 @@
 
-const dataPath = "../data/filtereddata.csv";
+const dataPath = "../data/compileddata.csv";
 
 const genderColumn = "RV0005: Sex";
 const genderMaleValue = 1;
@@ -26,6 +26,7 @@ const lambdaByGender = function(d){
     } else if (d[genderColumn] === genderFemaleValue){
         return 1;
     } else {
+        return 2
         console.log(d[genderColumn]);
     }
 };
@@ -335,6 +336,7 @@ function updateGraphId(inputFunc, data, counts){
                                 && prevMap.get(funcValue + 1) > element.graphID;
         if (!isAlreadyInPlace){
             let proposedID = proposals.get(funcValue);
+            console.log(proposedID);
             if (isNaN(proposedID) || proposedID === undefined){
                 throw new Error();
             }
@@ -387,7 +389,8 @@ function movePeople(inputFunc, data, counts){
 
 
 d3.csv(dataPath, d3.autoType).then(filteredData => {
-    filteredData = filteredData.slice(0,2048);
+    console.log(filteredData);
+    // filteredData = filteredData.slice(0,2048);
     // var formatTime = d3.time.format("%e %B");
 
 
