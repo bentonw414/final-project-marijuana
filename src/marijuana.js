@@ -399,7 +399,7 @@ d3.select("body").append("div").attr("id","sliderDiv");
 
 //create svg element
 var svgDoc=d3.select("#people1").append("svg")
-    .attr("viewBox", "0 0 400 400");
+    .attr("viewBox", "0 0 280 280");
     // .attr("preserveAspectRatio", "xMidYMid meet");
 console.log(svgDoc);
 // d3.selectAll("people").each(function(d, i) { d.attr("id", "people" + i) });
@@ -423,7 +423,7 @@ numRows = Math.floor(filteredData.length/numCols);
 
 //padding for the grid
 xPadding = 10;
-yPadding = 80;
+yPadding = 25;
 
 //background rectangle
 // svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8 + 2*yPadding).attr('xlink:href', 'http://simpleicon.com/wp-content/uploads/smile.png');
