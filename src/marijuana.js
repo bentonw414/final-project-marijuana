@@ -398,7 +398,10 @@ d3.select("body").append("div").attr("id","sliderDiv");
 
 
 //create svg element
-var svgDoc=d3.selectAll("people").append("svg").attr("viewbox", "0 0 400 400");
+var svgDoc=d3.select("#people1").append("svg")
+    .attr("viewBox", "0 0 400 400");
+    // .attr("preserveAspectRatio", "xMidYMid meet");
+console.log(svgDoc);
 // d3.selectAll("people").each(function(d, i) { d.attr("id", "people" + i) });
 
 svgDocGlob = svgDoc;
@@ -408,7 +411,8 @@ svgDoc.append("defs")
     .append("g")
     .attr("id","iconCustom")
         .append("path")
-            .attr("d", "M3.5,2H2.7C3,1.8,3.3,1.5,3.3,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z");
+            // .attr("transform", "scale(2.5)")
+            .attr("d", "M3.5,2H2.7C3,1.8,3.3,1.5,3.3,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z")
             // ,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z");
 
 
@@ -460,7 +464,7 @@ pictoLayer
         .attr("xlink:href","#iconCustom")
         .attr("id",function(d)    {
             d.graphID = d["V0001B: Respondent ID"]-1;
-            return "icon"+d["V0001B: Respondent ID"]-1;
+            return "icon"+(d["V0001B: Respondent ID"]-1);
         })
         .attr("class", "personIcon")
         .attr("x",function(d) {
@@ -506,8 +510,8 @@ pictoLayer.on("mousemove", function(event){
 pictoLayer.on('mouseleave', function(event) {
     tooltip.style('display', 'none');      
     prevTooltip = undefined;                  
-    });             
-
+    }); 
+    
 //create a jquery slider to control the pictogram         
 //  ( "#sliderDiv" ).slider({
 //       orientation: "horizontal",
