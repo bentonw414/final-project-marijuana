@@ -387,7 +387,7 @@ function movePeople(inputFunc, data, counts){
 
 
 d3.csv(dataPath, d3.autoType).then(filteredData => {
-    filteredData = filteredData.slice(0,2000);
+    filteredData = filteredData.slice(0,2048);
     // var formatTime = d3.time.format("%e %B");
 
 
@@ -414,7 +414,7 @@ svgDoc.append("defs")
 
 
 //specify the number of columns and rows for pictogram layout
-numCols = 100;
+numCols = 64;
 numRows = Math.floor(filteredData.length/numCols);
 
 //padding for the grid
@@ -444,8 +444,15 @@ var tooltip = d3.select('#chart')                               // NEW
           tooltip.style('display', 'none');                                 
 
 //create group element and create an svg <use> element for each icon
-svgDoc.append("g")
-    .attr("id","pictoLayer")
+let pictoLayer = svgDoc.append("g").attr("id","pictoLayer");
+
+// Draw a rect behind the icons (will set width after icons are drawn)
+svgDoc.selectAll("#pictoLayer")
+    .append("rect")
+    .attr("id", "iconRect")
+    .attr("opacity", "0");
+
+pictoLayer
     .selectAll("use")
     .data(filteredData)
     .enter()
@@ -453,8 +460,9 @@ svgDoc.append("g")
         .attr("xlink:href","#iconCustom")
         .attr("id",function(d)    {
             d.graphID = d["V0001B: Respondent ID"]-1;
-            return "icon"+d;
+            return "icon"+d["V0001B: Respondent ID"]-1;
         })
+        .attr("class", "personIcon")
         .attr("x",function(d) {
             var whole=Math.floor((d["V0001B: Respondent ID"]-1)/numRows)
             var remainder = (d["V0001B: Respondent ID"]-1) % numCols;//calculates the x position (column number) using modulus
@@ -466,59 +474,39 @@ svgDoc.append("g")
             return yPadding+(remainder*hBuffer);//apply the buffer and return the value
         })
         .attr("fill", "#D3D3D3");
-      
 
-        let temp = svgDoc.selectAll("use").on('mouseover', function(event, d) {  
-            if (currentSelectionFunction !== undefined){
-                if (prevTooltip !== funcMaps.get(currentSelectionFunction)(d)){
-                    tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d));            
-                    tooltip.style('display', 'block');
-                    prevTooltip = funcMaps.get(currentSelectionFunction)(d);
-                };
-                tooltip.style("left", (event.clientX + 10) + "px")     
-                .style("top", (event.clientY + 10) + "px");       
-            }            
-          });                    
-                                         
-          temp.on("mousemove", function(){
-            tooltip.style("left", (event.clientX + 10) + "px")     
-            .style("top", (event.clientY + 10) + "px");    
-          });
-          svgDoc.on('mouseleave', function(event) {
-            tooltip.style('display', 'none');      
-            prevTooltip = undefined;                  
-          });     
-          
-        //   var handleItemFocus = function(event, item) {
-        //     var step = item.data.step
-        //     console.log("problem");
-        //     graphic.update(step)
-        // };	
-        
-        // var handleContainerScroll = function(event) {
-        //     var bottom = false
-        //     var fixed = false
-        
-        //     var bb = $graphicEl[0].getBoundingClientRect()
-        //     var bottomFromTop = bb.bottom - viewportHeight
-        
-        //     if (bb.top < 0 && bottomFromTop > 0) {
-        //         bottom = false
-        //         fixed = true
-        //     } else if (bb.top < 0 && bottomFromTop < 0) {
-        //         bottom = true
-        //         fixed = false
-        //     }
-        
-        //     toggle(fixed, bottom)
-        // };
-        
-        // svgDoc.scrollStory({
-        //     contentSelector: '.trigger',
-        //     triggerOffset: 400,
-        //     itemfocus: handleItemFocus,
-        //     containerscroll: handleContainerScroll,
-        // });
+let groupElement = document.querySelector('#pictoLayer');
+let rectBBox = document.querySelector('#iconRect');
+
+// Set the rect to the size of the bounding box with all the icons
+let bboxGroup = groupElement.getBBox();
+    rectBBox.setAttribute('x', bboxGroup.x);
+    rectBBox.setAttribute('y', bboxGroup.y);
+    rectBBox.setAttribute('width', bboxGroup.width);
+    rectBBox.setAttribute('height', bboxGroup.height);
+
+// Update tooltip value on the icons
+svgDoc.selectAll("use").on('mouseover', function(event, d) {  
+    if (currentSelectionFunction !== undefined){
+        if (prevTooltip !== funcMaps.get(currentSelectionFunction)(d)){
+            tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d));            
+            tooltip.style('display', 'block');
+            prevTooltip = funcMaps.get(currentSelectionFunction)(d);
+        };
+        tooltip.style("left", (event.clientX + 10) + "px")     
+        .style("top", (event.clientY + 10) + "px");       
+    }            
+    });
+
+// Update the position and remove based on the size of the g (which has an invisible rectangle behind it)
+pictoLayer.on("mousemove", function(event){
+    tooltip.style("left", (event.clientX + 10) + "px")     
+    .style("top", (event.clientY + 10) + "px");    
+    });
+pictoLayer.on('mouseleave', function(event) {
+    tooltip.style('display', 'none');      
+    prevTooltip = undefined;                  
+    });             
 
 //create a jquery slider to control the pictogram         
 //  ( "#sliderDiv" ).slider({
