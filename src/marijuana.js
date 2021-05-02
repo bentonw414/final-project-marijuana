@@ -1,7 +1,7 @@
 import {lambdaByGender, labelsGender, genderMapFunc} from "./columnHelpers/gender.js";
 import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
-import { labelsUSPrison, lambdaByUSPrison } from "./columnHelpers/usprison.js";
+import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
 
 const dataPath = "../data/compileddata.csv";
 
@@ -11,8 +11,8 @@ var xPadding = 0;
 var yPadding = 0;
 var hBuffer = 0;
 var wBuffer = 0;
-var currentSelectionFunction = undefined;
-var currentLabelData = undefined;
+var currentSelectionFunction = lambdaByUSPrison;
+var currentLabelData = labelsUSPrison;
 var prevTooltip = undefined;
 var svgDocGlob = undefined;
 
@@ -21,6 +21,7 @@ var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
 funcMaps.set(lambdaByOffenseType, offenseMapFunc);
+funcMaps.set(lambdaByUSPrison, usPrisonMapFunc);
 
 // Takes in a function, and gives each data point a "graphid" (id within category)
 // Returns a map of counts for each category
@@ -323,7 +324,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
             var whole = Math.floor((d["V0001B: Respondent ID"] - 1) / numCols)//calculates the y position (row number)
             return yPadding + (remainder * hBuffer);//apply the buffer and return the value
         })
-        .attr("fill", "#D3D3D3");
+        .attr("fill", d => returnClass(currentSelectionFunction, d));
 
     let groupElement = document.querySelector('#pictoLayer');
     let rectBBox = document.querySelector('#iconRect');
