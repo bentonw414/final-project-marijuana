@@ -1,12 +1,8 @@
+import {lambdaByGender, labelsGender, genderMapFunc} from "./columnHelpers/gender.js";
+import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
+import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
 
 const dataPath = "../data/compileddata.csv";
-
-const genderColumn = "RV0005: Sex";
-const genderMaleValue = 1;
-const genderFemaleValue = 2;
-
-const alcColumn = "V1264: Age at First Drink";
-const offenseColumn = "RV0036: Controlling Offense Category - 13";
 
 var numCols = 0;
 var numRows = 0;
@@ -20,160 +16,6 @@ var prevTooltip = undefined;
 var svgDocGlob = undefined;
 
 
-const lambdaByGender = function (d) {
-    if (d[genderColumn] === genderMaleValue) {
-        return 0;
-    } else if (d[genderColumn] === genderFemaleValue) {
-        return 1;
-    } else {
-        return 2
-        console.log(d[genderColumn]);
-    }
-};
-
-const labelsGender =
-    [
-        {
-            hashValue: 0,
-            meaning: "Male"
-        },
-        {
-            hashValue: 1,
-            meaning: "Female"
-        }
-    ];
-
-const lambdaByAgeAlc = function (d) {
-    let alcValue = d[alcColumn];
-    if (alcValue > 0 && alcValue < 100) {
-        return Math.floor(alcValue / 10);
-    } else {
-        return 11;
-    }
-};
-
-const lambdaByOffenseType = function (d) {
-    let offenseType = d[offenseColumn];
-    if (offenseType > 13 || offenseType < 1) {
-        return 0;
-    }
-    return offenseType;
-}
-
-const genderMapFunc = function (d) {
-    if (d[genderColumn] === genderMaleValue) {
-        return "Male";
-    } else if (d[genderColumn] === genderFemaleValue) {
-        return "Female";
-    } else {
-        console.log(d[genderColumn]);
-    }
-};
-
-const alcMapFunc = function (d) {
-    let alcValue = d[alcColumn];
-    if (alcValue > 0 && alcValue < 100) {
-        return "Age:" + Math.floor(alcValue / 10) * 10 + "-" + Math.floor(alcValue / 10) + 9;
-    } else {
-        return "Did not answer/Never?";
-    }
-}
-
-const offenseMapFunc = function (d) {
-    switch (d[offenseColumn]) {
-        case 1:
-            return "Homicide";
-        case 2:
-            return "Rape/Sexual Assault";
-        case 3:
-            return "Robbery";
-        case 4:
-            return "Assault";
-        case 5:
-            return "Other Violent";
-        case 6:
-            return "Burglary";
-        case 7:
-            return "Other Property";
-        case 8:
-            return "Drug Trafficking";
-        case 9:
-            return "Drug Possession";
-        case 10:
-            return "Other Drug";
-        case 11:
-            return "Weapons";
-        case 12:
-            return "Other Public Order";
-        case 13:
-            return "Other Unspecified";
-        default:
-            console.log("BROKEN offense type");
-            return "No Offense Type Given";
-        // code block
-    }
-}
-
-const labelsOffenseMap =
-    [
-        {
-            hashValue: 0,
-            meaning: "No Offense Type Given"
-        },
-        {
-            hashValue: 1,
-            meaning: "Homicide"
-        },
-        {
-            hashValue: 2,
-            meaning: "Rape/Sexual Assault"
-        },
-        {
-            hashValue: 3,
-            meaning: "Robbery"
-        },
-        {
-            hashValue: 4,
-            meaning: "Assault"
-        },
-        {
-            hashValue: 5,
-            meaning: "Other Violent"
-        },
-        {
-            hashValue: 6,
-            meaning: "Burglary"
-        },
-        {
-            hashValue: 7,
-            meaning: "Other Property"
-        },
-        {
-            hashValue: 8,
-            meaning: "Drug Trafficking"
-        },
-        {
-            hashValue: 9,
-            meaning: "Drug Possession"
-        },
-        {
-            hashValue: 10,
-            meaning: "Other Drug"
-        },
-        {
-            hashValue: 11,
-            meaning: "Weapons"
-        },
-        {
-            hashValue: 12,
-            meaning: "Other Public Order"
-        },
-        {
-            hashValue: 13,
-            meaning: "Other Unspecified"
-        }
-    ];
-
 var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
@@ -183,7 +25,7 @@ funcMaps.set(lambdaByOffenseType, offenseMapFunc);
 // Returns a map of counts for each category
 // Input func maps a data point to a category value integer 0 - n categories - 1
 function getCountsAndUpdateGraphId(inputFunc, data) {
-    maxValue = -1;
+    var maxValue = -1;
     let counts = new Map();
     // TODO make this just however many categories there are 
     for (let i = 0; i < 20; i++) {
@@ -278,7 +120,7 @@ function drawLabels(mapping, counts) {
 }
 
 function getCounts(inputFunc, data) {
-    maxValue = -1;
+    var maxValue = -1;
     let counts = new Map();
     // TODO make this just however many categories there are 
     for (let i = 0; i < 20; i++) {
