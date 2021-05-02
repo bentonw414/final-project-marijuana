@@ -12,11 +12,18 @@
     // });
 
     // get all slides
-    var myevents = ["colorgender", "movegender", "colorage", "moveage", "colorgender", "movegender"];
+
+    function dispatchColorUSPrison() {
+        var event = document.createEvent('Event');
+        event.initEvent("colorusprison", true, true);
+  
+        // if (e.progress > 0.5){
+        document.getElementById("people1").dispatchEvent(event);
+      }
 
     function dispatchColorGender() {
       var event = document.createEvent('Event');
-      event.initEvent(myevents[0], true, true);
+      event.initEvent("colorgender", true, true);
 
       // if (e.progress > 0.5){
       document.getElementById("people1").dispatchEvent(event);
@@ -24,7 +31,7 @@
 
     function dispatchMoveGender() {
       var event = document.createEvent('Event');
-      event.initEvent(myevents[1], true, true);
+      event.initEvent("movegender", true, true);
 
       // if (e.progress > 0.5){
       document.getElementById("people1").dispatchEvent(event);
@@ -32,7 +39,7 @@
 
     function dispatchColorAge() {
       var event = document.createEvent('Event');
-      event.initEvent(myevents[2], true, true);
+      event.initEvent("colorage", true, true);
 
       // if (e.progress > 0.5){
       document.getElementById("people1").dispatchEvent(event);
@@ -40,14 +47,14 @@
 
     function dispatchMoveAge() {
       var event = document.createEvent('Event');
-      event.initEvent(myevents[3], true, true);
+      event.initEvent("moveage", true, true);
 
       // if (e.progress > 0.5){
       document.getElementById("people1").dispatchEvent(event);
     }
     var slides = document.querySelectorAll("section.panel");
     var toggles = [".p1", ".p2", ".p3", ".p4", ".p5", ".p6"];
-    var funcs = [dispatchColorGender, dispatchMoveGender, dispatchColorAge, dispatchMoveAge, dispatchColorGender, dispatchMoveGender];
+    var funcs = [dispatchColorUSPrison, dispatchMoveGender, dispatchColorAge, dispatchMoveAge, dispatchColorGender, dispatchMoveGender];
 
     // create scene for every slide
     for (var i = 0; i < slides.length; i++) {

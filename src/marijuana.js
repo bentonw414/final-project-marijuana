@@ -1,6 +1,7 @@
 import {lambdaByGender, labelsGender, genderMapFunc} from "./columnHelpers/gender.js";
 import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
+import { labelsUSPrison, lambdaByUSPrison } from "./columnHelpers/usprison.js";
 
 const dataPath = "../data/compileddata.csv";
 
@@ -417,6 +418,22 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     people.addEventListener("moveage", function () {
         console.log("test move gender");
         move();
+    });
+
+    people.addEventListener("colorusprison", function(){
+        console.log("test us prison");
+        currentSelectionFunction = lambdaByUSPrison;
+        currentLabelData = labelsUSPrison;
+
+        colorPeople(filteredData, currentSelectionFunction);
+    });
+
+    people.addEventListener("moveusprison", function(){
+        console.log("test us prison");
+        currentSelectionFunction = lambdaByUSPrison;
+        currentLabelData = labelsUSPrison;
+        move();
+        // colorPeople(filteredData, currentSelectionFunction);
     });
 
     let genderButton = document.getElementById('gender-button');
