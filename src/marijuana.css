@@ -308,6 +308,7 @@ svg {
 #move-button{
     background:var(--background1);
     border:1px solid var(--accent2);
+    margin:2cm;
 
 }
 

@@ -7,42 +7,6 @@
 <script src="//cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
 <style type="text/css">
-  /* #sliderDiv  {
-                margin:10px;
-                margin-top:30px;
-                height:15px;
-                width:00px;
-            } */
-
-
-
-  /* text    {
-                fill:#bb6d82;
-                text-anchor:left;
-                font-size:12px;
-                font-family:sans-serif,Helvetica,Arial;
-                font-weight:bold;
-            } */
-
-  /* .iconPlain  {
-                fill:#a7a59b;   
-                width: 1px;
-                height: 1px;
-            }
-            
-            .iconSelected  {
-                fill:black;   
-                width: 1px;
-                height: 1px;
-            }
-            
-            rect    {
-              
-              fill: black;
-                /* background-image: ; */
-  /* fill:"./prison.jpeg"; */
-  /* fill:#BADA55;    */
-  /* } */
 </style>
 <title>
   🌿Weed🌿
@@ -56,20 +20,13 @@
 </head>
 
 <body>
-  <div class="panel">
+  <div class="panel2">
     <h1>
       🌿 WEEED 🌿
     </h1>
 
 </body>
 
-<div class="movebutton">
-  <button type="button" class="button" id="move-button">Move </button>
-  <button type="button" class="button" id="gender-button">Gender </button>
-  <button type="button" class="button" id="age-drink-button">Age Drink </button>
-  <button type="button" class="button" id="offense-type-button">Offense Type </button>
-  <p></p>
-</div>
 <div id="chart">
 </div>
 <!-- <script src="./marijuana.js"></script> -->
@@ -80,8 +37,11 @@
 
 <style type="text/css">
   .panel {
-    height: 500px;
-    width: 100%;
+    text-align: left;
+    font-size: 30px;
+    height: 600px;
+    width: 40%;
+    padding:1cm;
     /* opacity:0; */
   }
 
@@ -161,7 +121,7 @@
         triggerElement: toggles[i],
         triggerHook: 0.9, // show, when scrolled 10% into view
         duration: "80%", // hide 10% before exiting view (80% + 10% from bottom)
-        offset: 50 // move trigger to center of element
+        offset: 0 // move trigger to center of element
       })
         .setClassToggle(toggles[i], "visible") // add class to reveal
         // .addIndicators() // add indicators (requires plugin)
@@ -170,6 +130,15 @@
     }
   });
 </script>
+
+<section class="panel p5">
+  <button type="button" class="button" id="move-button">Move </button>
+  <button type="button" class="button" id="gender-button">Gender </button>
+  <br>
+  <button type="button" class="button" id="age-drink-button">Age Drink </button>
+  <button type="button" class="button" id="offense-type-button">Offense Type </button>
+  <p></p>
+</section>
 
 
 <div class="bottom" id="right">
