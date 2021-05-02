@@ -432,7 +432,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     });
 
     people.addEventListener("moveusprison", function(){
-        console.log("test us prison");
+        console.log("test us prison move");
         currentSelectionFunction = lambdaByUSPrison;
         currentLabelData = labelsUSPrison;
         move();
@@ -448,9 +448,25 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     });
 
     people.addEventListener("movelaprison", function(){
-        console.log("test la prison");
+        console.log("test la prison move");
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
+        move();
+        // colorPeople(filteredData, currentSelectionFunction);
+    });
+
+    people.addEventListener("coloroffense", function(){
+        console.log("test offense");
+        currentSelectionFunction = lambdaByOffenseType;
+        currentLabelData = labelsOffenseMap;
+
+        colorPeople(filteredData, currentSelectionFunction);
+    });
+
+    people.addEventListener("moveoffense", function(){
+        console.log("test offense move");
+        currentSelectionFunction = lambdaByOffenseType;
+        currentLabelData = labelsOffenseMap;
         move();
         // colorPeople(filteredData, currentSelectionFunction);
     });

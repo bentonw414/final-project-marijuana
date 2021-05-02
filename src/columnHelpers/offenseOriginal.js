@@ -5,19 +5,13 @@ const lambdaByOffenseType = function (d) {
     if (offenseType > 13 || offenseType < 1) {
         return 0;
     }
-    if (offenseType === 9 || offenseType === 10){
-        return 8;
-    }
-    if (offenseType > 10){
-        return offenseType -2;
-    }
     return offenseType;
 }
 
 
 
 const offenseMapFunc = function (d) {
-    switch (lambdaByOffenseType(d[offenseColumn])) {
+    switch (d[offenseColumn]) {
         case 1:
             return "Homicide";
         case 2:
@@ -33,12 +27,16 @@ const offenseMapFunc = function (d) {
         case 7:
             return "Other Property";
         case 8:
-            return "Drug";
+            return "Drug Trafficking";
         case 9:
-            return "Weapons";
+            return "Drug Possession";
         case 10:
-            return "Other Public Order";
+            return "Other Drug";
         case 11:
+            return "Weapons";
+        case 12:
+            return "Other Public Order";
+        case 13:
             return "Other Unspecified";
         default:
             console.log("BROKEN offense type");
@@ -83,18 +81,26 @@ const labelsOffenseMap =
         },
         {
             hashValue: 8,
-            meaning: "Drug"
+            meaning: "Drug Trafficking"
         },
         {
             hashValue: 9,
-            meaning: "Weapons"
+            meaning: "Drug Possession"
         },
         {
             hashValue: 10,
-            meaning: "Other Public Order"
+            meaning: "Other Drug"
         },
         {
             hashValue: 11,
+            meaning: "Weapons"
+        },
+        {
+            hashValue: 12,
+            meaning: "Other Public Order"
+        },
+        {
+            hashValue: 13,
             meaning: "Other Unspecified"
         }
     ];
