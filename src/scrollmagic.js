@@ -19,7 +19,30 @@
   
         // if (e.progress > 0.5){
         document.getElementById("people1").dispatchEvent(event);
-      }
+    }
+
+    function dispatchMoveUSPrison() {
+        var event = document.createEvent('Event');
+        event.initEvent("moveusprison", true, true);
+
+        // if (e.progress > 0.5){
+        document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchColorLAPrison() {
+        var event = document.createEvent('Event');
+        event.initEvent("colorlaprison", true, true);
+  
+        // if (e.progress > 0.5){
+        document.getElementById("people1").dispatchEvent(event);
+    }
+    function dispatchMoveLAPrison() {
+        var event = document.createEvent('Event');
+        event.initEvent("movelaprison", true, true);
+
+        // if (e.progress > 0.5){
+        document.getElementById("people1").dispatchEvent(event);
+    }
 
     function dispatchColorGender() {
       var event = document.createEvent('Event');
@@ -54,7 +77,7 @@
     }
     var slides = document.querySelectorAll("section.panel");
     var toggles = [".p1", ".p2", ".p3", ".p4", ".p5", ".p6"];
-    var funcs = [dispatchColorUSPrison, dispatchMoveGender, dispatchColorAge, dispatchMoveAge, dispatchColorGender, dispatchMoveGender];
+    var funcs = [dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchColorGender, dispatchMoveGender];
 
     // create scene for every slide
     for (var i = 0; i < slides.length; i++) {

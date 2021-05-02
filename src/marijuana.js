@@ -2,6 +2,7 @@ import {lambdaByGender, labelsGender, genderMapFunc} from "./columnHelpers/gende
 import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
+import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 
 const dataPath = "../data/compileddata.csv";
 
@@ -22,6 +23,7 @@ funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
 funcMaps.set(lambdaByOffenseType, offenseMapFunc);
 funcMaps.set(lambdaByUSPrison, usPrisonMapFunc);
+funcMaps.set(lambdaByLAPrison, laPrisonMapFunc);
 
 // Takes in a function, and gives each data point a "graphid" (id within category)
 // Returns a map of counts for each category
@@ -433,6 +435,22 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test us prison");
         currentSelectionFunction = lambdaByUSPrison;
         currentLabelData = labelsUSPrison;
+        move();
+        // colorPeople(filteredData, currentSelectionFunction);
+    });
+
+    people.addEventListener("colorlaprison", function(){
+        console.log("test la prison");
+        currentSelectionFunction = lambdaByLAPrison;
+        currentLabelData = labelsLAPrison;
+
+        colorPeople(filteredData, currentSelectionFunction);
+    });
+
+    people.addEventListener("movelaprison", function(){
+        console.log("test la prison");
+        currentSelectionFunction = lambdaByLAPrison;
+        currentLabelData = labelsLAPrison;
         move();
         // colorPeople(filteredData, currentSelectionFunction);
     });
