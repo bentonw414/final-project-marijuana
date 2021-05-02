@@ -63,18 +63,34 @@
     function dispatchColorOffense() {
         var event = document.createEvent('Event');
         event.initEvent("coloroffense", true, true);
-  
+
         // if (e.progress > 0.5){
         document.getElementById("people1").dispatchEvent(event);
-      }
-  
-      function dispatchMoveOffense() {
+    }
+
+    function dispatchMoveOffense() {
         var event = document.createEvent('Event');
         event.initEvent("moveoffense", true, true);
-  
+
         // if (e.progress > 0.5){
         document.getElementById("people1").dispatchEvent(event);
-      }
+    }
+
+    function dispatchColorMarijuana() {
+        var event = document.createEvent('Event');
+        event.initEvent("colormarijuana", true, true);
+
+        // if (e.progress > 0.5){
+        document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchMoveMarijuana() {
+        var event = document.createEvent('Event');
+        event.initEvent("movemarijuana", true, true);
+
+        // if (e.progress > 0.5){
+        document.getElementById("people1").dispatchEvent(event);
+    }
 
     function dispatchColorAge() {
       var event = document.createEvent('Event');
@@ -92,8 +108,8 @@
       document.getElementById("people1").dispatchEvent(event);
     }
     var slides = document.querySelectorAll("section.panel");
-    var toggles = [".p1", ".p2", ".p3", ".p4", ".p5", ".p6"];
-    var funcs = [dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchColorOffense, dispatchMoveOffense];
+    var toggles = [".p1", ".p2", ".p3", ".p4", ".p5", ".p6", ".p7", ".p8"];
+    var funcs = [dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchColorOffense, dispatchMoveOffense, dispatchColorMarijuana, dispatchMoveMarijuana];
 
     // create scene for every slide
     for (var i = 0; i < slides.length; i++) {

@@ -3,6 +3,8 @@ import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
 import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
+import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
+
 
 const dataPath = "../data/compileddata.csv";
 
@@ -24,6 +26,7 @@ funcMaps.set(lambdaByAgeAlc, alcMapFunc);
 funcMaps.set(lambdaByOffenseType, offenseMapFunc);
 funcMaps.set(lambdaByUSPrison, usPrisonMapFunc);
 funcMaps.set(lambdaByLAPrison, laPrisonMapFunc);
+funcMaps.set(lambdaByMarijuana, marijuanaMapFunc);
 
 // Takes in a function, and gives each data point a "graphid" (id within category)
 // Returns a map of counts for each category
@@ -475,6 +478,19 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test offense move");
         currentSelectionFunction = lambdaByOffenseType;
         currentLabelData = labelsOffenseMap;
+        move();
+    });
+
+    people.addEventListener("colormarijuana", function(){
+        currentSelectionFunction = lambdaByMarijuana;
+        currentLabelData = labelsMarijuana;
+        color();
+    });
+
+    people.addEventListener("movemarijuana", function(){
+        console.log("test offense move");
+        currentSelectionFunction = lambdaByMarijuana;
+        currentLabelData = labelsMarijuana;
         move();
     });
 

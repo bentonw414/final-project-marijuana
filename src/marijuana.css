@@ -246,6 +246,12 @@ svg {
 .p6.visible {
   opacity:1;
 }
+.p7.visible {
+  opacity:1;
+}
+.p8.visible {
+  opacity:1;
+}
 
 /* section{
   height: 400px;
@@ -254,9 +260,10 @@ svg {
 .panel {
   text-align: left;
   font-size: 30px;
-  height: 600px;
+  height: 550px;
   width: 40%;
   padding:1cm;
+  margin-bottom: 100px;
   /* opacity:0; */
   -webkit-transform: scale(0.9);
 			 -moz-transform: scale(0.9);
@@ -280,25 +287,29 @@ svg {
   opacity:0;
   background-color: var(--accent2);
 }
-
 .p3{
   opacity: 0;
   background-color: var(--neutral);
 }
-
 .p4{
   opacity:0;
   background-color: var(--background1);
 }
-
 .p5{
   opacity:0;
   background-color: var(--accent1);
 }
-
 .p6{
   opacity:0;
   background-color: var(--accent2);
+}
+.p7{
+  opacity:0;
+  background-color: var(--neutral);
+}
+.p8{
+  opacity:0;
+  background-color: var(--background1);
 }
 
 #move-button{
