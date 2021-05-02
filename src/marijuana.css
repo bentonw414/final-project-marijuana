@@ -240,6 +240,12 @@ svg {
 .p4.visible {
   opacity:1;
 }
+.p5.visible {
+  opacity:1;
+}
+.p6.visible {
+  opacity:1;
+}
 
 /* section{
   height: 400px;
@@ -283,6 +289,16 @@ svg {
 .p4{
   opacity:0;
   background-color: var(--background1);
+}
+
+.p5{
+  opacity:0;
+  background-color: var(--accent1);
+}
+
+.p6{
+  opacity:0;
+  background-color: var(--accent2);
 }
 
 #move-button{

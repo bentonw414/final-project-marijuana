@@ -12,7 +12,7 @@
     // });
 
     // get all slides
-    var myevents = ["colorgender", "movegender", "colorage", "moveage"];
+    var myevents = ["colorgender", "movegender", "colorage", "moveage", "colorgender", "movegender"];
 
     function dispatchColorGender() {
       var event = document.createEvent('Event');
@@ -46,8 +46,8 @@
       document.getElementById("people1").dispatchEvent(event);
     }
     var slides = document.querySelectorAll("section.panel");
-    var toggles = [".p1", ".p2", ".p3", ".p4"];
-    var funcs = [dispatchColorGender, dispatchMoveGender, dispatchColorAge, dispatchMoveAge];
+    var toggles = [".p1", ".p2", ".p3", ".p4", ".p5", ".p6"];
+    var funcs = [dispatchColorGender, dispatchMoveGender, dispatchColorAge, dispatchMoveAge, dispatchColorGender, dispatchMoveGender];
 
     // create scene for every slide
     for (var i = 0; i < slides.length; i++) {
