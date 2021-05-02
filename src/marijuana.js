@@ -378,11 +378,24 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     //         });
     //       }
     //  });
+    
+
     function move() {
         let counts = getCounts(currentSelectionFunction, filteredData);
         updateGraphId(currentSelectionFunction, filteredData, counts);
         drawLabels(currentLabelData, counts);
-        movePeople(currentSelectionFunction, filteredData, counts);
+        colorPeople(filteredData, currentSelectionFunction);
+        setTimeout(function(){
+            //do what you need here
+            movePeople(currentSelectionFunction, filteredData, counts);
+        }, 500);
+        
+    }
+
+    function color(){
+        let counts = getCounts(currentSelectionFunction, filteredData);
+        drawLabels(currentLabelData, counts);
+        colorPeople(filteredData, currentSelectionFunction);
     }
 
     let moveButton = document.getElementById('move-button');
@@ -403,8 +416,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test gender");
         currentSelectionFunction = lambdaByGender;
         currentLabelData = labelsGender;
-
-        colorPeople(filteredData, currentSelectionFunction);
+        color();
     });
 
     people.addEventListener("movegender", function () {
@@ -415,7 +427,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     people.addEventListener("colorage", function () {
         console.log("test age");
         currentSelectionFunction = lambdaByAgeAlc;
-        colorPeople(filteredData, currentSelectionFunction);
+        color();
     });
 
     people.addEventListener("moveage", function () {
@@ -427,8 +439,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test us prison");
         currentSelectionFunction = lambdaByUSPrison;
         currentLabelData = labelsUSPrison;
-
-        colorPeople(filteredData, currentSelectionFunction);
+        color();
     });
 
     people.addEventListener("moveusprison", function(){
@@ -436,31 +447,28 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         currentSelectionFunction = lambdaByUSPrison;
         currentLabelData = labelsUSPrison;
         move();
-        // colorPeople(filteredData, currentSelectionFunction);
     });
 
     people.addEventListener("colorlaprison", function(){
         console.log("test la prison");
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
-
-        colorPeople(filteredData, currentSelectionFunction);
+        color();
     });
 
     people.addEventListener("movelaprison", function(){
         console.log("test la prison move");
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
+        
         move();
-        // colorPeople(filteredData, currentSelectionFunction);
     });
 
     people.addEventListener("coloroffense", function(){
         console.log("test offense");
         currentSelectionFunction = lambdaByOffenseType;
         currentLabelData = labelsOffenseMap;
-
-        colorPeople(filteredData, currentSelectionFunction);
+        color();
     });
 
     people.addEventListener("moveoffense", function(){
@@ -468,7 +476,6 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         currentSelectionFunction = lambdaByOffenseType;
         currentLabelData = labelsOffenseMap;
         move();
-        // colorPeople(filteredData, currentSelectionFunction);
     });
 
     let genderButton = document.getElementById('gender-button');
@@ -509,11 +516,6 @@ function colorPeople(data, lambdaFunc) {
 let colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 function returnClass(lambdafunc, d) {
     return colorScale(lambdafunc(d));
-    // if (d["RV0005: Sex"] == "2"){
-    //     colorScale(d)
-    //     return "#BADA55";
-    // }
-    // return "#a7a59b";
 }
 function getColorOfHash(hashValue) {
     return colorScale(hashValue);
