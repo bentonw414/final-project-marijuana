@@ -528,8 +528,9 @@ function colorPeople(data, lambdaFunc) {
         .ease(d3.easeLinear)
         .attr("fill", d => returnClass(lambdaFunc, d));
 }
-
-let colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+var colors = ["#7465a4","#f4c95d", "#d9596e","#1ec296","#d64933","#3881bc","#94386e","#8f753d","#ff7722","#60935d"]
+;
+let colorScale = d3.scaleOrdinal(colors);
 function returnClass(lambdafunc, d) {
     return colorScale(lambdafunc(d));
 }

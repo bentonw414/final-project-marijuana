@@ -1,10 +1,18 @@
 :root {
     --background1: black;
     --text: #FBFFFE; 
-    --accent2: #fdaa48;
-    --accent1: #A3320B;
-    --neutral: #848586;
+    --accent1: #7465a4ff;
+    --accent2: #f4c95dff;
+    --accent3: #d9596eff;
+    --accent4: #1ec296ff;
+    --accent5: #d64933ff;
+    --accent6: #3881bcff;
+    --accent7: #94386eff;
+    --accent8: #8f753dff;
+    --accent9: #ff7722ff;
+    --accent10: #60935dff;
   }
+  
 
 title{
     color:var(--text);
@@ -163,6 +171,7 @@ html {
     margin: auto;
     width : 60%;
     text-align: center;
+    font: impact;
   }
 
   
@@ -200,6 +209,7 @@ html {
     position: fixed;
     bottom: 0;
     width: 98%;
+    color:var(--text);
   }
   
   text.shadow {
@@ -260,10 +270,10 @@ svg {
 .panel {
   text-align: left;
   font-size: 30px;
-  height: 550px;
+  height: 400px;
   width: 40%;
   padding:1cm;
-  margin-bottom: 100px;
+  margin-bottom: 250px;
   /* opacity:0; */
   -webkit-transform: scale(0.9);
 			 -moz-transform: scale(0.9);
@@ -281,6 +291,9 @@ svg {
   
   opacity:0;
   background-color: var(--accent1);
+  /* background-image: radial-gradient( circle farthest-corner at 1.5% 1.4%,
+                              var(--accent1) 0%,
+                               var(--accent2) 100.2% ); */
 }
 
 .p2{
@@ -289,27 +302,27 @@ svg {
 }
 .p3{
   opacity: 0;
-  background-color: var(--neutral);
+  background-color: var(--accent3);
 }
 .p4{
   opacity:0;
-  background-color: var(--background1);
+  background-color: var(--accent4);
 }
 .p5{
   opacity:0;
-  background-color: var(--accent1);
+  background-color: var(--accent5);
 }
 .p6{
   opacity:0;
-  background-color: var(--accent2);
+  background-color: var(--accent6);
 }
 .p7{
   opacity:0;
-  background-color: var(--neutral);
+  background-color: var(--accent7);
 }
 .p8{
   opacity:0;
-  background-color: var(--background1);
+  background-color: var(--accent8);
 }
 
 #move-button{
