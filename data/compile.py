@@ -5,6 +5,10 @@ import random
 import math
 
 num_people = 2048
+us_prison_per = 0.007
+louisianna_per = 0.024
+extra_r = [us_prison_per, louisianna_per]
+extra_names = ["percent us in prison", "percent LA in prison"]
 
 #-55 is my special value for other
 def convert_to_column(df, df2, name, column_dict, total):
@@ -14,8 +18,6 @@ def convert_to_column(df, df2, name, column_dict, total):
     for value in column_dict:
         values.append(value)
         people = math.floor(num_people*column_dict[value]/total)
-        print(people)
-        print(people/num_people)
         percentage = people/num_people
         percentages.append(percentage)
         new_column += [value for i in range(0, people)]
@@ -29,6 +31,24 @@ def convert_to_column(df, df2, name, column_dict, total):
     df2[name + ":percentages"] = percentages
     random.shuffle(new_column)
     df[name] = new_column
+    return df, df2
+
+def extra_rows(df, df2):
+    values = [0, 1]
+    for outer in range(len(extra_r)):
+        percent = extra_r[outer]
+        new_column = []
+        percentages = []
+        percentages = [1-percent, percent]
+        for index in range(len(percentages)):
+            people = round(2048*percentages[index])
+            new_column += [values[index] for i in range(people)]
+        random.shuffle(new_column)
+        df[extra_names[outer]] = new_column
+        values = pd.Series(values)
+        percentages = pd.Series(percentages)
+        df2[extra_names[outer] + ": values"] = values
+        df2[extra_names[outer] + ":percentages"] = percentages
     return df, df2
 
 
@@ -53,6 +73,8 @@ for name in read_file.columns:
             column_dict[value] = 1
     index += 1
     df, df2 = convert_to_column(df, df2, name, column_dict, count)
+df, df2 = extra_rows(df, df2)
+
 
 df.to_csv("./compileddata.csv", mode = "w", index=False)
 df2.to_csv("./percentagedata.csv", mode = "w", index=False)
