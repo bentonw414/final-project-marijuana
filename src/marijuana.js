@@ -68,7 +68,7 @@ function getTextX(counts, prevMap, d) {
     let leftHumans = Math.floor(prevMap.get(key) / numRows);// something like this
     let humansWide = Math.floor(counts.get(key) / numRows);//some calculation involving numRows and counts[key]
     let centerHumans = Math.floor(leftHumans + humansWide / 2);
-    let xValue = xPadding + (centerHumans * wBuffer) + 10; // stolen from function for drawing little people.
+    let xValue = xPadding + (centerHumans * wBuffer) + 4; // stolen from function for drawing little people.
     return xValue;
 }
 
