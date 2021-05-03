@@ -78,17 +78,20 @@ function getTextX(counts, prevMap, d) {
  */
 function drawLabels(mapping, counts) {
     // intialize some counter
+    const newMapping = new Array();
     let prevMap = new Map();
     prevMap.set(0, 0);
     for (let i = 1; counts.has(i); i++) {
         prevMap.set(i, prevMap.get(i - 1) + counts.get(i - 1));
     }
+    console.log(mapping);
     svgDocGlob.selectAll('.labelsText')
         .data(mapping)
         .join(
             enter => enter.append("text")
                 .attr("opacity", 0)
                 .attr("transform", function (d) {
+                    console.log("this is d:", d);
                     let xValue = getTextX(counts, prevMap, d) // stolen from function for drawing little people.
                     return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
                 })
@@ -117,7 +120,13 @@ function drawLabels(mapping, counts) {
                 .transition()
                 .duration(1000)
                 .ease(d3.easeSinInOut)
-                .attr("fill", d => getColorOfHash(d.hashValue))
+                .attr("fill", function(d) {
+                    if (d.color === undefined){
+                        return getColorOfHash(d.hashValue);
+                    }
+                    return d.color;
+                }
+                )
                 .attr("opacity", 1)
                 .text(d => d.meaning);
         })
@@ -185,7 +194,6 @@ function updateGraphId(inputFunc, data, counts) {
             && prevMap.get(funcValue + 1) > element.graphID;
         if (!isAlreadyInPlace) {
             let proposedID = proposals.get(funcValue);
-            console.log(proposedID);
             if (isNaN(proposedID) || proposedID === undefined) {
                 throw new Error();
             }
@@ -532,9 +540,24 @@ var colors = ["#7465a4","#f4c95d", "#d9596e","#1ec296","#d64933","#3881bc","#943
 ;
 let colorScale = d3.scaleOrdinal(colors);
 function returnClass(lambdafunc, d) {
+    let hashValue = lambdafunc(d);
+    if (currentLabelData !== undefined &&
+        0<= hashValue < currentLabelData.length &&
+        currentLabelData[hashValue] !== undefined &&
+        currentLabelData[hashValue].color !== undefined){
+
+        return currentLabelData[hashValue].color;
+    }
     return colorScale(lambdafunc(d));
 }
 function getColorOfHash(hashValue) {
+    if (currentLabelData !== undefined &&
+        0<= hashValue < currentLabelData.length &&
+        currentLabelData[hashValue] !== undefined &&
+        currentLabelData[hashValue].color !== undefined){
+
+        return currentLabelData[hashValue].color;
+    }
     return colorScale(hashValue);
 }
 
