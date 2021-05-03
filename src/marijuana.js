@@ -1,6 +1,7 @@
 import {lambdaByGender, labelsGender, genderMapFunc} from "./columnHelpers/gender.js";
 import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
+import {lambdaByDrugOffense, labelsDrugOffenseMap, drugOffenseMapFunc} from "./columnHelpers/drugOffense.js";
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
 import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
@@ -14,8 +15,8 @@ var xPadding = 0;
 var yPadding = 0;
 var hBuffer = 0;
 var wBuffer = 0;
-var currentSelectionFunction = lambdaByUSPrison;
-var currentLabelData = labelsUSPrison;
+var currentSelectionFunction = undefined;
+var currentLabelData = undefined;
 var prevTooltip = undefined;
 var svgDocGlob = undefined;
 
@@ -24,6 +25,7 @@ var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
 funcMaps.set(lambdaByOffenseType, offenseMapFunc);
+funcMaps.set(lambdaByDrugOffense, drugOffenseMapFunc);
 funcMaps.set(lambdaByUSPrison, usPrisonMapFunc);
 funcMaps.set(lambdaByLAPrison, laPrisonMapFunc);
 funcMaps.set(lambdaByMarijuana, marijuanaMapFunc);
@@ -84,22 +86,21 @@ function drawLabels(mapping, counts) {
     for (let i = 1; counts.has(i); i++) {
         prevMap.set(i, prevMap.get(i - 1) + counts.get(i - 1));
     }
-    console.log(mapping);
     svgDocGlob.selectAll('.labelsText')
         .data(mapping)
         .join(
             enter => enter.append("text")
                 .attr("opacity", 0)
                 .attr("transform", function (d) {
-                    console.log("this is d:", d);
                     let xValue = getTextX(counts, prevMap, d) // stolen from function for drawing little people.
                     return "translate(" + xValue + "," + yPadding + ")" + "rotate(315)";
                 })
                 .attr("y", 0)
                 .attr("dy", -5)
-                .attr("font-size", "6px")
+                .attr("font-size", "7px")
+                .attr("font-weight", "bold")
                 .attr("x", 0)
-                .text(d => d),
+                .text(d => d.meaning),
             update => update,
             exit => exit.transition().duration(1000).ease(d3.easeSinInOut).attr("opacity", 0).remove()
         )
@@ -115,7 +116,7 @@ function drawLabels(mapping, counts) {
                 })
                 .attr("y", 0)
                 .attr("dy", -3)
-                .attr("font-size", "6px")
+                .attr("font-size", "7px")
                 .attr("x", 0)
                 .transition()
                 .duration(1000)
@@ -246,7 +247,6 @@ function movePeople(inputFunc, data, counts) {
 
 
 d3.csv(dataPath, d3.autoType).then(filteredData => {
-    console.log(filteredData);
     // filteredData = filteredData.slice(0,2048);
     // var formatTime = d3.time.format("%e %B");
 
@@ -261,7 +261,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     var svgDoc = d3.select("#people1").append("svg")
         .attr("viewBox", "0 0 280 280");
     // .attr("preserveAspectRatio", "xMidYMid meet");
-    console.log(svgDoc);
+    // console.log(svgDoc);
     // d3.selectAll("people").each(function(d, i) { d.attr("id", "people" + i) });
 
     svgDocGlob = svgDoc;
@@ -283,7 +283,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
 
     //padding for the grid
     xPadding = 10;
-    yPadding = 25;
+    yPadding = 35;
 
     //background rectangle
     // svgDoc.append("rect").attr("width",numCols*4+2*xPadding).attr("height",numRows*8 + 2*yPadding).attr('xlink:href', 'http://simpleicon.com/wp-content/uploads/smile.png');
@@ -337,7 +337,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
             var whole = Math.floor((d["V0001B: Respondent ID"] - 1) / numCols)//calculates the y position (row number)
             return yPadding + (remainder * hBuffer);//apply the buffer and return the value
         })
-        .attr("fill", d => returnClass(currentSelectionFunction, d));
+        .attr("fill", "black");
 
     let groupElement = document.querySelector('#pictoLayer');
     let rectBBox = document.querySelector('#iconRect');
@@ -474,6 +474,19 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         
         move();
     });
+    people.addEventListener("colordrugoffense", function(){
+        console.log("test offense");
+        currentSelectionFunction = lambdaByDrugOffense;
+        currentLabelData = labelsDrugOffenseMap;
+        color();
+    });
+
+    people.addEventListener("movedrugoffense", function(){
+        console.log("test offense move");
+        currentSelectionFunction = lambdaByDrugOffense;
+        currentLabelData = labelsDrugOffenseMap;
+        move();
+    });
 
     people.addEventListener("coloroffense", function(){
         console.log("test offense");
@@ -502,6 +515,28 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         move();
     });
 
+    people.addEventListener("initialpeople", function(){
+        pictoLayer.selectAll(".personIcon")
+        .transition()
+        .duration(400)
+        .ease(d3.easeSinInOut)
+        .attr("fill", "black");
+        svgDocGlob.selectAll('.labelsText')
+        .transition()
+        .duration(400)
+        .ease(d3.easeSinInOut)
+        .attr("fill", "black");
+
+    });
+
+    people.addEventListener("secondpeople", function(){
+        pictoLayer.selectAll(".personIcon")
+        .transition()
+        .duration(400)
+        .ease(d3.easeSinInOut)
+        .attr("fill", "#D3D3D3");
+    });
+
     let genderButton = document.getElementById('gender-button');
     genderButton.addEventListener('click', function () {
         console.log("clicked gender button");
@@ -511,12 +546,12 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         colorPeople(filteredData, currentSelectionFunction);
     });
 
-    let ageDrinkButton = document.getElementById('age-drink-button');
-    ageDrinkButton.addEventListener('click', function () {
-        console.log("clicked drink button");
-        currentSelectionFunction = lambdaByAgeAlc;
-        colorPeople(filteredData, currentSelectionFunction);
-    });
+    // let ageDrinkButton = document.getElementById('age-drink-button');
+    // ageDrinkButton.addEventListener('click', function () {
+    //     console.log("clicked drink button");
+    //     currentSelectionFunction = lambdaByAgeAlc;
+    //     colorPeople(filteredData, currentSelectionFunction);
+    // });
 
     let offenseButton = document.getElementById('offense-type-button');
     offenseButton.addEventListener('click', function () {
@@ -536,7 +571,7 @@ function colorPeople(data, lambdaFunc) {
         .ease(d3.easeLinear)
         .attr("fill", d => returnClass(lambdaFunc, d));
 }
-var colors = ["#7465a4","#f4c95d", "#d9596e","#1ec296","#d64933","#3881bc","#94386e","#8f753d","#ff7722","#60935d"]
+var colors = ["#7465a4","#f4c95d", "#d9596e","#1ec296","#d64933","#3881bc","#94386e","#8B795E","#ff7722","#60935d"]
 ;
 let colorScale = d3.scaleOrdinal(colors);
 function returnClass(lambdafunc, d) {

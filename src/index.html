@@ -43,40 +43,67 @@
   }
 </style>
 <div id="people1" align="right"></div>
+<section class="panel pa">
+  Prison and mass incarceration in the United States have grown drastically in the last 40 years. In that amount of time, the U.S. prison population has increased in size by 500%, but what does the prison population itself look like?
+</section>
+<section class="panel pb">
+  In the following visuals, we hope to help answer that question, providing some insight into what forces influence who ends up in prison, and why they end up there.
+</section>
+<section class="panel pc">
+  In 2016, the Bureau of Justice Statistics conducted a lengthy survey of nearly 25,000 inmates kept in various federal and state prisons throughout the United States.
+</section>
+<section class="panel pd">
+  The panel will update over time, reflecting various demographics.
+</section>
 <section class="panel p1">
-  0.07% of adults in the United States of America are imprisoned. 
+  Each icon represents approximately 157,763 U.S. citizens.
 </section>
 <section class="panel p2">
-  The United States of America has the highest percentage of their population imprisoned in the world. 
+  The United States has the highest incarceration rate per capita in the world. 
+  <p>
+    <br></p>
+  Nearly <b>1 in 142</b> adults are imprisoned in the U.S. 
 </section>
 <section class="panel p3">
-  Some states like Louisana have an even higher percent imprisoned. 
+  Some states, such as Louisiana, have an even higher percent of their population imprisoned. 
 </section>
 <section class="panel p4">
-  In Louisiana 2.4% of adults are imprisoned. 
+  In Louisiana, nearly <b>1 in 40</b> adults are in prison.
 </section>
 <section class="panel p5">
-  Over 21% are imprisoned for drug crimes. 
+  Over 21% of prisoners in the U.S. are imprisoned for drug crimes.
 </section>
 <section class="panel p6">
-  That's over 40,000 people imprisoned for drug crimes in 2016. 
+  That's over <b>40,000 people</b> in prison for drug crimes in 2016.
 </section>
 <section class="panel p7">
-  TODO% of all crimes involved marijuana. Should we exclude the other data? 
+  People are in prisons for a wide variety of other crimes as well.
 </section>
 <section class="panel p8">
-  Today recreational marijuana is legal in 16 states and Washington, DC. Medical marijuana is legal in another 19.  
+  Keep scrolling, and you can click buttons to color the icons by various filters, and clicking the move button will make the icons line by category.
 </section>
+<!-- <section class="panel p9">
+  TODO% of all crimes involved marijuana. Should we exclude the other data? 
+</section>
+<section class="panel p10">
+  Today recreational marijuana is legal in 16 states and Washington, DC. Medical marijuana is legal in another 19.  
+</section> -->
 </div>
 <script src="scrollmagic.js"></script>
 
 <section class="panel p0">
-  <button type="button" class="button" id="move-button">Move </button>
-  <button type="button" class="button" id="gender-button">Gender </button>
-  <br>
-  <button type="button" class="button" id="age-drink-button">Age Drink </button>
-  <button type="button" class="button" id="offense-type-button">Offense Type </button>
-  <p></p>
+  <div id="all-buttons-div">
+    <div>
+      <button type="button" class="button" id="move-button">Move </button>
+    </div>
+    <div>
+      <button type="button" class="button" id="gender-button">Gender </button>
+    </div>
+    <div>
+    <!-- <button type="button" class="button" id="age-drink-button">Age Drink </button> -->
+      <button type="button" class="button" id="offense-type-button">Offense Type </button>
+    </div>
+  </div>
 </section>
 
 
@@ -85,7 +112,7 @@
 </div>
 
 <div class="bottom" id="left">
-  <a href=" https://www.ssa.gov/oact/babynames/limits.html" style="color:#FBFFFE">Data Source</a>
+  <a href="./citations.html" style="color:#FBFFFE">Sources/Citations</a>
 </div>
 <script type="module" src="./marijuana.js"></script>
 </html>

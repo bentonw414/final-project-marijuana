@@ -19,31 +19,18 @@ const lambdaByLAPrison = function (d) {
 const labelsLAPrison = [
     {
         hashValue: 0,
-        meaning: 'In prisonNEW',
-        color: "teal"
+        meaning: 'In prison',
+        color: "#1ec296"
     },
     {
         hashValue: 1,
-        meaning: 'Not in prisonNEW',
-        color: "grey"
+        meaning: 'Not in prison',
+        color: "#94386eff"
     }
 ];
 
-// const mapping = new Map();
-// for (let i = 0; i < labelsLAPrison.length; i++){
-//     mapping.set(labelsLAPrison[i].hashValue, labelsLAPrison[i].meaning);
-// }
-
 const laPrisonMapFunc = function (d) {
     const hashValue = lambdaByLAPrison(d);
-
-    // if (d[usPercentColumn] === 1) {
-    //     return "Not In PrisonA";
-    // } else if (d[usPercentColumn] === 0) {
-    //     return "In PrisonA";
-    // } else {
-    //     console.log(d[genderColumn]);
-    // }
     return labelsLAPrison[hashValue].meaning;
 };
 

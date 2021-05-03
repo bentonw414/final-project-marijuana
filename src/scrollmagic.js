@@ -76,6 +76,22 @@
         document.getElementById("people1").dispatchEvent(event);
     }
 
+    function dispatchColorDrugOffense() {
+      var event = document.createEvent('Event');
+      event.initEvent("colordrugoffense", true, true);
+
+      // if (e.progress > 0.5){
+      document.getElementById("people1").dispatchEvent(event);
+  }
+
+  function dispatchMoveDrugOffense() {
+      var event = document.createEvent('Event');
+      event.initEvent("movedrugoffense", true, true);
+
+      // if (e.progress > 0.5){
+      document.getElementById("people1").dispatchEvent(event);
+  }
+
     function dispatchColorMarijuana() {
         var event = document.createEvent('Event');
         event.initEvent("colormarijuana", true, true);
@@ -107,10 +123,29 @@
       // if (e.progress > 0.5){
       document.getElementById("people1").dispatchEvent(event);
     }
-    var slides = document.querySelectorAll("section.panel");
-    var toggles = [".p1", ".p2", ".p3", ".p4", ".p5", ".p6", ".p7", ".p8"];
-    var funcs = [dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchColorOffense, dispatchMoveOffense, dispatchColorMarijuana, dispatchMoveMarijuana];
+    
+    function dispatchPeople(){
+      var event = document.createEvent('Event');
+      event.initEvent("initialpeople", true, true);
 
+      // if (e.progress > 0.5){
+      document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchPeople2(){
+      var event = document.createEvent('Event');
+      event.initEvent("secondpeople", true, true);
+
+      // if (e.progress > 0.5){
+      document.getElementById("people1").dispatchEvent(event);
+    }
+
+    function dispatchNothing(){
+      console.log("do nothing");
+    }
+    var slides = document.querySelectorAll("section.panel");
+    var toggles = [".pa", ".pb", ".pc", ".pd", ".p1", ".p2", ".p3", ".p4", ".p5", ".p6", ".p7", ".p8", ".p9", ".p10"];
+    var funcs = [dispatchNothing, dispatchNothing, dispatchPeople, dispatchPeople2, dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchColorDrugOffense, dispatchMoveDrugOffense, dispatchColorOffense, dispatchMoveOffense];
     // create scene for every slide
     for (var i = 0; i < slides.length; i++) {
 

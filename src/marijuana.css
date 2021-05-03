@@ -8,7 +8,7 @@
     --accent5: #d64933ff;
     --accent6: #3881bcff;
     --accent7: #94386eff;
-    --accent8: #8f753dff;
+    --accent8: #A47551;
     --accent9: #ff7722ff;
     --accent10: #60935dff;
   }
@@ -87,10 +87,13 @@ html {
       
   
     h1 {text-align: center;
+        font-size: 3em;
+        margin-top: 2em;
         color:var(--text);}
     p {text-align: center;}
     div {text-align: center;
-      margin-bottom: 10px;}
+      /* margin-bottom: 10px; */
+    }
   
   
     
@@ -124,7 +127,7 @@ html {
       display:inline-block;
       cursor:pointer;
       font-size:14px;
-      padding:5px 15px;
+      padding:5px;
       text-decoration:none;
     background-color: var(---background);
     color: var(--text);
@@ -158,9 +161,10 @@ html {
     border:1px solid #b56d07;
     }
   
-  /* #chart {
-    margin-left : 10%;
-  } */
+  #chart {
+    position: chart;
+    z-index: -1;
+  }
   
   
   img {
@@ -173,26 +177,6 @@ html {
     text-align: center;
     font: impact;
   }
-
-  
-  /* .panel{
-    /* background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(rgb(212, 180, 131),1)); */
-    /* background-image:radial-gradient(rgba(212, 180, 131, 1), rgba(255,0,0,0)); */
-    /* background-color: var(--background1);  */
-    /* background-color:; */
-    /* border-radius:15px; */
-    /* opacity:1; */
-    /* width : 100%; */
-    /* overflow:scroll; */
-        /* padding:10px;
-        float:left;
-        width:95%;
-        height:100%;  */
-    /* margin: auto; */
-    /* margin-bottom: 5px;
-    padding: 5px 5px; */
-  /* } */ 
-  
 
   
   #label{
@@ -228,16 +212,30 @@ html {
   }
 
 svg {
-        overflow:scroll;
+        overflow:visible;
         padding:10px;
         float:left;
         width:100%;
         height:100%; 
             
 }
+
+
 /* #panel{
   opacity:0;
 } */
+.pa.visible {
+  opacity:1;
+}
+.pb.visible {
+  opacity:1;
+}
+.pc.visible {
+  opacity:1;
+}
+.pd.visible {
+  opacity:1;
+}
 .p1.visible {
   opacity:1;
 }
@@ -262,16 +260,20 @@ svg {
 .p8.visible {
   opacity:1;
 }
-
-/* section{
-  height: 400px;
-} */
+.p9.visible {
+  opacity:1;
+}
+.p10.visible {
+  opacity:1;
+}
 
 .panel {
+  font-family: Verdana, sans-serif;
   text-align: left;
   font-size: 30px;
-  height: 400px;
+  height: 100%;
   width: 40%;
+  border-radius: 5px;
   padding:1cm;
   margin-bottom: 250px;
   /* opacity:0; */
@@ -286,6 +288,33 @@ svg {
 				 -o-transition: all 1s ease-in-out;
 						transition: all 1s ease-in-out;
 }
+.pa{
+  opacity:0;
+  background-color: var(--accent6);
+  position: relative;
+  width: 93.5%;
+  z-index: 9999;
+  margin-top: 200px;
+}
+.pb{
+  opacity:0;
+  background-color: var(--accent3);
+  position: relative;
+  width: 93.5%;
+  z-index: 9999;
+}
+.pc{
+  opacity:0;
+  background-color: var(--accent4);
+  position: relative;
+  width: 93.5%;
+  z-index: 9999;
+}
+.pd{
+  opacity:0;
+  background-color: var(--accent8);
+}
+
 
 .p1{
   
@@ -298,37 +327,45 @@ svg {
 
 .p2{
   opacity:0;
-  background-color: var(--accent2);
+  background-color: var(--accent1);
 }
 .p3{
   opacity: 0;
-  background-color: var(--accent3);
+  background-color: var(--accent7);
 }
 .p4{
   opacity:0;
-  background-color: var(--accent4);
+  background-color: var(--accent7);
 }
 .p5{
   opacity:0;
-  background-color: var(--accent5);
+  background-color: var(--accent10);
 }
 .p6{
   opacity:0;
-  background-color: var(--accent6);
+  background-color: var(--accent10);
 }
 .p7{
   opacity:0;
-  background-color: var(--accent7);
+  background-color: var(--accent5);
 }
 .p8{
   opacity:0;
-  background-color: var(--accent8);
+  background-color: var(--accent5);
+}
+.p9{
+  opacity:0;
+  background-color: var(--accent9);
+}
+.p10{
+  opacity:0;
+  background-color: var(--accent10);
 }
 
 #move-button{
     background:var(--background1);
     border:1px solid var(--accent2);
-    margin:2cm;
+    /* margin:2cm; */
 
 }
 
@@ -384,7 +421,7 @@ button{
     position:fixed;
     /* width: 200px;
     height: 28px; */
-    padding: 10px 10px 0px 10px;
+    padding: 10px 10px 10px 10px;
     background: var(--background1);
     border: 2px solid var(--accent2);
     opacity: 0.8;
@@ -400,13 +437,13 @@ button{
   #people1{
     position:fixed;
     z-index: 998;
-    left: 50%;
+    left: 45%;
 
     /* margin-left: 0;
     margin-left: auto; */
     top:0%;
     /* top: -300px; */
-    width:45%;
+    width:40%;
     height:100%;
   }
 
@@ -415,3 +452,5 @@ button{
   width: 2%;
   height: 4%;
 } */
+
+

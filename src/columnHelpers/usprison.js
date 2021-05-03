@@ -1,29 +1,28 @@
 const usPercentColumn = "percent us in prison";
 
 const lambdaByUSPrison = function (d) {
-    return d[usPercentColumn]
+    return 1 - d[usPercentColumn]
 };
+
 
 const labelsUSPrison =
     [
+        
         {
             hashValue: 0,
-            meaning: "Not In Prison"
+            meaning: "In Prison",
+            color: "#f4c95d"
         },
         {
             hashValue: 1,
-            meaning: "In Prison"
+            meaning: "Not In Prison",
+            color: "#7465a4"
         }
     ];
 
 const usPrisonMapFunc = function (d) {
-    if (d[usPercentColumn] === 0) {
-        return "Not In Prison";
-    } else if (d[usPercentColumn] === 1) {
-        return "In Prison";
-    } else {
-        console.log(d[genderColumn]);
-    }
+    const hashValue = lambdaByUSPrison(d);
+    return labelsUSPrison[hashValue].meaning;
 };
 
 export {lambdaByUSPrison, labelsUSPrison, usPrisonMapFunc};

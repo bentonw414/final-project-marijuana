@@ -22,6 +22,10 @@ const labelsGender =
         {
             hashValue: 1,
             meaning: "Female"
+        },
+        {
+            hashValue: 2, 
+            meaning: "Other"
         }
     ];
 
@@ -31,7 +35,7 @@ const genderMapFunc = function (d) {
     } else if (d[genderColumn] === genderFemaleValue) {
         return "Female";
     } else {
-        console.log(d[genderColumn]);
+        return "Other";
     }
 };
 
