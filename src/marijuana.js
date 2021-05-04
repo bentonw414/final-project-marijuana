@@ -102,10 +102,10 @@ function drawLabels(mapping, counts) {
                 .attr("x", 0)
                 .text(d => d.meaning),
             update => update,
-            exit => exit.transition().duration(1000).ease(d3.easeSinInOut).attr("opacity", 0).remove()
+            exit => exit.transition("labelsFade").duration(1000).ease(d3.easeSinInOut).attr("opacity", 0).remove()
         )
         .attr("class", "labelsText")
-        .transition()
+        .transition("labelsFade")
         .on("end", function () {
             svgDocGlob.selectAll('.labelsText')
                 .data(mapping)
@@ -118,7 +118,7 @@ function drawLabels(mapping, counts) {
                 .attr("dy", -3)
                 .attr("font-size", "7px")
                 .attr("x", 0)
-                .transition()
+                .transition("labelsFade") // same as before so interrupts fade in if we try to fade out.
                 .duration(1000)
                 .ease(d3.easeSinInOut)
                 .attr("fill", function(d) {
@@ -216,7 +216,7 @@ function movePeople(inputFunc, data, counts) {
     }
     d3.selectAll("use")
         .data(data)
-        .transition()
+        .transition("peopleMoveTransition")
         .delay(function (d, i) { return Math.floor(Math.random() * 1000) })
         .duration(function (d, i) {
             let prevX = this.getAttribute("x");
@@ -396,10 +396,10 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         updateGraphId(currentSelectionFunction, filteredData, counts);
         drawLabels(currentLabelData, counts);
         colorPeople(filteredData, currentSelectionFunction);
-        setTimeout(function(){
-            //do what you need here
+        // setTimeout(function(){
+        //     //do what you need here
             movePeople(currentSelectionFunction, filteredData, counts);
-        }, 500);
+        // }, 500);
         
     }
 
@@ -517,12 +517,12 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
 
     people.addEventListener("initialpeople", function(){
         pictoLayer.selectAll(".personIcon")
-        .transition()
+        .transition("peopleFadeOutInitial")
         .duration(400)
         .ease(d3.easeSinInOut)
         .attr("fill", "black");
         svgDocGlob.selectAll('.labelsText')
-        .transition()
+        .transition("labelsFade")
         .duration(400)
         .ease(d3.easeSinInOut)
         .attr("fill", "black");
@@ -531,7 +531,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
 
     people.addEventListener("secondpeople", function(){
         pictoLayer.selectAll(".personIcon")
-        .transition()
+        .transition("peopleFadeInInitial")
         .duration(400)
         .ease(d3.easeSinInOut)
         .attr("fill", "#D3D3D3");
@@ -566,7 +566,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
 function colorPeople(data, lambdaFunc) {
     d3.selectAll("use")
         .data(data)
-        .transition()
+        .transition("peopleColorTransition")
         .duration(400)
         .ease(d3.easeLinear)
         .attr("fill", d => returnClass(lambdaFunc, d));

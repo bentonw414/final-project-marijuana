@@ -17,7 +17,7 @@ color queue:
 
 
 TODO to fix for final:
-  Do the queue thing.
+  DONE; no need for queue, just use named transitions and they can happen concurrently. Do the queue thing.
   Add small visuals for context?
   Show percentages in tooltips?
   Multivariate chunks?
@@ -25,7 +25,7 @@ TODO to fix for final:
   Make it better than just turning the people black at the top
   Fix labels disappearing and reappearing when you just click move.
   Don't show tooltip after scrolling up.
-  Move labels to the left a bit (benton added like a +10 pixels for the x or something somewhere at some point.)
+  DONE Move labels to the left a bit (benton added like a +10 pixels for the x or something somewhere at some point.)
 
   Add more buttons/filters and things
   Figure out a better story to tell.
