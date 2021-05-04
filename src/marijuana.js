@@ -542,12 +542,12 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .transition("peopleFadeOutInitial")
         .duration(400)
         .ease(d3.easeSinInOut)
-        .attr("fill", "black");
+        .attr("opacity", "0");
         svgDocGlob.selectAll('.labelsText')
         .transition("labelsFade")
         .duration(400)
         .ease(d3.easeSinInOut)
-        .attr("fill", "black");
+        .attr("opacity", "0");
 
     });
 
@@ -556,7 +556,8 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .transition("peopleFadeInInitial")
         .duration(400)
         .ease(d3.easeSinInOut)
-        .attr("fill", "#D3D3D3");
+        .attr("fill", "#D3D3D3")
+        .attr("opacity", "1");
     });
 
     let genderButton = document.getElementById('gender-button');
