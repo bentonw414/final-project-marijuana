@@ -23,7 +23,7 @@ TODO to fix for final:
   Multivariate chunks?
   Make buttons resize better
   Make it better than just turning the people black at the top
-  Fix labels disappearing and reappearing when you just click move.
+  DONE; currently only stays if text and xValue are the same. Fix labels disappearing and reappearing when you just click move.
   Don't show tooltip after scrolling up.
   DONE Move labels to the left a bit (benton added like a +10 pixels for the x or something somewhere at some point.)
 

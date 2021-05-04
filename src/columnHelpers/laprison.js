@@ -19,12 +19,12 @@ const lambdaByLAPrison = function (d) {
 const labelsLAPrison = [
     {
         hashValue: 0,
-        meaning: 'In prison',
+        meaning: "In Prison",
         color: "#1ec296"
     },
     {
         hashValue: 1,
-        meaning: 'Not in prison',
+        meaning: "Not In Prison",
         color: "#94386eff"
     }
 ];

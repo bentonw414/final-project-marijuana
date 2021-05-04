@@ -99,8 +99,7 @@ function drawLabels(mapping, counts) {
                 .attr("dy", -5)
                 .attr("font-size", "7px")
                 .attr("font-weight", "bold")
-                .attr("x", 0)
-                .text(d => d.meaning),
+                .attr("x", 0),
             update => update,
             exit => exit.transition("labelsFade").duration(1000).ease(d3.easeSinInOut).attr("opacity", 0).remove()
         )
@@ -133,7 +132,30 @@ function drawLabels(mapping, counts) {
         })
         .duration(1000)
         .ease(d3.easeSinInOut)
-        .attr("opacity", "0");
+        .attr("opacity", function(d) {
+            let xValue = getTextX(counts, prevMap, d);
+            let transform = this.getAttribute("transform");
+            let regex = /[0-9]+/
+            let oldX = Number(transform.match(regex)[0]);
+
+            if (oldX === NaN){
+                console.log("something went wrong with parsing transform");
+                return "0";
+            }
+
+            let oldText = this.textContent;
+            let newText = d.meaning;
+            console.log(oldText, newText, xValue, oldX);
+
+
+            // If the label doesn't move and has same value, don't fade out.
+            if (oldX === xValue && 
+                oldText === newText && oldText !== undefined){
+                return "1";
+            }
+            return "0";
+        }
+        );
 }
 
 function getCounts(inputFunc, data) {
