@@ -22,9 +22,9 @@ TODO to fix for final:
   Show percentages in tooltips?
   Multivariate chunks?
   Make buttons resize better
-  DONE; people are just transparent. Make it better than just turning the people black at the top
+  Make it better than just turning the people black at the top
   DONE; currently only stays if text and xValue are the same. Fix labels disappearing and reappearing when you just click move.
-  DONE; making people transparent fixes this Don't show tooltip after scrolling up.
+  Don't show tooltip after scrolling up.
   DONE Move labels to the left a bit (benton added like a +10 pixels for the x or something somewhere at some point.)
 
   Add more buttons/filters and things
