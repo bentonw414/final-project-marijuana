@@ -52,7 +52,7 @@ var prevTooltip = undefined;
 var svgDocGlob = undefined;
 var state = "Louisiana";
 var toolTipPercents = undefined; // Map of hashvalue => percent that is populated when coloring the icons
-
+var counter = 0;
 
 var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
@@ -155,7 +155,7 @@ function drawLabels(mapping, counts) {
                 .ease(d3.easeSinInOut)
                 .attr("fill", function(d) {
                     if (d.color === undefined){
-                        return getColorOfHash(d.hashValue);
+                        return getColorOfHash(d.hashValue, counter);
                     }
                     return d.color;
                 }
@@ -634,6 +634,16 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     //     colorPeople(filteredData, currentSelectionFunction);
     // });
 
+    let selector = document.getElementById('state-selector');
+    console.log(selector);
+    selector.addEventListener('change', function(){
+        state = selector.value;
+        color();
+    setTimeout(function(){
+            move();
+    }, 1000);
+
+    });
     let offenseButton = document.getElementById('offense-type-button');
     offenseButton.addEventListener('click', function () {
         console.log("clicked offense button");
@@ -666,13 +676,13 @@ function returnClass(lambdafunc, d) {
     }
     return colorScale(lambdafunc(d));
 }
-function getColorOfHash(hashValue) {
+function getColorOfHash(hashValue, counter) {
     if (currentLabelData !== undefined &&
         0<= hashValue < currentLabelData.length &&
         currentLabelData[hashValue] !== undefined &&
         currentLabelData[hashValue].color !== undefined){
 
-        return currentLabelData[hashValue].color;
+        return currentLabelData[hashValue + counter].color;
     }
     return colorScale(hashValue);
 }

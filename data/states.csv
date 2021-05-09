@@ -1,53 +1,53 @@
 State,Federal prison rate,State prison rate,Local jails rate,Youth facilities rate,incarcerated rate
-Alabama,73,655,260,18,1.006
-Alaska,55,707,0,26,0.788
-Arizona,52,623,226,13,0.914
-Arkansas,51,601,125,23,0.8
-California,32,349,217,21,0.619
-Colorado,28,382,229,20,0.659
-Connecticut,33,463,0,8,0.504
-Delaware,36,739,0,17,0.792
-District of Columbia,820,0,366,35,1.221
-Florida,75,512,282,14,0.883
-Georgia,56,521,429,15,1.021
-Hawaii,101,411,0,6,0.518
-Idaho,26,493,157,28,0.704
-Illinois,59,375,160,13,0.607
-Indiana,37,443,204,24,0.708
-Iowa,85,284,155,23,0.547
-Kansas,60,332,214,30,0.636
-Kentucky,57,490,237,17,0.801
-Louisiana,56,816,271,17,1.16
-Maine,34,169,155,12,0.37
-Maryland,74,351,148,13,0.586
-Massachusetts,26,158,146,6,0.336
-Michigan,39,437,143,17,0.636
-Minnesota,34,194,153,16,0.397
-Mississippi,56,628,159,8,0.851
-Missouri,92,526,182,17,0.817
-Montana,98,360,73,14,0.545
-Nebraska,90,288,183,22,0.583
-Nevada,39,438,249,17,0.743
-New Hampshire,28,223,216,6,0.473
-New Jersey,32,241,168,10,0.451
-New Mexico,69,337,345,19,0.77
-New York,52,266,116,8,0.442
-North Carolina,80,371,203,5,0.659
-North Dakota,64,230,229,23,0.546
-Ohio,38,444,171,20,0.673
-Oklahoma,56,710,230,13,1.009
-Oregon,32,377,142,27,0.578
-Pennsylvania,47,396,310,22,0.775
-Rhode Island,42,318,0,15,0.375
-South Carolina,80,440,216,14,0.75
-South Dakota,129,422,354,39,0.944
-Tennessee,81,438,330,10,0.859
-Texas,74,610,207,16,0.907
-Utah,42,237,138,21,0.438
-Vermont,31,316,0,4,0.351
-Virginia,72,449,264,19,0.804
-Washington,34,255,194,14,0.497
-West Virginia,84,373,188,27,0.672
-Wisconsin,33,392,239,14,0.678
-Wyoming,112,407,228,28,0.775
-50 States and DC total,56,422,208,16,0.702
+Alabama,73,655,260,18,0.01006
+Alaska,55,707,0,26,0.00788
+Arizona,52,623,226,13,0.00914
+Arkansas,51,601,125,23,0.008
+California,32,349,217,21,0.00619
+Colorado,28,382,229,20,0.00659
+Connecticut,33,463,0,8,0.00504
+Delaware,36,739,0,17,0.00792
+District of Columbia,820,0,366,35,0.01221
+Florida,75,512,282,14,0.00883
+Georgia,56,521,429,15,0.01021
+Hawaii,101,411,0,6,0.00518
+Idaho,26,493,157,28,0.00704
+Illinois,59,375,160,13,0.00607
+Indiana,37,443,204,24,0.00708
+Iowa,85,284,155,23,0.00547
+Kansas,60,332,214,30,0.00636
+Kentucky,57,490,237,17,0.00801
+Louisiana,56,816,271,17,0.0116
+Maine,34,169,155,12,0.0037
+Maryland,74,351,148,13,0.00586
+Massachusetts,26,158,146,6,0.00336
+Michigan,39,437,143,17,0.00636
+Minnesota,34,194,153,16,0.00397
+Mississippi,56,628,159,8,0.00851
+Missouri,92,526,182,17,0.00817
+Montana,98,360,73,14,0.00545
+Nebraska,90,288,183,22,0.00583
+Nevada,39,438,249,17,0.00743
+New Hampshire,28,223,216,6,0.00473
+New Jersey,32,241,168,10,0.00451
+New Mexico,69,337,345,19,0.0077
+New York,52,266,116,8,0.00442
+North Carolina,80,371,203,5,0.00659
+North Dakota,64,230,229,23,0.00546
+Ohio,38,444,171,20,0.00673
+Oklahoma,56,710,230,13,0.01009
+Oregon,32,377,142,27,0.00578
+Pennsylvania,47,396,310,22,0.00775
+Rhode Island,42,318,0,15,0.00375
+South Carolina,80,440,216,14,0.0075
+South Dakota,129,422,354,39,0.00944
+Tennessee,81,438,330,10,0.00859
+Texas,74,610,207,16,0.00907
+Utah,42,237,138,21,0.00438
+Vermont,31,316,0,4,0.00351
+Virginia,72,449,264,19,0.00804
+Washington,34,255,194,14,0.00497
+West Virginia,84,373,188,27,0.00672
+Wisconsin,33,392,239,14,0.00678
+Wyoming,112,407,228,28,0.00775
+50 States and DC total,56,422,208,16,0.00702
