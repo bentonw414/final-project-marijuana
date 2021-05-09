@@ -28,6 +28,12 @@ TODO to fix for final:
   DONE Move labels to the left a bit (benton added like a +10 pixels for the x or something somewhere at some point.)
 
   DONE make people smaller to show crowd a bit better.
+  Fixing colors to be all pairs that look nice together
+  DONE tooltip matches color of person
+  DONE can look at imprisonment rates by state
+  DONE refreshing takes to top
+  DONE labels no longer lag to change color if they don't need to.
+  TODO: add way to skip to end.
 
   Add more buttons/filters and things
   Figure out a better story to tell.
