@@ -7,8 +7,29 @@ import math
 num_people = 2048
 us_prison_per = 0.007
 louisianna_per = 0.024
-extra_r = [us_prison_per, louisianna_per]
-extra_names = ["percent us in prison", "percent LA in prison"]
+extra_r = [us_prison_per]
+extra_names = ["percent us in prison"]
+state_name = "percent {} in prison"
+
+def add_states(df_big):
+    df = pd.read_csv("./states.csv")
+    for row in df.iterrows():
+        print(row)
+        print(row[0])
+        print(row[1]["State"])
+        state = row[1]["State"]
+        percent = row[1]["incarcerated rate"]
+        new_column = []
+        print(percent)
+        values = [1, 0]
+        percentages = [percent, 1-percent]
+        for index in range(len(percentages)):
+            people = round(2048*percentages[index])
+            new_column += [values[index] for i in range(people)]
+        random.shuffle(new_column)
+        df_big[state_name.format(state)] = new_column
+    return df_big
+
 
 #-55 is my special value for other
 def convert_to_column(df, df2, name, column_dict, total):
@@ -74,6 +95,7 @@ for name in read_file.columns:
     index += 1
     df, df2 = convert_to_column(df, df2, name, column_dict, count)
 df, df2 = extra_rows(df, df2)
+df = add_states(df)
 
 
 df.to_csv("./compileddata.csv", mode = "w", index=False)

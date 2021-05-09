@@ -1,7 +1,7 @@
-const usPercentColumn = "percent LA in prison";
+const column = "percent Louisiana in prison";
 
 const lambdaByLAPrison = function (d) {
-    return 1 - d[usPercentColumn]
+    return 1 - d[column]
 };
 
 // const labelsLAPrison =
@@ -30,6 +30,7 @@ const labelsLAPrison = [
 ];
 
 const laPrisonMapFunc = function (d) {
+    column_name = column
     const hashValue = lambdaByLAPrison(d);
     return labelsLAPrison[hashValue].meaning;
 };

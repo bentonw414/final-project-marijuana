@@ -3,8 +3,34 @@ import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
 import {lambdaByDrugOffense, labelsDrugOffenseMap, drugOffenseMapFunc} from "./columnHelpers/drugOffense.js";
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
-import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
+// import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
+
+const columnstart = "percent ";
+const columnend = " in prison";
+
+const lambdaByLAPrison = function (d) {
+    return 1 - d[columnstart + state + columnend];
+};
+
+const labelsLAPrison = [
+    {
+        hashValue: 0,
+        meaning: "In Prison",
+        color: "#1ec296"
+    },
+    {
+        hashValue: 1,
+        meaning: "Not In Prison",
+        color: "#94386eff"
+    }
+];
+
+const laPrisonMapFunc = function (d) {
+    // column_name = column.format(state)
+    const hashValue = lambdaByLAPrison(d);
+    return labelsLAPrison[hashValue].meaning;
+};
 
 
 const dataPath = "../data/compileddata.csv";
@@ -19,6 +45,7 @@ var currentSelectionFunction = undefined;
 var currentLabelData = undefined;
 var prevTooltip = undefined;
 var svgDocGlob = undefined;
+var state = "Louisiana";
 
 
 var funcMaps = new Map();
