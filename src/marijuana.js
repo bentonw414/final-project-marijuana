@@ -5,6 +5,7 @@ import {lambdaByDrugOffense, labelsDrugOffenseMap, drugOffenseMapFunc} from "./c
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
 // import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
+import {RGB_Linear_Shade} from "./pSBC.js";
 
 const columnstart = "percent ";
 const columnend = " in prison";
@@ -334,7 +335,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .append("g")
         .attr("id", "iconCustom")
         .append("path")
-        // .attr("transform", "scale(2.5)")
+        .attr("transform", "scale(.79)")
         .attr("d", "M3.5,2H2.7C3,1.8,3.3,1.5,3.3,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z")
     // ,1.1c0-0.6-0.4-1-1-1c-0.6,0-1,0.4-1,1c0,0.4,0.2,0.7,0.6,0.9H1.1C0.7,2,0.4,2.3,0.4,2.6v1.9c0,0.3,0.3,0.6,0.6,0.6h0.2c0,0,0,0.1,0,0.1v1.9c0,0.3,0.2,0.6,0.3,0.6h1.3c0.2,0,0.3-0.3,0.3-0.6V5.3c0,0,0-0.1,0-0.1h0.2c0.3,0,0.6-0.3,0.6-0.6V2.6C4.1,2.3,3.8,2,3.5,2z");
 
@@ -417,6 +418,9 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         if (currentSelectionFunction !== undefined) {
             if (prevTooltip !== funcMaps.get(currentSelectionFunction)(d)) {
                 let percentage = toolTipPercents.get(currentSelectionFunction(d));
+                let color = this.getAttribute("fill");
+                tooltip.style("background", RGB_Linear_Shade(-.5,color));
+                tooltip.style("border-color", color);
                 tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d) + 
     ":<br> " + percentage + "%");
                 tooltip.style('display', 'block');
