@@ -688,9 +688,9 @@ function colorPeople(data, lambdaFunc) {
         .ease(d3.easeLinear)
         .attr("fill", d => returnClass(lambdaFunc, d));
 }
-var colors = ["#94386eff", "#1ec296","#d9596e", "#7465a4","#f4c95d","#3881bc","#d64933","#8B795E","#ff7722","#60935d"];
-var pcolors = ["#4B644A","#54F2F2", "#0C6FC0", "#F16A87", "#157a6e","#ffc800","#404e5c","#e84855", "#5b5f97","#e6e18f"];
-colors = pcolors
+var colors = ["#5081B9","#F58B51", "#60815F", "#54F2F2", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
+var pcolors = ["#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f", "#60815F", "#54F2F2", "#5081B9","#F58B51"];
+
 
 
 

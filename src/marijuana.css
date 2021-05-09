@@ -1,15 +1,15 @@
 :root {
     --background1: black;
     --text: #FBFFFE; 
-    --accent1: #0c6fc0ff;
-    --accent2: #f37c96ff;
-    --accent3: #4b644aff;
+    --accent1: #5081B9ff;
+    --accent2: #F58B51ff;
+    --accent3: #60815Fff;
     --accent4: #54f2f2ff;
-    --accent5: #157a6eff;
+    --accent5: #0B847Aff;
     --accent6: #ffc800ff;
-    --accent7: #5b5f97ff;
+    --accent7: #4B5C6Cff;
     --accent8: #e6e18fff;
-    --accent9: #404e5cff;
+    --accent9: #5b5f97ff;
     --accent10: #e84855ff;
   }
   
@@ -293,7 +293,7 @@ svg {
 }
 .pa{
   opacity:0;
-  background-color: var(--accent10);
+  background-color: var(--accent3);
   position: relative;
   width: 93.5%;
   z-index: 9999;
@@ -301,28 +301,28 @@ svg {
 }
 .pb{
   opacity:0;
-  background-color: var(--accent3);
+  background-color: var(--accent1);
   position: relative;
   width: 93.5%;
   z-index: 9999;
 }
 .pc{
   opacity:0;
-  background-color: var(--accent4);
+  background-color: var(--accent9);
   position: relative;
   width: 93.5%;
   z-index: 9999;
 }
 .pd{
   opacity:0;
-  background-color: var(--accent8);
+  background-color: var(--accent5);
 }
 
 
 .p1{
   
   opacity:0;
-  background-color: var(--accent1);
+  background-color: var(--accent3);
   /* background-image: radial-gradient( circle farthest-corner at 1.5% 1.4%,
                               var(--accent1) 0%,
                                var(--accent2) 100.2% ); */
@@ -330,27 +330,27 @@ svg {
 
 .p2{
   opacity:0;
-  background-color: var(--accent1);
+  background-color: var(--accent3);
 }
 .p3{
   opacity: 0;
-  background-color: var(--accent7);
+  background-color: var(--accent1);
 }
 .p4{
   opacity:0;
-  background-color: var(--accent7);
+  background-color: var(--accent1);
 }
 .p4-5{
   opacity:0;
-  background-color: var(--accent7);
+  background-color: var(--accent1);
 }
 .p5{
   opacity:0;
-  background-color: var(--accent6);
+  background-color: var(--accent7);
 }
 .p6{
   opacity:0;
-  background-color: var(--accent6);
+  background-color: var(--accent7);
 }
 .p7{
   opacity:0;

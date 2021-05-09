@@ -1,4 +1,5 @@
 const offenseColumn = "RV0036: Controlling Offense Category - 13";
+var colors = ["#5081B9","#F58B51", "#60815F", "#54F2F2", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
 
 const lambdaByDrugOffense = function (d) {
     let offenseType = d[offenseColumn];
@@ -13,16 +14,6 @@ const lambdaByDrugOffense = function (d) {
 const drugOffenseMapFunc = function (d) {
     const hashValue = lambdaByDrugOffense(d);
     return labelsDrugOffenseMap[hashValue].meaning;
-    // switch (lambdaByDrugOffense(d[offenseColumn])) {
-    //     case 1:
-    //         return "Drug";
-    //     case 2:
-    //         return "Other";
-    //     default:
-    //         console.log("BROKEN offense type");
-    //         return "No Offense Type Given";
-    //     // code block
-    // }
 }
 
 const labelsDrugOffenseMap =
@@ -30,12 +21,12 @@ const labelsDrugOffenseMap =
         {
             hashValue: 0,
             meaning: "Drug",
-            color:"#d9596eff"
+            color:colors[7]
         },
         {
             hashValue: 1,
             meaning: "Other",
-            color: "#3881bcff"
+            color: colors[6]
         }
     ];
 

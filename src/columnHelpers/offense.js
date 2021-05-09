@@ -1,63 +1,59 @@
 const offenseColumn = "RV0036: Controlling Offense Category - 13";
-var colors = ["#7465a4","#f4c95d", "#ff7722ff","#1ec296","#d64933","#8B795E","#3881bc","#94386e","#60935d"];
+var colors = ["#60815F", "#54F2F2","#5081B9","#F58B51", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
+
 
 const labelsOffenseMap =
     [
         {
             hashValue: 0,
             meaning: "Drug",
-            color: "#d9596eff"
+            color: colors[7]
         },
         {
             hashValue: 1,
-            meaning: "No Offense Type Given", 
-            color: colors[0]
+            meaning: "Homicide", 
+            color: colors[6]
         },
         {
             hashValue: 2,
-            meaning: "Homicide", 
+            meaning: "Rape/Sexual Assault", 
             color: colors[1]
         },
         {
             hashValue: 3,
-            meaning: "Rape/Sexual Assault", 
-            color: colors[2]
+            meaning: "Robbery", 
+            color: colors[0]
         },
         {
             hashValue: 4,
-            meaning: "Robbery", 
+            meaning: "Assault", 
             color: colors[3]
         },
         {
             hashValue: 5,
-            meaning: "Assault", 
-            color: colors[4]
+            meaning: "Other Violent", 
+            color: colors[2]
         },
         {
             hashValue: 6,
-            meaning: "Other Violent", 
+            meaning: "Burglary", 
             color: colors[5]
         },
         {
             hashValue: 7,
-            meaning: "Burglary", 
-            color: colors[6]
+            meaning: "Other Property", 
+            color: colors[4]
         },
         {
             hashValue: 8,
-            meaning: "Other Property", 
-            color: colors[7]
+            meaning: "Weapons", 
+            color: colors[9]
         },
         {
             hashValue: 9,
-            meaning: "Weapons", 
+            meaning: "No Offense Type Given", 
             color: colors[8]
         },
-        {
-            hashValue: 10,
-            meaning: "Other Public Order", 
-            color: colors[0]
-        }
     ];
 
 

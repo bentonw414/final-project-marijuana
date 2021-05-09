@@ -1,6 +1,8 @@
 const genderColumn = "RV0005: Sex";
 const genderMaleValue = 1;
 const genderFemaleValue = 2;
+var colors = ["#5081B9","#F58B51", "#60815F", "#54F2F2", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
+
 
 const lambdaByGender = function (d) {
     if (d[genderColumn] === genderMaleValue) {
@@ -21,11 +23,13 @@ const labelsGender =
         },
         {
             hashValue: 1,
-            meaning: "Female"
+            meaning: "Female",
+            color:colors[4]
         },
         {
             hashValue: 2, 
-            meaning: "Other"
+            meaning: "Other",
+            color:colors[5]
         }
     ];
 
