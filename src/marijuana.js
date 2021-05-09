@@ -188,8 +188,37 @@ function drawLabels(mapping, counts) {
                 return "1";
             }
             return "0";
-        }
-        );
+        })
+        // .transition("specialFade")
+        // .duration(1000)
+        // .ease(d3.easeSinInOut)
+        .attr("fill", function(d){
+            let xValue = getTextX(counts, prevMap, d);
+            let transform = this.getAttribute("transform");
+            let regex = /[0-9]+/
+            let oldX = Number(transform.match(regex)[0]);
+
+            if (oldX === NaN){
+                console.log("something went wrong with parsing transform");
+                return this.getAttribute("fill");
+            }
+
+            let oldText = this.textContent;
+            let newText = d.meaning;
+
+
+            // If the label doesn't move and has same value, don't fade out.
+            if (oldX === xValue && 
+                oldText === newText && oldText !== undefined){
+                if (d.color === undefined){
+                    console.log("undefined");
+                    return getColorOfHash(d.hashValue);
+                }
+                return d.color;
+            }
+            // console.log(this.getAttribute())
+            return this.getAttribute("fill");
+        });
 }
 
 function getCounts(inputFunc, data) {
