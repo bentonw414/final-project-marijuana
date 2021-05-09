@@ -573,6 +573,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .ease(d3.easeSinInOut)
         .attr("fill", "#ffffff00")
         .attr("opacity", "1");
+        currentSelectionFunction = undefined;
     });
 
     let genderButton = document.getElementById('gender-button');
