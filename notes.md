@@ -20,12 +20,14 @@ TODO to fix for final:
   DONE; no need for queue, just use named transitions and they can happen concurrently. Do the queue thing.
   Add small visuals for context?
   DONE Show percentages in tooltips?
-  Multivariate chunks?
+  NOT DOING (requires too much data processing by javascript; can't load that much data on the fly): Multivariate chunks?
   Make buttons resize better
   DONE Make it better than just turning the people black at the top; hidden
   DONE; currently only stays if text and xValue are the same. DONE Fix labels disappearing and reappearing when you just click move.
   DONE Don't show tooltip after scrolling up.
   DONE Move labels to the left a bit (benton added like a +10 pixels for the x or something somewhere at some point.)
+
+  DONE make people smaller to show crowd a bit better.
 
   Add more buttons/filters and things
   Figure out a better story to tell.
