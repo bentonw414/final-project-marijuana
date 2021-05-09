@@ -17,12 +17,12 @@ const labelsLAPrison = [
     {
         hashValue: 0,
         meaning: "In Prison",
-        color: "#1ec296"
+        // color: "#1ec296"/
     },
     {
         hashValue: 1,
         meaning: "Not In Prison",
-        color: "#94386eff"
+        // color: "#94386eff"
     }
 ];
 
@@ -53,7 +53,7 @@ var svgDocGlob = undefined;
 var state = "Louisiana";
 var toolTipPercents = undefined; // Map of hashvalue => percent that is populated when coloring the icons
 var counter = 0;
-
+var useCounter = false;
 var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
@@ -155,7 +155,8 @@ function drawLabels(mapping, counts) {
                 .ease(d3.easeSinInOut)
                 .attr("fill", function(d) {
                     if (d.color === undefined){
-                        return getColorOfHash(d.hashValue, counter);
+                        console.log("undefined");
+                        return getColorOfHash(d.hashValue);
                     }
                     return d.color;
                 }
@@ -480,6 +481,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
             console.log("no selection yet");
             return;
         }
+        useCounter = false;
         let counts = getCounts(currentSelectionFunction, filteredData);
         updateGraphId(currentSelectionFunction, filteredData, counts);
         drawLabels(currentLabelData, counts);
@@ -491,22 +493,26 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test gender");
         currentSelectionFunction = lambdaByGender;
         currentLabelData = labelsGender;
+        useCounter = false;
         color();
     });
 
     people.addEventListener("movegender", function () {
         console.log("test move gender");
+        useCounter = false;
         move();
     });
 
     people.addEventListener("colorage", function () {
         console.log("test age");
         currentSelectionFunction = lambdaByAgeAlc;
+        useCounter = false;
         color();
     });
 
     people.addEventListener("moveage", function () {
         console.log("test move gender");
+        useCounter = false;
         move();
     });
 
@@ -514,6 +520,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test us prison");
         currentSelectionFunction = lambdaByUSPrison;
         currentLabelData = labelsUSPrison;
+        useCounter = false;
         color();
     });
 
@@ -521,6 +528,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test us prison move");
         currentSelectionFunction = lambdaByUSPrison;
         currentLabelData = labelsUSPrison;
+        useCounter = false;
         move();
     });
 
@@ -528,6 +536,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test la prison");
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
+        useCounter = false;
         color();
     });
 
@@ -535,13 +544,14 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test la prison move");
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
-        
+        useCounter = false;
         move();
     });
     people.addEventListener("colordrugoffense", function(){
         console.log("test offense");
         currentSelectionFunction = lambdaByDrugOffense;
         currentLabelData = labelsDrugOffenseMap;
+        useCounter = false;
         color();
     });
 
@@ -549,6 +559,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test offense move");
         currentSelectionFunction = lambdaByDrugOffense;
         currentLabelData = labelsDrugOffenseMap;
+        useCounter = false;
         move();
     });
 
@@ -556,6 +567,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test offense");
         currentSelectionFunction = lambdaByOffenseType;
         currentLabelData = labelsOffenseMap;
+        useCounter = false;
         color();
     });
 
@@ -563,12 +575,14 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test offense move");
         currentSelectionFunction = lambdaByOffenseType;
         currentLabelData = labelsOffenseMap;
+        useCounter = false;
         move();
     });
 
     people.addEventListener("colormarijuana", function(){
         currentSelectionFunction = lambdaByMarijuana;
         currentLabelData = labelsMarijuana;
+        useCounter = false;
         color();
     });
 
@@ -576,6 +590,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("test offense move");
         currentSelectionFunction = lambdaByMarijuana;
         currentLabelData = labelsMarijuana;
+        useCounter = false;
         move();
     });
 
@@ -596,6 +611,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
             function() {console.log("hiding");
             document.getElementById("chart").style.visibility = "hidden";}
         );
+        useCounter = false;
 
     });
 
@@ -616,6 +632,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .attr("fill", "#ffffff00")
         .attr("opacity", "1");
         currentSelectionFunction = undefined;
+        useCounter = false;
     });
 
     let genderButton = document.getElementById('gender-button');
@@ -625,6 +642,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         currentLabelData = labelsGender;
 
         colorPeople(filteredData, currentSelectionFunction);
+        useCounter = false;
     });
 
     // let ageDrinkButton = document.getElementById('age-drink-button');
@@ -638,6 +656,10 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     console.log(selector);
     selector.addEventListener('change', function(){
         state = selector.value;
+        counter += 2;
+        counter %= pcolors.length;
+        console.log(counter);
+        useCounter = true;
         color();
     setTimeout(function(){
             move();
@@ -662,11 +684,31 @@ function colorPeople(data, lambdaFunc) {
         .ease(d3.easeLinear)
         .attr("fill", d => returnClass(lambdaFunc, d));
 }
-var colors = ["#7465a4","#f4c95d", "#d9596e","#1ec296","#d64933","#3881bc","#94386e","#8B795E","#ff7722","#60935d"]
-;
+var colors = ["#94386eff", "#1ec296","#d9596e", "#7465a4","#f4c95d","#3881bc","#d64933","#8B795E","#ff7722","#60935d"];
+var pcolors = ["#4B644A","#54F2F2", "#0C6FC0", "#F16A87", "#157a6e","#ffc800","#404e5c","#e84855", "#5b5f97","#e6e18f"];
+colors = pcolors
+
+
+
+
+let pairedColorScale = d3.scaleOrdinal(pcolors);
 let colorScale = d3.scaleOrdinal(colors);
 function returnClass(lambdafunc, d) {
     let hashValue = lambdafunc(d);
+    // console.log(counter);
+    if (currentLabelData !== undefined &&
+        0<= hashValue < currentLabelData.length &&
+        currentLabelData[hashValue] !== undefined &&
+        currentLabelData[hashValue].color !== undefined){
+        return currentLabelData[hashValue].color;
+    }
+    if (useCounter){
+        return pairedColorScale(lambdafunc(d)+counter);
+
+    }
+    return colorScale(lambdafunc(d));
+}
+function getColorOfHash(hashValue) {
     if (currentLabelData !== undefined &&
         0<= hashValue < currentLabelData.length &&
         currentLabelData[hashValue] !== undefined &&
@@ -674,15 +716,8 @@ function returnClass(lambdafunc, d) {
 
         return currentLabelData[hashValue].color;
     }
-    return colorScale(lambdafunc(d));
-}
-function getColorOfHash(hashValue, counter) {
-    if (currentLabelData !== undefined &&
-        0<= hashValue < currentLabelData.length &&
-        currentLabelData[hashValue] !== undefined &&
-        currentLabelData[hashValue].color !== undefined){
-
-        return currentLabelData[hashValue + counter].color;
+    if (useCounter){
+        return pairedColorScale(hashValue+counter);
     }
     return colorScale(hashValue);
 }
