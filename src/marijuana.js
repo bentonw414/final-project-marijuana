@@ -542,21 +542,37 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .transition("peopleFadeOutInitial")
         .duration(400)
         .ease(d3.easeSinInOut)
-        .attr("fill", "black");
+        .attr("fill", "black")
+        .attr("opacity", "0");
         svgDocGlob.selectAll('.labelsText')
         .transition("labelsFade")
         .duration(400)
         .ease(d3.easeSinInOut)
-        .attr("fill", "black");
+        .attr("fill", "black")
+        .attr("opacity", "0")
+        .end().then(
+            function() {console.log("hiding");
+            document.getElementById("chart").style.visibility = "hidden";}
+        );
 
     });
 
     people.addEventListener("secondpeople", function(){
+        console.log("making visible");
+        document.getElementById("chart").style.visibility = "visible";
         pictoLayer.selectAll(".personIcon")
         .transition("peopleFadeInInitial")
         .duration(400)
         .ease(d3.easeSinInOut)
+        .attr("opacity", "1")
         .attr("fill", "#D3D3D3");
+
+        svgDocGlob.selectAll('.labelsText')
+        .transition("labelsFade")
+        .duration(400)
+        .ease(d3.easeSinInOut)
+        .attr("fill", "#ffffff00")
+        .attr("opacity", "1");
     });
 
     let genderButton = document.getElementById('gender-button');
