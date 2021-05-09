@@ -30,12 +30,12 @@ const labelsDrugOffenseMap =
         {
             hashValue: 0,
             meaning: "Drug",
-            color:"#ff7722ff"
+            color:"#d9596eff"
         },
         {
             hashValue: 1,
             meaning: "Other",
-            color: "#60935dff"
+            color: "#3881bcff"
         }
     ];
 

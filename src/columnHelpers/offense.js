@@ -1,12 +1,12 @@
 const offenseColumn = "RV0036: Controlling Offense Category - 13";
-var colors = ["#7465a4","#f4c95d", "#d9596e","#1ec296","#d64933","#8B795E","#3881bc","#94386e","#60935d"];
+var colors = ["#7465a4","#f4c95d", "#ff7722ff","#1ec296","#d64933","#8B795E","#3881bc","#94386e","#60935d"];
 
 const labelsOffenseMap =
     [
         {
             hashValue: 0,
             meaning: "Drug",
-            color: "#ff7722ff"
+            color: "#d9596eff"
         },
         {
             hashValue: 1,

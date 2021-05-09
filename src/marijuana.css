@@ -290,7 +290,7 @@ svg {
 }
 .pa{
   opacity:0;
-  background-color: var(--accent6);
+  background-color: var(--accent10);
   position: relative;
   width: 93.5%;
   z-index: 9999;
@@ -339,11 +339,11 @@ svg {
 }
 .p5{
   opacity:0;
-  background-color: var(--accent10);
+  background-color: var(--accent6);
 }
 .p6{
   opacity:0;
-  background-color: var(--accent10);
+  background-color: var(--accent6);
 }
 .p7{
   opacity:0;
