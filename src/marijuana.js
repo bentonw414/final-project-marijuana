@@ -6,6 +6,11 @@ import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpe
 import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
 
+// Fixes weird things if you try to refresh in the middle of page
+// https://stackoverflow.com/questions/3664381/force-page-scroll-position-to-top-at-page-refresh-in-html
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+}
 
 const dataPath = "../data/compileddata.csv";
 
@@ -19,6 +24,7 @@ var currentSelectionFunction = undefined;
 var currentLabelData = undefined;
 var prevTooltip = undefined;
 var svgDocGlob = undefined;
+var toolTipPercents = undefined; // Map of hashvalue => percent that is populated when coloring the icons
 
 
 var funcMaps = new Map();
@@ -145,7 +151,6 @@ function drawLabels(mapping, counts) {
 
             let oldText = this.textContent;
             let newText = d.meaning;
-            console.log(oldText, newText, xValue, oldX);
 
 
             // If the label doesn't move and has same value, don't fade out.
@@ -182,6 +187,16 @@ function getCounts(inputFunc, data) {
             counts.set(i, 0);
         }
     }
+
+    // Now, update the percentage map;
+    let totalIcons = numCols*numRows;
+    toolTipPercents = new Map();
+    for (let [key, value] of counts){
+        let percent = (value*100)/totalIcons;
+        let roundedPercent = Math.round(percent * 100)/100;
+        toolTipPercents.set(key, roundedPercent);
+    }
+
     return counts;
 }
 
@@ -276,8 +291,6 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     console.log(filteredData)
     //placeholder div for jquery slider
     d3.select("body").append("div").attr("id", "sliderDiv");
-
-
 
     //create svg element
     var svgDoc = d3.select("#people1").append("svg")
@@ -375,7 +388,9 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     svgDoc.selectAll("use").on('mouseover', function (event, d) {
         if (currentSelectionFunction !== undefined) {
             if (prevTooltip !== funcMaps.get(currentSelectionFunction)(d)) {
-                tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d));
+                let percentage = toolTipPercents.get(currentSelectionFunction(d));
+                tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d) + 
+    ":<br> " + percentage + "%");
                 tooltip.style('display', 'block');
                 prevTooltip = funcMaps.get(currentSelectionFunction)(d);
             };
