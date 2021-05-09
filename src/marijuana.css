@@ -428,10 +428,11 @@ button{
     position:fixed;
     /* width: 200px;
     height: 28px; */
+    border-radius: 3px;
     padding: 10px 10px 10px 10px;
     background: var(--background1);
-    border: 2px solid var(--accent2);
-    opacity: 0.8;
+    border: 2px solid;
+    opacity: 0.9;
     z-index:999;
     
   }

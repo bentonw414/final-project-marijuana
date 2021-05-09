@@ -5,6 +5,7 @@ import {lambdaByDrugOffense, labelsDrugOffenseMap, drugOffenseMapFunc} from "./c
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
 // import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
+import {RGB_Linear_Shade} from "./pSBC.js";
 
 const columnstart = "percent ";
 const columnend = " in prison";
@@ -416,6 +417,9 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         if (currentSelectionFunction !== undefined) {
             if (prevTooltip !== funcMaps.get(currentSelectionFunction)(d)) {
                 let percentage = toolTipPercents.get(currentSelectionFunction(d));
+                let color = this.getAttribute("fill");
+                tooltip.style("background", RGB_Linear_Shade(-.5,color));
+                tooltip.style("border-color", color);
                 tooltip.select('.label').html(funcMaps.get(currentSelectionFunction)(d) + 
     ":<br> " + percentage + "%");
                 tooltip.style('display', 'block');
