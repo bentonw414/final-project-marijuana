@@ -1,6 +1,6 @@
 const usPercentColumn = "percent us in prison";
 
-var colors = ["#5081B9","#F58B51", "#60815F", "#54F2F2", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
+var colors = ["#5081B9", "#F58B51", "#60815F", "#54F2F2", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
 
 
 const lambdaByUSPrison = function (d) {

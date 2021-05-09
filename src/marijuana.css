@@ -7,9 +7,9 @@
     --accent4: #54f2f2ff;
     --accent5: #0B847Aff;
     --accent6: #ffc800ff;
-    --accent7: #4B5C6Cff;
+    --accent7: #5b5f97ff;
     --accent8: #e6e18fff;
-    --accent9: #5b5f97ff;
+    --accent9: #4B5C6Cff;
     --accent10: #e84855ff;
   }
   
@@ -308,7 +308,7 @@ svg {
 }
 .pc{
   opacity:0;
-  background-color: var(--accent9);
+  background-color: var(--accent7);
   position: relative;
   width: 93.5%;
   z-index: 9999;
@@ -334,15 +334,15 @@ svg {
 }
 .p3{
   opacity: 0;
-  background-color: var(--accent1);
+  background-color: var(--accent7);
 }
 .p4{
   opacity:0;
-  background-color: var(--accent1);
+  background-color: var(--accent7);
 }
 .p4-5{
   opacity:0;
-  background-color: var(--accent1);
+  background-color: var(--accent7);
 }
 .p5{
   opacity:0;
@@ -362,7 +362,7 @@ svg {
 }
 .p9{
   opacity:0;
-  background-color: var(--accent9);
+  background-color: var(--accent10);
 }
 .p10{
   opacity:0;
@@ -389,7 +389,7 @@ button{
     display: inline-block;
     color: white;
     font-size: 14px;
-    font-family: "montserrat";
+    font-family: Verdana, sans-serif;
     text-decoration: none;
     margin: 30px 30px;
     border: 2px solid var(--accent1);
@@ -461,4 +461,47 @@ button{
   height: 4%;
 } */
 
+.select-style {
+  /* background: var(--accent1);
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* z-index: -1; */
+    /* transition: all 0.6s ease;  */
+  /* border: 1px solid #ccc; */
+  width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+  /* background: #fafafa url("img/icon-select.png") no-repeat 90% 50%; */
+}
 
+.select-style select {
+  background: var(--background1);
+    content: "";
+    /* position: absolute;
+    top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%,-50%); */
+    /* z-index: -1; */
+    transition: all 0.6s ease;
+    border: 3px solid var(--accent8);
+    color: var(--text);
+    font-size: large;
+    font-family: Verdana, sans-serif;
+    padding:5px;
+    margin-top: 25px;
+    
+      /* padding: 5px 8px;*/
+  /* width: 130%;*/
+  /* border: none; */
+  /* box-shadow: none; */
+  /* background: transparent; */
+  /* background-image: none; */
+  -webkit-appearance: none; 
+}
+
+.select-style select:focus {
+  outline: none;
+}

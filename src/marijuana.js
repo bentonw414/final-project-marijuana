@@ -156,7 +156,6 @@ function drawLabels(mapping, counts) {
                 .ease(d3.easeSinInOut)
                 .attr("fill", function(d) {
                     if (d.color === undefined){
-                        console.log("undefined");
                         return getColorOfHash(d.hashValue);
                     }
                     return d.color;
@@ -717,13 +716,13 @@ function colorPeople(data, lambdaFunc) {
         .ease(d3.easeLinear)
         .attr("fill", d => returnClass(lambdaFunc, d));
 }
-var colors = ["#5081B9","#F58B51", "#60815F", "#54F2F2", "#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f"];
-var pcolors = ["#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f", "#60815F", "#54F2F2", "#5081B9","#F58B51"];
+var colors = ["#e6e18f", "#5b5f97", "#F58B51","#5081B9",  "#54F2F2","#60815F", "#ffc800","#0B847A","#e84855","#4B5C6C"];
+var pcolors = ["#ffc800","#0B847A","#e84855","#4B5C6C", "#e6e18f","#5b5f97",  "#54F2F2","#60815F", "#F58B51", "#5081B9"];
 
+//light dark pcolors: ["#ffc800","#0B847A","#e84855","#4B5C6C", "#e6e18f","#5b5f97",  "#54F2F2","#60815F", "#F58B51", "#5081B9"];
+//light dark colors: ["#F58B51","#5081B9",  "#54F2F2","#60815F", "#ffc800","#0B847A","#e84855","#4B5C6C", "#e6e18f", "#5b5f97"];
 
-
-
-
+//dark light pcolors ["#0B847A","#ffc800","#4B5C6C","#e84855", "#5b5f97","#e6e18f",  "#60815F","#54F2F2", "#5081B9","#F58B51"];
 let pairedColorScale = d3.scaleOrdinal(pcolors);
 let colorScale = d3.scaleOrdinal(colors);
 function returnClass(lambdafunc, d) {
