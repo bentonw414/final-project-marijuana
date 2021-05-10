@@ -112,7 +112,7 @@ html {
   a {
     text-decoration: none;
     display: inline-block;
-    padding: 2px 8px;
+    /* padding: 2px 8px; */
   }
   
   button:hover {
