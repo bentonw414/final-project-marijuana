@@ -204,12 +204,21 @@ html {
     color:rgb(251, 255, 5);
   }
 
+  .p6-5 a {
+    color:var(--accent10);
+  }
+  .p6-5 a:hover{
+    color:var(--accent2);
+  }
+
+
+
   .bottom a {
     color: grey;
   }
 
   .bottom a:hover {
-    color: rgb(122, 26, 26);
+    color: var(--accent5);
   }
 
 
@@ -292,6 +301,10 @@ svg {
   opacity:1;
 }
 
+.p6-5.visible {
+  opacity:1;
+}
+
 .panel {
   font-family: Verdana, sans-serif;
   text-align: left;
@@ -327,7 +340,8 @@ svg {
   align-content: right;
 }
 .line-chart{
-  align-content: right;
+  /* align-content: left; */
+  position: relative;
 }
 .pa{
   opacity:0;
@@ -387,6 +401,10 @@ svg {
   background-color: var(--accent9);
 }
 .p6{
+  opacity:0;
+  background-color: var(--accent9);
+}
+.p6-5{
   opacity:0;
   background-color: var(--accent9);
 }
