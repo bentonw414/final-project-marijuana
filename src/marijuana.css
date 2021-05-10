@@ -192,9 +192,27 @@ html {
   .bottom {
     position: fixed;
     bottom: 0;
+    margin-bottom: 10px;
     width: 98%;
     color:var(--text);
   }
+
+  .p7-5 a {
+    color:rgb(59, 59, 59);
+  }
+  .p7-5 a:hover{
+    color:rgb(251, 255, 5);
+  }
+
+  .bottom a {
+    color: grey;
+  }
+
+  .bottom a:hover {
+    color: rgb(122, 26, 26);
+  }
+
+
   
   text.shadow {
     background-color:white;
@@ -202,13 +220,13 @@ html {
   
   #right{
     text-align: right;
-    font-size: 10px;
+    font-size: 15px;
   }
   
   #left{
     text-align: left;
     font-size:15px;
-    width:109px;
+    width:200px;
   }
 
 svg {
@@ -267,6 +285,10 @@ svg {
   opacity:1;
 }
 .p10.visible {
+  opacity:1;
+}
+
+.p7-5.visible {
   opacity:1;
 }
 
@@ -353,6 +375,10 @@ svg {
   background-color: var(--accent7);
 }
 .p7{
+  opacity:0;
+  background-color: var(--accent5);
+}
+.p7-5{
   opacity:0;
   background-color: var(--accent5);
 }
