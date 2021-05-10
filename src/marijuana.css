@@ -497,6 +497,20 @@ button{
     
   }
 
+  .tooltip2 {
+    position:fixed;
+    /* width: 200px;
+    height: 28px; */
+    border-radius: 3px;
+    margin-left: 20px;
+    pointer-events: none;
+    padding: 10px 10px 10px 10px;
+    /* background: var(--background1); */
+    border: none;
+    opacity: 0.9;
+    z-index:999;
+  }
+
   /* .people1{
     height: 100%;
     width:600px;
