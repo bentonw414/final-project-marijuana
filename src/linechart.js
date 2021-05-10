@@ -78,10 +78,12 @@ var svg = d3.select("#line-chart")
         .attr("class", "lines");
     })
 
-    // backgroundRect.on("mouseout", function (e){
-    //   svg.selectAll(".lines")
-    //     .remove();
-    // })
+    backgroundRect.on("mouseout", function (e){
+      svg.selectAll(".lines")
+        .remove();
+      svg.selectAll("circle")
+        .style("fill", "#e84855ff");
+    })
     backgroundRect.on("mousemove", function (e) {
       // rect.width is width in pixels of drawing area on screen
           let rectBBox = document.querySelector('#iconRect');
