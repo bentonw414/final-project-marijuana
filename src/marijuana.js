@@ -55,6 +55,8 @@ var state = "Louisiana";
 var toolTipPercents = undefined; // Map of hashvalue => percent that is populated when coloring the icons
 var counter = 0;
 var useCounter = false;
+var clicked = false;
+
 var funcMaps = new Map();
 funcMaps.set(lambdaByGender, genderMapFunc);
 funcMaps.set(lambdaByAgeAlc, alcMapFunc);
@@ -569,6 +571,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
         useCounter = false;
+        console.log(counter);
         color();
     });
 
@@ -577,8 +580,23 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         currentSelectionFunction = lambdaByLAPrison;
         currentLabelData = labelsLAPrison;
         useCounter = false;
+        console.log(counter);
         move();
     });
+
+    people.addEventListener("moveanyprison", function(){
+        console.log("test la prison move");
+        currentSelectionFunction = lambdaByLAPrison;
+        currentLabelData = labelsLAPrison;
+        useCounter = false;
+        // if (state !== "Louisiana"){
+        if (clicked){
+            useCounter = true;
+        }
+        move();
+        // }
+    });
+
     people.addEventListener("colordrugoffense", function(){
         console.log("test offense");
         currentSelectionFunction = lambdaByDrugOffense;
@@ -672,9 +690,8 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("clicked gender button");
         currentSelectionFunction = lambdaByGender;
         currentLabelData = labelsGender;
-
-        colorPeople(filteredData, currentSelectionFunction);
         useCounter = false;
+        colorPeople(filteredData, currentSelectionFunction);
     });
 
     // let ageDrinkButton = document.getElementById('age-drink-button');
@@ -692,6 +709,7 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         counter %= pcolors.length;
         console.log(counter);
         useCounter = true;
+        clicked = true;
         color();
     setTimeout(function(){
             move();
@@ -732,6 +750,7 @@ function returnClass(lambdafunc, d) {
         0<= hashValue < currentLabelData.length &&
         currentLabelData[hashValue] !== undefined &&
         currentLabelData[hashValue].color !== undefined){
+            console.log("special?");
         return currentLabelData[hashValue].color;
     }
     if (useCounter){
