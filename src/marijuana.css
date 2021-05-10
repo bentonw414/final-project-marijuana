@@ -179,16 +179,6 @@ html {
   }
 
   
-  #label{
-    margin: auto;
-    padding:10px;
-    margin-bottom: 5px;
-    background-image:radial-gradient(rgba(212, 180, 131, 1), rgba(255,0,0,0));
-    display:flex;
-    width:100%;
-    justify-content: space-between;
-  }
-  
   .bottom {
     position: fixed;
     bottom: 0;
@@ -329,20 +319,26 @@ svg {
 .p-alpha{
   /* margin: 200px; */
   /* opacity:0; */
-  /* background-color: var(--accent3);
-  position: relative;
-  width: 93.5%;
-  z-index: 9999; */
-  position: relative;
+  /* background-color: var(--accent3);*/
+  /* position: relative; */
+  /* width: 93.5%; */
+  /* z-index: 9999; */
+  /* position: relative; */
   z-index: 9999;
-  padding-bottom:300px;
+  /* padding-bottom:300px; */
+  margin-right: 0;
+  margin-left: auto;
+  /* background-color: firebrick; */
 
-  align-content: right;
+  /* align-content: right; */
 }
-.line-chart{
-  /* align-content: left; */
-  position: relative;
+
+#people1{
+  visibility: hidden;
 }
+
+
+
 .pa{
   opacity:0;
   background-color: var(--accent3);
@@ -469,6 +465,7 @@ button{
     z-index: -1;
     transition: all 0.6s ease;
   }
+
   
   button::before{
     width: 0%;
@@ -497,18 +494,31 @@ button{
     
   }
 
+
+  .label {
+    display: table;
+    text-align: left;
+    margin-top: 0;
+    /* height: 0%; */
+    margin-bottom: auto;
+    /* background-color: green; */
+  }
+
   .tooltip2 {
     position:fixed;
-    /* width: 200px;
-    height: 28px; */
+    width: 50%;
+    /* height: 20%; */
     border-radius: 3px;
-    margin-left: 20px;
+    margin-left: 10px;
     pointer-events: none;
+    text-align: left;
     padding: 10px 10px 10px 10px;
     /* background: var(--background1); */
+    font-size: large;
     border: none;
     opacity: 0.9;
-    z-index:999;
+    /* z-index:99999; */
+    /* background-color: purple; */
   }
 
   /* .people1{

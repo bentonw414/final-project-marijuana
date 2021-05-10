@@ -431,7 +431,8 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
             var whole = Math.floor((d["V0001B: Respondent ID"] - 1) / numCols)//calculates the y position (row number)
             return yPadding + (remainder * hBuffer);//apply the buffer and return the value
         })
-        .attr("fill", "black");
+        .attr("fill", "black")
+        .attr("opacity", "0");
 
     let groupElement = document.querySelector('#pictoLayer');
     let rectBBox = document.querySelector('#iconRect');
@@ -659,13 +660,15 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         .attr("opacity", "0")
         .end().then(
             function() {console.log("hiding");
-            document.getElementById("chart").style.visibility = "hidden";}
+            document.getElementById("chart").style.visibility = "hidden";
+            document.getElementById("people1").style.visibility = "hidden";}
         );
         useCounter = false;
 
     });
 
     people.addEventListener("secondpeople", function(){
+        document.getElementById("people1").style.visibility = "visible";
         console.log("making visible");
         document.getElementById("chart").style.visibility = "visible";
         pictoLayer.selectAll(".personIcon")

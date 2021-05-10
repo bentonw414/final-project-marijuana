@@ -17,6 +17,8 @@ var svg = d3.select("#line-chart")
         .range([ 0,  width]);
       svg.append("g")
         .attr("transform", "translate(0 " + height + ")")
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
         .call(d3.axisBottom(x).tickFormat(d3.format("d")));
     
       // Add Y axis
@@ -24,7 +26,9 @@ var svg = d3.select("#line-chart")
         .domain([0,  2500000])
         .range([ height, 0]);
       svg.append("g")
-        .call(d3.axisLeft(y));
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .call(d3.axisLeft(y).ticks(2));
       
         svg.append("rect")
         .attr("class", "backgroundRect-linechart");
@@ -36,7 +40,7 @@ var svg = d3.select("#line-chart")
         .data(filteredData)
         .enter()
         .append("circle")
-          .attr("cx", function (d) { console.log(x(d.year), d.year); return x(d.year); } )
+          .attr("cx", function (d) { return x(d.year); } )
           .attr("cy", function (d) { return y(d.count); } )
           .attr("r", 3)
           .style("fill", "#e84855ff");
@@ -51,14 +55,18 @@ var svg = d3.select("#line-chart")
 
           var tooltip = d3.select('#line-chart')                               // NEW
           .append('div')                                                // NEW
-          .attr('class', 'tooltip2');                                    // NEW
+          .attr('class', 'tooltip2');
+
+                              // NEW
   
     svg.append('g')
     .selectAll("dot");
     // .append("rect")
       tooltip.append('div')                                           // NEW
-          .attr('class', 'label');
-      tooltip.style('display', 'none');
+          .attr('class', 'label')
+          tooltip.select('.label').html("<p>Year: <br>" + 
+              "<b>1925</b><br>" + "Prison Population: <br>" +"<b>91,669</b>" + "</p>");
+      // tooltip.style('display', 'none');
 
     //   svg.selectAll("circle").on('mousemove', function (event, d) {
     //       console.log("dot!");
@@ -92,16 +100,20 @@ var svg = d3.select("#line-chart")
       var rect = e.target.getBoundingClientRect();
       var x = e.clientX - rect.left; //x position within the element.
       var y = e.clientY - rect.top;  //y position within the element.
-      console.log("Left? : " + x + " ; Top? : " + y + ".");
+      // console.log("Left? : " + x + " ; Top? : " + y + ".");
       // console.log(rect);
       // x currently is in pixels from left of drawing area
       let xRatio = x/(rect.width);
-      console.log(Math.round((xRatio)*(2017-1925))+1925);
+      // console.log(Math.round((xRatio)*(2017-1925))+1925);
       var year = Math.round((xRatio)*(2017-1925))+1925;
       var bisect = d3.bisector(d => d.year);
       var i = bisect.left(filteredData, year);
-      console.log(filteredData[i]);
+      // console.log(filteredData[i]);
       var d = filteredData[i];
+      if (d === undefined){
+        return;
+      }
+
       svg.selectAll("circle")
       .style("fill", d => {
         if (d.year === year){
@@ -110,16 +122,16 @@ var svg = d3.select("#line-chart")
         return "#e84855ff";
       });
       // Commas taken from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-            tooltip.select('.label').html("Year: <br>" + 
-            d.year + "<br>" + "Prison Population: <br>" + d.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                tooltip.style('display', 'block');
-            tooltip.style("left", e.clientX)
-                .style("top", e.clientY);
+            tooltip.select('.label').html("<p>Year: <br><b>" + 
+            d.year + "</b><br>" + "Prison Population: <br><b>" + d.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</b></p>");
+                // tooltip.style('display', 'block');
+            // tooltip.style("left", e.clientX)
+            //     .style("top", e.clientY);
       var x = d3.scaleLinear()
       .domain([1925, 2016])
       .range([ 0,  width]);
       if (!(x(year) >= 0)){
-        console.log(x(year));
+        // console.log(x(year));
         return;
       }
       svg.selectAll(".lines")
