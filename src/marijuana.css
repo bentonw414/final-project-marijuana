@@ -244,6 +244,9 @@ svg {
 .pa.visible {
   opacity:1;
 }
+.p-side-by-chart.visible {
+  opacity:1;
+}
 .pb.visible {
   opacity:1;
 }
@@ -345,8 +348,71 @@ svg {
   position: relative;
   width: 93.5%;
   z-index: 9999;
+  margin-top: 200px;
+}
+
+
+.p-side-by-chart{
+  opacity:0;
+  /* background-color: var(--accent4); */
+  position: relative;
+  width: 100%;
+  z-index: 9999;
+  padding: 0px;
   /* margin-top: 200px; */
 }
+#container-charts{
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+#another-container {
+  display:flex;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  width: 35%;
+}
+
+#line-chart-text {
+  display: block;
+  /* position:relative; */
+  background-color: var(--accent3);
+  font-family: Verdana, sans-serif;
+  text-align: left;
+  font-size: 30px;
+  /* height: 100%; */
+  align-items: center;
+  /* justify-content: center; */
+  width: 100%;
+  border-radius: 5px;
+  /* height: 100%; */
+  padding: 1cm;
+  /* margin-left: -10; */
+  /* padding:1cm; */
+  /* margin-bottom: 250px; */
+  /* opacity:0; */
+  -webkit-transform: scale(0.9);
+			 -moz-transform: scale(0.9);
+				-ms-transform: scale(0.9);
+				 -o-transform: scale(0.9);
+						transform: scale(0.9);
+		-webkit-transition: all 1s ease-in-out;
+			 -moz-transition: all 1s ease-in-out;
+				-ms-transition: all 1s ease-in-out;
+				 -o-transition: all 1s ease-in-out;
+						transition: all 1s ease-in-out;
+}
+
+#line-chart {
+  width: 50%;
+  display: inline-block;
+  margin-left: 7%;
+}
+
+
 .pb{
   opacity:0;
   background-color: var(--accent1);
@@ -498,7 +564,8 @@ button{
   .label {
     display: table;
     text-align: left;
-    margin-top: 0;
+    margin-top: 10%;
+    margin-left: 10%;
     /* height: 0%; */
     margin-bottom: auto;
     /* background-color: green; */
@@ -514,7 +581,7 @@ button{
     text-align: left;
     padding: 10px 10px 10px 10px;
     /* background: var(--background1); */
-    font-size: large;
+    font-size: 100%;
     border: none;
     opacity: 0.9;
     /* z-index:99999; */

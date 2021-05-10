@@ -151,8 +151,8 @@
       console.log("do nothing");
     }
     var slides = document.querySelectorAll("section.panel");
-    var toggles = [".pa", ".pb", ".pc", ".pd", ".p1", ".p2", ".p3", ".p4", ".p4-5", ".p5", ".p6",".p6-5", ".p7", ".p7-5", ".p8", ".p9", ".p10"];
-    var funcs = [dispatchNothing, dispatchNothing, dispatchPeople, dispatchPeople2, dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchMoveAnyPrison, dispatchColorDrugOffense, dispatchMoveDrugOffense, dispatchNothing, dispatchColorOffense, dispatchMoveOffense, dispatchNothing];;
+    var toggles = [".pa", ".p-side-by-chart", ".pb", ".pc", ".pd", ".p1", ".p2", ".p3", ".p4", ".p4-5", ".p5", ".p6",".p6-5", ".p7", ".p7-5", ".p8", ".p9", ".p10"];
+    var funcs = [dispatchNothing, dispatchNothing, dispatchNothing, dispatchPeople, dispatchPeople2, dispatchColorUSPrison, dispatchMoveUSPrison, dispatchColorLAPrison, dispatchMoveLAPrison, dispatchMoveAnyPrison, dispatchColorDrugOffense, dispatchMoveDrugOffense, dispatchNothing, dispatchColorOffense, dispatchMoveOffense, dispatchNothing];;
     // create scene for every slide
     for (var i = 0; i < slides.length; i++) {
 
