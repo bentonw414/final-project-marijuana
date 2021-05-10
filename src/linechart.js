@@ -25,9 +25,13 @@ var svg = d3.select("#line-chart")
         .range([ height, 0]);
       svg.append("g")
         .call(d3.axisLeft(y));
+      
+        svg.append("rect")
+        .attr("class", "backgroundRect-linechart");
     
       // Add dots
       svg.append('g')
+        .attr("id", "circlesId")
         .selectAll("dot")
         .data(filteredData)
         .enter()
@@ -37,13 +41,21 @@ var svg = d3.select("#line-chart")
           .attr("r", 3)
           .style("fill", "#e84855ff");
 
+      let backgroundRect = svg.selectAll(".backgroundRect-linechart")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", width)
+        .attr("height", height)
+        .attr("fill", "black");
+        
+
           var tooltip = d3.select('#line-chart')                               // NEW
           .append('div')                                                // NEW
-          .attr('class', 'tooltip');                                    // NEW
+          .attr('class', 'tooltip2');                                    // NEW
   
     svg.append('g')
-    .selectAll("dot")
-    .append("rect")
+    .selectAll("dot");
+    // .append("rect")
       tooltip.append('div')                                           // NEW
           .attr('class', 'label');
       tooltip.style('display', 'none');
@@ -60,7 +72,17 @@ var svg = d3.select("#line-chart")
     // });
 
     // Update the position and remove based on the size of the g (which has an invisible rectangle behind it)
-    svg.on("mousemove", function (e) {
+
+    backgroundRect.on("mouseover", function (e){
+      svg.append("line")
+        .attr("class", "lines");
+    })
+
+    // backgroundRect.on("mouseout", function (e){
+    //   svg.selectAll(".lines")
+    //     .remove();
+    // })
+    backgroundRect.on("mousemove", function (e) {
       // rect.width is width in pixels of drawing area on screen
           let rectBBox = document.querySelector('#iconRect');
 
@@ -86,24 +108,27 @@ var svg = d3.select("#line-chart")
         return "#e84855ff";
       });
       // Commas taken from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-            tooltip.select('.label').html("year: <br>" + 
-            d.year + "<br>" + "population: <br>" + d.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            tooltip.select('.label').html("Year: <br>" + 
+            d.year + "<br>" + "Prison Population: <br>" + d.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 tooltip.style('display', 'block');
-            tooltip.style("left", e.clientX + "px")
-                .style("top", e.clientY + "px");
+            tooltip.style("left", e.clientX)
+                .style("top", e.clientY);
       var x = d3.scaleLinear()
       .domain([1925, 2016])
       .range([ 0,  width]);
-      svg.selectAll(".lines").remove();
-      svg.append("line")
+      if (!(x(year) >= 0)){
+        console.log(x(year));
+        return;
+      }
+      svg.selectAll(".lines")
+      
       .attr("x1", x(year))  //<<== change your code here
       .attr("y1", 0)
       .attr("x2", x(year))  //<<== and here
       .attr("y2", height - margin.top - margin.bottom)
-      .style("stroke-width", 2)
+      .style("stroke-width", 1)
       .style("stroke", "#54f2f2ff")
-      .style("fill", "none")
-      .attr("class", "lines");
+      .style("fill", "none");
     });
 
   
