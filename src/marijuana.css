@@ -291,13 +291,29 @@ svg {
 				 -o-transition: all 1s ease-in-out;
 						transition: all 1s ease-in-out;
 }
+.p-alpha{
+  /* margin: 200px; */
+  /* opacity:0; */
+  /* background-color: var(--accent3);
+  position: relative;
+  width: 93.5%;
+  z-index: 9999; */
+  position: relative;
+  z-index: 9999;
+  padding-bottom:300px;
+
+  align-content: right;
+}
+.line-chart{
+  align-content: right;
+}
 .pa{
   opacity:0;
   background-color: var(--accent3);
   position: relative;
   width: 93.5%;
   z-index: 9999;
-  margin-top: 200px;
+  /* margin-top: 200px; */
 }
 .pb{
   opacity:0;
