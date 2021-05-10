@@ -3,6 +3,7 @@ import {lambdaByAgeAlc, alcMapFunc} from "./columnHelpers/ageAlc.js";
 import {lambdaByOffenseType, labelsOffenseMap, offenseMapFunc} from "./columnHelpers/offense.js";
 import {lambdaByDrugOffense, labelsDrugOffenseMap, drugOffenseMapFunc} from "./columnHelpers/drugOffense.js";
 import { labelsUSPrison, lambdaByUSPrison, usPrisonMapFunc } from "./columnHelpers/usprison.js";
+import {raceMapFunc, labelsRaceMap, lambdaByRace} from "./columnHelpers/race.js"
 // import { labelsLAPrison, lambdaByLAPrison, laPrisonMapFunc } from "./columnHelpers/laprison.js";
 import { labelsMarijuana, lambdaByMarijuana, marijuanaMapFunc } from "./columnHelpers/invweed.js";
 import {RGB_Linear_Shade} from "./pSBC.js";
@@ -753,7 +754,6 @@ function returnClass(lambdafunc, d) {
         0<= hashValue < currentLabelData.length &&
         currentLabelData[hashValue] !== undefined &&
         currentLabelData[hashValue].color !== undefined){
-            console.log("special?");
         return currentLabelData[hashValue].color;
     }
     if (useCounter){
