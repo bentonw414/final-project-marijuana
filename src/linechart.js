@@ -82,16 +82,17 @@ var svg = d3.select("#line-chart")
     // Update the position and remove based on the size of the g (which has an invisible rectangle behind it)
 
     backgroundRect.on("mouseover", function (e){
+      svg.selectAll(".lines").remove();
       svg.append("line")
         .attr("class", "lines");
     })
 
-    backgroundRect.on("mouseout", function (e){
-      svg.selectAll(".lines")
-        .remove();
-      svg.selectAll("circle")
-        .style("fill", "#e84855ff");
-    })
+    // backgroundRect.on("mouseout", function (e){
+    //   svg.selectAll(".lines")
+    //     .remove();
+    //   svg.selectAll("circle")
+    //     .style("fill", "#e84855ff");
+    // })
     backgroundRect.on("mousemove", function (e) {
       // rect.width is width in pixels of drawing area on screen
           let rectBBox = document.querySelector('#iconRect');
@@ -110,7 +111,7 @@ var svg = d3.select("#line-chart")
       var i = bisect.left(filteredData, year);
       // console.log(filteredData[i]);
       var d = filteredData[i];
-      if (d === undefined){
+      if (d === undefined || d.year === undefined){
         return;
       }
 

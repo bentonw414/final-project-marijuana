@@ -408,7 +408,7 @@ svg {
 
 #line-chart {
   width: 50%;
-  display: inline-block;
+  display: block;
   margin-left: 7%;
 }
 
