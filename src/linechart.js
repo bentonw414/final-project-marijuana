@@ -63,8 +63,8 @@ var svg = d3.select("#line-chart")
     .selectAll("dot");
     // .append("rect")
       tooltip.append('div')                                           // NEW
-          .attr('class', 'label')
-          tooltip.select('.label').html("<p>Year: <br>" + 
+          .attr('class', 'label2')
+          tooltip.select('.label2').html("<p>Year: <br>" + 
               "<b>1925</b><br>" + "Prison Population: <br>" +"<b>91,669</b>" + "</p>");
       // tooltip.style('display', 'none');
 
@@ -123,7 +123,7 @@ var svg = d3.select("#line-chart")
         return "#e84855ff";
       });
       // Commas taken from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-            tooltip.select('.label').html("<p>Year: <br><b>" + 
+            tooltip.select('.label2').html("<p>Year: <br><b>" + 
             d.year + "</b><br>" + "Prison Population: <br><b>" + d.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</b></p>");
                 // tooltip.style('display', 'block');
             // tooltip.style("left", e.clientX)
