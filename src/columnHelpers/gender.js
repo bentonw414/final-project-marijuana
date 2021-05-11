@@ -19,17 +19,18 @@ const labelsGender =
     [
         {
             hashValue: 0,
-            meaning: "Male"
+            meaning: "Male",
+            color: colors[4]
         },
         {
             hashValue: 1,
             meaning: "Female",
-            color:colors[4]
+            color:colors[5]
         },
         {
             hashValue: 2, 
             meaning: "Other",
-            color:colors[5]
+            color:colors[8]
         }
     ];
 

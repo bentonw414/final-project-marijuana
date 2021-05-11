@@ -57,7 +57,7 @@
   <div id="container-charts">
     <div id="another-container">
     <div id="line-chart-text">
-      In that amount of time, the U.S. prison population has increased in size by 500%. Mouse over the chart to see size of the prison population over time.
+      In that amount of time, the U.S. prison population has increased in size by 500%. Mouse over the chart to see the size of the prison population over time.
     </div>
     </div>
     <div id="line-chart">
@@ -90,10 +90,10 @@
   In Louisiana, around <b>1 in 85</b> adults are in prison.
 </section>
 
-<section class="panel p4-5">
+<section class="panel p4-5" id="selector-div">
   <div>Explore the incarceration rates for other U.S. states.</div>
   <!-- <div class="custom-select" style="width:200px;"> -->
-    <div class="select-style">
+    <div class="select-style" id="state-div">
     <select id="state-selector">
       <option value="Alabama">Alabama</option>
       <option value="Alaska">Alaska</option>
@@ -182,8 +182,12 @@
 <section class="panel p0">
   <div id="all-buttons-div">
     <div>
+      <!-- <button type="button" class="button" id="age-drink-button">Age Drink </button> -->
+        <button type="button" class="button" id="race-button">Race</button>
+      </div>
+    <!-- <div>
       <button type="button" class="button" id="move-button">Move </button>
-    </div>
+    </div> -->
     <div>
       <button type="button" class="button" id="gender-button">Gender </button>
     </div>
@@ -191,6 +195,14 @@
     <!-- <button type="button" class="button" id="age-drink-button">Age Drink </button> -->
       <button type="button" class="button" id="offense-type-button">Offense Type </button>
     </div>
+    <div>
+      <!-- <button type="button" class="button" id="age-drink-button">Age Drink </button> -->
+        <button type="button" class="button" id="prison-pop-button">US Prison Pop</button>
+      </div>
+    <div>
+      <!-- <button type="button" class="button" id="age-drink-button">Age Drink </button> -->
+        <button type="button" class="button" id="drug-button">Drug vs. Other</button>
+      </div>
   </div>
 </section>
 

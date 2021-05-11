@@ -116,14 +116,14 @@ html {
   }
   
   button:hover {
-    background-color:var(--accent1);
+    background-color:var(--accent9);
     color: var(--text);
   }
   
   button {
   
       /* border-radius:15px; */
-      border:1px solid var(--accent1);
+      border:1px solid var(--accent9);
       display:inline-block;
       cursor:pointer;
       font-size:14px;
@@ -135,7 +135,7 @@ html {
   
   
   button:focus{
-    background: var(--background1); 
+    background: var(--background9); 
     /* background-color : #D4B483; */
   }
   
@@ -379,7 +379,7 @@ svg {
 #line-chart-text {
   display: block;
   /* position:relative; */
-  background-color: var(--accent3);
+  background-color: var(--accent9);
   font-family: Verdana, sans-serif;
   text-align: left;
   font-size: 30px;
@@ -493,17 +493,17 @@ svg {
 
 #move-button{
     background:var(--background1);
-    border:1px solid var(--accent2);
+    border:1px solid var(--accent9);
     /* margin:2cm; */
 
 }
 
 #move-button:hover{
-    background: var(--accent2);
+    background: var(--accent9);
 }
 
 #move-button:before{
-    background: var(--accent2);
+    background: var(--accent9);
 }
 
 button{
@@ -514,7 +514,7 @@ button{
     font-family: Verdana, sans-serif;
     text-decoration: none;
     margin: 30px 30px;
-    border: 2px solid var(--accent1);
+    border: 2px solid var(--accent9);
     padding: 14px 30px;
     text-transform: uppercase;
     overflow: hidden;
@@ -522,7 +522,7 @@ button{
     transform: translate(-50%,-50%); 
   }
   button::before{
-    background: var(--accent1);
+    background: var(--accent9);
     content: "";
     position: absolute;
     top: 50%;

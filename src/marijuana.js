@@ -66,6 +66,7 @@ funcMaps.set(lambdaByDrugOffense, drugOffenseMapFunc);
 funcMaps.set(lambdaByUSPrison, usPrisonMapFunc);
 funcMaps.set(lambdaByLAPrison, laPrisonMapFunc);
 funcMaps.set(lambdaByMarijuana, marijuanaMapFunc);
+funcMaps.set(lambdaByRace, raceMapFunc);
 
 // Takes in a function, and gives each data point a "graphid" (id within category)
 // Returns a map of counts for each category
@@ -510,19 +511,19 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         colorPeople(filteredData, currentSelectionFunction);
     }
 
-    let moveButton = document.getElementById('move-button');
-    moveButton.addEventListener('click', function () {
-        console.log("clicked move button");
-        if (currentSelectionFunction === undefined) {
-            console.log("no selection yet");
-            return;
-        }
-        useCounter = false;
-        let counts = getCounts(currentSelectionFunction, filteredData);
-        updateGraphId(currentSelectionFunction, filteredData, counts);
-        drawLabels(currentLabelData, counts);
-        movePeople(currentSelectionFunction, filteredData, counts);
-    });
+    // let moveButton = document.getElementById('move-button');
+    // moveButton.addEventListener('click', function () {
+    //     console.log("clicked move button");
+    //     if (currentSelectionFunction === undefined) {
+    //         console.log("no selection yet");
+    //         return;
+    //     }
+    //     useCounter = false;
+    //     let counts = getCounts(currentSelectionFunction, filteredData);
+    //     updateGraphId(currentSelectionFunction, filteredData, counts);
+    //     drawLabels(currentLabelData, counts);
+    //     movePeople(currentSelectionFunction, filteredData, counts);
+    // });
 
     let people = document.getElementById('people1');
     people.addEventListener("colorgender", function () {
@@ -695,8 +696,46 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         currentSelectionFunction = lambdaByGender;
         currentLabelData = labelsGender;
         useCounter = false;
-        colorPeople(filteredData, currentSelectionFunction);
+        color();
+        setTimeout(function(){
+            move();
+    }, 1000);
     });
+
+    let popButton = document.getElementById('prison-pop-button');
+    popButton.addEventListener('click', function () {
+        currentSelectionFunction = lambdaByUSPrison;
+        currentLabelData = labelsUSPrison;
+        useCounter = false;
+        color();
+        setTimeout(function(){
+            move();
+    }, 1000);
+    });
+
+    let raceButton = document.getElementById('race-button');
+    raceButton.addEventListener('click', function () {
+        currentSelectionFunction = lambdaByRace;
+        currentLabelData = labelsRaceMap;
+        useCounter = false;
+        color();
+        setTimeout(function(){
+            move();
+    }, 1000);
+    });
+
+    let drugButton = document.getElementById('drug-button');
+    drugButton.addEventListener('click', function () {
+        currentSelectionFunction = lambdaByDrugOffense;
+        currentLabelData = labelsDrugOffenseMap;
+        useCounter = false;
+        color();
+        setTimeout(function(){
+            move();
+    }, 1000);
+    });
+
+
 
     // let ageDrinkButton = document.getElementById('age-drink-button');
     // ageDrinkButton.addEventListener('click', function () {
@@ -706,6 +745,8 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
     // });
 
     let selector = document.getElementById('state-selector');
+    let selectordiv = document.getElementById("selector-div");
+    let statediv = document.getElementById("state-selector");
     console.log(selector);
     selector.addEventListener('change', function(){
         state = selector.value;
@@ -714,6 +755,16 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log(counter);
         useCounter = true;
         clicked = true;
+        var borderIndex = counter - 2; 
+        var backgroundIndex = counter -1;
+        if (borderIndex < 0){
+            borderIndex = pcolors.length - 2;
+        }
+        if (backgroundIndex < 0){
+            backgroundIndex = pcolors.length - 1;
+        }
+        statediv.style.borderColor = pcolors[borderIndex];
+        selectordiv.style.backgroundColor = pcolors[backgroundIndex];
         color();
     setTimeout(function(){
             move();
@@ -725,7 +776,11 @@ d3.csv(dataPath, d3.autoType).then(filteredData => {
         console.log("clicked offense button");
         currentLabelData = labelsOffenseMap
         currentSelectionFunction = lambdaByOffenseType;
-        colorPeople(filteredData, currentSelectionFunction);
+        useCounter = false;
+        color();
+        setTimeout(function(){
+                move();
+        }, 1000);
     });
 
 });
@@ -739,7 +794,7 @@ function colorPeople(data, lambdaFunc) {
         .attr("fill", d => returnClass(lambdaFunc, d));
 }
 var colors = ["#e6e18f", "#5b5f97", "#F58B51","#5081B9",  "#54F2F2","#60815F", "#ffc800","#0B847A","#e84855","#4B5C6C"];
-var pcolors = ["#ffc800","#0B847A","#e84855","#4B5C6C", "#e6e18f","#5b5f97",  "#54F2F2","#60815F", "#F58B51", "#5081B9"];
+var pcolors = ["#ffc800","#0B847A","#e84855","#4B5C6C",  "#F58B51", "#5081B9", "#54F2F2","#60815F", "#e6e18f","#5b5f97"];
 
 //light dark pcolors: ["#ffc800","#0B847A","#e84855","#4B5C6C", "#e6e18f","#5b5f97",  "#54F2F2","#60815F", "#F58B51", "#5081B9"];
 //light dark colors: ["#F58B51","#5081B9",  "#54F2F2","#60815F", "#ffc800","#0B847A","#e84855","#4B5C6C", "#e6e18f", "#5b5f97"];

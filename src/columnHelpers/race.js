@@ -7,43 +7,55 @@ const labelsRaceMap =
         {
             hashValue: 0,
             meaning: "White",
-            color: colors[7]
+            color: colors[4]
         },
         {
             hashValue: 1,
             meaning: "Black", 
-            color: colors[6]
+            color: colors[7]
         },
         {
+            //4
             hashValue: 2,
-            meaning: "Hispanic", 
-            color: colors[1]
+            meaning: "Asian/Pacif. Islander", 
+            color: colors[8]
         },
         {
+            //2
             hashValue: 3,
+            meaning: "Hispanic", 
+            color: colors[9]
+        },
+        {
+            //3
+            hashValue: 4,
             meaning: "American Indian/Alaska Native", 
             color: colors[0]
         },
         {
-            hashValue: 4,
-            meaning: "Asian/Pacif. Islander", 
-            color: colors[3]
-        },
-        {
             hashValue: 5,
             meaning: "Mixed", 
-            color: colors[2]
+            color: colors[3]
         },
         {
             hashValue: 6,
             meaning: "Other/Unknown", 
-            color: colors[5]
+            color: colors[2]
         },
     ];
 
 
 const lambdaByRace = function (d) {
     let raceCategory = d[raceColumn];
+    if (raceCategory === 3){
+        return 3;
+    }
+    if (raceCategory === 4){
+        return 4;
+    }
+    if (raceCategory === 5){
+        return 2;
+    }
     if (raceCategory >= 1 && raceCategory <= 6){
       return raceCategory - 1;
     }
@@ -53,8 +65,8 @@ const lambdaByRace = function (d) {
 
 
 const raceMapFunc = function (d) {
-        const hashValue = lambdaByOffenseType(d);
-        return labelsOffenseMap[hashValue].meaning;
+        const hashValue = lambdaByRace(d);
+        return labelsRaceMap[hashValue].meaning;
 }
 
 
