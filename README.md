@@ -1,4 +1,5 @@
-## We are including the team page in the readme, as allowed on Slack.
+## Site Link
+[https://6859-sp21.github.io/final-project-marijuana/src/index.html](https://6859-sp21.github.io/final-project-marijuana/src/index.html)
 
 * Title: Prison in The U.S.
     Formerly: Marijuana Legalization
